@@ -1,0 +1,102 @@
+package com.caruso.pcbuilderproject.specslist
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.caruso.pcbuilderproject.R
+import com.caruso.pcbuilderproject.R.string.*
+import com.caruso.pcbuilderproject.classes.CPU
+import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+
+@Composable
+fun CPUSpecs(
+        cpu: CPU
+) {
+    Column {
+        SpecListItem(
+                leftItem = stringResource(numberOfCores_Label),
+                rightItem = cpu.coreNumber.toString()
+        )
+        Divider(
+                Modifier.padding(bottom = 10.dp, end = 16.dp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        SpecListItem(
+                leftItem = stringResource(baseClockSpeed_Label),
+                rightItem = cpu.baseClockSpeed.toString()
+        )
+        Divider(
+                Modifier.padding(bottom = 10.dp, end = 16.dp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        SpecListItem(
+                leftItem = stringResource(powerConsumption_Label),
+                rightItem = cpu.powerConsumption.toString()
+        )
+        Divider(
+                Modifier.padding(bottom = 10.dp, end = 16.dp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        SpecListItem(
+                leftItem = stringResource(architecture_Label),
+                rightItem = cpu.architecture
+        )
+        Divider(
+                Modifier.padding(bottom = 10.dp, end = 16.dp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        SpecListItem(leftItem = stringResource(socketType_Label), rightItem = cpu.socket)
+        Divider(
+                Modifier.padding(bottom = 10.dp, end = 16.dp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        SpecListItem(
+                leftItem = stringResource(integratedGraphics_Label),
+                rightItem = if (cpu.integratedGraphics) stringResource(yes_Label) else stringResource(no_Label)
+        )
+        Divider(
+                Modifier.padding(bottom = 10.dp, end = 16.dp),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        SpecListItem(
+                leftItem = stringResource(coolerIncluded_Label),
+                rightItem = if (cpu.fanIncluded) stringResource(yes_Label) else stringResource(no_Label)
+        )
+    }
+}
+
+@Preview
+@Composable
+fun CPUSpecsPreview() {
+    PCBuilderProjectTheme(darkTheme = true) {
+        Card(
+                modifier = Modifier
+                        .fillMaxWidth(0.9f)
+        ) {
+            Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
+                CPUSpecs(
+                        cpu = CPU(
+                                id = 1,
+                                brand = "AMD",
+                                series = "Ryzen 7",
+                                name = "7800X3D",
+                                price = 520.99f,
+                                coreNumber = 8,
+                                baseClockSpeed = 3.4f,
+                                powerConsumption = 125,
+                                architecture = "Zen 4",
+                                socket = "AM5",
+                                integratedGraphics = true,
+                                fanIncluded = false,
+                                imagePainter = painterResource(id = R.drawable.cpu)
+                        )
+                )
+            }
+        }
+    }
+}
