@@ -279,7 +279,8 @@ fun AccountScreen(
                                         scope = scope,
                                         snackbarHostState = snackbarHostState,
                                         snackbarMessage = snackbarMessage,
-                                        navController = navController
+                                        navController = navController,
+                                        loadingIconVisible = loadingIconOnButtonVisible
                                     )
                                 }
 
@@ -288,11 +289,11 @@ fun AccountScreen(
                                         popUpTo(id = navController.graph.findStartDestination().id)
                                         launchSingleTop = true
                                     }
+                            } else {
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    loadingIconOnButtonVisible.value = false
+                                }, 200)
                             }
-
-                            Handler(Looper.getMainLooper()).postDelayed({
-                                loadingIconOnButtonVisible.value = false
-                            }, 400)
                         },
                         modifier = Modifier
                             .padding(bottom = 16.dp)
@@ -470,10 +471,6 @@ private fun textFieldsAreEmpty(
     return boolReturn
 }
 
-/**
- * Searches the Database to see if a user with the specified Username and Password.
- *
- */
 private fun checkCredentials(
     username: String,
     password: String,
@@ -482,6 +479,7 @@ private fun checkCredentials(
     snackbarHostState: SnackbarHostState,
     snackbarMessage: MutableState<String>,
     navController: NavHostController?,
+    loadingIconVisible: MutableState<Boolean>,
     ngrokLink: String = GlobalData.ngrokServerLinkPrefix
             + GlobalData.ngrokServerLink
             + GlobalData.ngrokServerLinkSuffix
@@ -502,7 +500,7 @@ private fun checkCredentials(
                     val result = jsonObject.getString("ris")
 
                     if (result == "1") {
-//snackbarMessage.value = ctx.getString(correctCredentials_SnackbarMessage)
+                        //snackbarMessage.value = ctx.getString(correctCredentials_SnackbarMessage)
                         GlobalData.loggedInUsername = username
 
                         navController?.navigate(BottomBarScreen.AccountScreen.route) {
@@ -518,9 +516,13 @@ private fun checkCredentials(
                                 snackbarMessage.value
                             )
                         }
+
+                        loadingIconVisible.value = false
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
+
+                    loadingIconVisible.value = false
                 }
             },
             Response.ErrorListener { error ->
@@ -541,6 +543,8 @@ private fun checkCredentials(
                             snackbarMessage.value
                         )
                     }
+
+                    loadingIconVisible.value = false
                 }.start()
             }) {
             override fun getParams(): Map<String, String> {
