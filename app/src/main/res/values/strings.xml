@@ -46,7 +46,7 @@
 
     <string name="enterUsername_textFieldLabel">Enter Username</string>
     <string name="enterPassword_textFieldLabel">Enter Password</string>
-    <string name="login_cardHeader">Please login</string>
+    <string name="login_cardHeader">Login</string>
     <string name="rememberMe_checkBoxText">Remember me</string>
     <string name="login_buttonText">Login</string>
     <string name="forgottenPassword_textButtonText">FORGOTTEN PASSWORD</string>
@@ -56,11 +56,17 @@
     <string name="correctCredentials_SnackbarMessage">Correct credentials.</string>
     <string name="accountDoesntExists">The account doesn\'t exist.</string>
     <string name="anErrorOccurred_Message">An error occurred.</string>
-    <string name="serverError_Message">Couldn\'t reach the server. Set the link correctly.</string>
+    <string name="serverError_Message">Unable to reach the server.</string>
     <string name="offlineWarning_Message">You\'re offline. Check the connection.</string>
     <string name="welcomeUser_Text">"Welcome "</string>
     <string name="dontHaveAnAccount_Text">Don\'t have an account?</string>
     <string name="createOne_AccountTextButton">CREATE ONE</string>
     <string name="createAnAccount_Label">Create an account</string>
     <string name="save_TextButton">Save</string>
+    <string name="createAnAccount_cardHeader">Create an account</string>
+    <string name="alreadyHaveAnAccount_Text">Already have an account?</string>
+    <string name="create_buttonText">Create</string>
+    <string name="logIn_TextButton">LOG-IN</string>
+    <string name="accountCreatedCorrectly_Message">Account created correctly.</string>
+    <string name="usernameAlreadyExists_Message">Account with this username already exists.</string>
 </resources>

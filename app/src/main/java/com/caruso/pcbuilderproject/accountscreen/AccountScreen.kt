@@ -1,9 +1,7 @@
 package com.caruso.pcbuilderproject.accountscreen
 
-import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
@@ -25,19 +23,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.classes.GlobalData
+import com.caruso.pcbuilderproject.classes.ServerFunctions
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import org.json.JSONException
-import org.json.JSONObject
-import java.net.HttpURLConnection
-import java.net.URL
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,10 +44,6 @@ fun AccountScreen(
 
     var serverSettingDialogOpen by remember { mutableStateOf(false) }
     var serverLinkTextField by rememberSaveable { mutableStateOf(GlobalData.ngrokServerLink) }
-
-    val createAccountDialogOpen = remember { mutableStateOf(false) }
-
-
 
     Scaffold(
         modifier = Modifier
@@ -94,6 +80,10 @@ fun AccountScreen(
     ) { paddingValues ->
 
         if (GlobalData.loggedInUsername == null) {
+
+            val creatingAccount = remember {
+                mutableStateOf(false)
+            }
 
             var usernameTextLogIn by rememberSaveable(stateSaver = TextFieldValue.Saver) {
                 mutableStateOf(TextFieldValue(text = "", TextRange(0, 7)))
@@ -158,12 +148,16 @@ fun AccountScreen(
                         .fillMaxWidth(0.9f)
 
                 ) {
-
-                    Text(
-                        text = stringResource(login_cardHeader),
-                        fontSize = MaterialTheme.typography.headlineMedium.fontSize,
-                        modifier = Modifier.padding(16.dp)
-                    )
+                    Crossfade(targetState = creatingAccount) { creatingAccount ->
+                        Text(
+                            text = if (!creatingAccount.value)
+                                stringResource(login_cardHeader)
+                            else
+                                stringResource(createAnAccount_cardHeader),
+                            fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
 
                     OutlinedTextField(
                         value = usernameTextLogIn,
@@ -210,7 +204,6 @@ fun AccountScreen(
                                         passwordVisibleLogin = !passwordVisibleLogin
                                     },
                                 ) {
-
                                     Crossfade(targetState = passwordVisibleLogin) { passwordVisibleLogin ->
                                         Icon(
                                             imageVector = if (passwordVisibleLogin) {
@@ -238,86 +231,120 @@ fun AccountScreen(
                             .fillMaxWidth()
                     )
 
-                    Row(
-                        modifier = Modifier
-                            .padding(start = 16.dp, end = 16.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = stringResource(dontHaveAnAccount_Text))
-                        Box(
+                    Crossfade(targetState = creatingAccount.value) { creatingAccountTarget ->
+                        Row(
                             modifier = Modifier
+                                .padding(start = 16.dp, end = 16.dp)
                                 .fillMaxWidth(),
-                            contentAlignment = Alignment.CenterEnd
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            TextButton(onClick = {
-                                createAccountDialogOpen.value = true
-                            }) {
-                                Text(text = stringResource(createOne_AccountTextButton))
+                            Text(
+                                text = if (!creatingAccount.value)
+                                    stringResource(dontHaveAnAccount_Text)
+                                else
+                                    stringResource(alreadyHaveAnAccount_Text)
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                contentAlignment = Alignment.CenterEnd
+                            ) {
+                                TextButton(onClick = {
+                                    creatingAccount.value = !creatingAccount.value
+                                }) {
+                                    Text(
+                                        text = if (!creatingAccountTarget)
+                                            stringResource(createOne_AccountTextButton)
+                                        else
+                                            stringResource(logIn_TextButton)
+                                    )
+                                }
                             }
                         }
                     }
 
                     Spacer(Modifier.height(16.dp))
 
-                    Button(
-                        onClick = {
-                            loadingIconOnButtonVisible.value = true
+                    Crossfade(targetState = creatingAccount) { creatingAccount ->
 
-                            if (textFieldsAreEmpty(
-                                    username = usernameTextLogIn.text,
-                                    password = passwordTextLogIn.text,
-                                    usernameErrorLogIn = usernameErrorLogIn,
-                                    passwordErrorLogIn = passwordErrorLogIn
-                                )
-                            ) {
-                                if (snackbarHostState != null) {
-                                    checkCredentials(
-                                        username = usernameTextLogIn.text,
-                                        password = passwordTextLogIn.text,
-                                        ctx = context,
-                                        scope = scope,
-                                        snackbarHostState = snackbarHostState,
-                                        snackbarMessage = snackbarMessage,
-                                        navController = navController,
-                                        loadingIconVisible = loadingIconOnButtonVisible
-                                    )
-                                }
-
-                                if (GlobalData.loggedInUsername != null)
-                                    navController?.navigate(BottomBarScreen.AccountScreen.route) {
-                                        popUpTo(id = navController.graph.findStartDestination().id)
-                                        launchSingleTop = true
-                                    }
-                            } else {
-                                Handler(Looper.getMainLooper()).postDelayed({
-                                    loadingIconOnButtonVisible.value = false
-                                }, 200)
-                            }
-                        },
-                        modifier = Modifier
-                            .padding(bottom = 16.dp)
-                            .fillMaxWidth(0.8f)
-                            .align(Alignment.CenterHorizontally)
-                    ) {
-                        AnimatedVisibility(
-                            visible = loadingIconOnButtonVisible.value
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Box(
-                                modifier = Modifier.padding(end = 8.dp)
+                            Button(
+                                onClick = {
+                                    loadingIconOnButtonVisible.value = true
+
+                                    if (textFieldsAreEmpty(
+                                            username = usernameTextLogIn.text,
+                                            password = passwordTextLogIn.text,
+                                            usernameErrorLogIn = usernameErrorLogIn,
+                                            passwordErrorLogIn = passwordErrorLogIn
+                                        )
+                                    ) {
+                                        if (snackbarHostState != null) {
+                                            if (!creatingAccount.value) {
+                                                ServerFunctions.checkCredentials(
+                                                    username = usernameTextLogIn.text,
+                                                    password = passwordTextLogIn.text,
+                                                    context = context,
+                                                    scope = scope,
+                                                    snackbarHostState = snackbarHostState,
+                                                    snackbarMessage = snackbarMessage,
+                                                    navController = navController,
+                                                    loadingIconVisible = loadingIconOnButtonVisible
+                                                )
+                                            } else {
+                                                ServerFunctions.createAccount(
+                                                    username = usernameTextLogIn.text,
+                                                    password = passwordTextLogIn.text,
+                                                    context = context,
+                                                    scope = scope,
+                                                    snackbarHostState = snackbarHostState,
+                                                    snackbarMessage = snackbarMessage,
+                                                    creatingAccount = creatingAccount,
+                                                    loadingIconVisible = loadingIconOnButtonVisible
+                                                )
+                                            }
+                                        }
+
+                                        if (GlobalData.loggedInUsername != null)
+                                            navController?.navigate(BottomBarScreen.AccountScreen.route) {
+                                                popUpTo(id = navController.graph.findStartDestination().id)
+                                                launchSingleTop = true
+                                            }
+                                    } else {
+                                        Handler(Looper.getMainLooper()).postDelayed({
+                                            loadingIconOnButtonVisible.value = false
+                                        }, 200)
+                                    }
+                                },
+                                modifier = Modifier
+                                    .padding(bottom = 16.dp)
+                                    .fillMaxWidth(0.8f)
                             ) {
-                                CircularProgressIndicator(
-                                    color = MaterialTheme.colorScheme.onPrimary,
-                                    strokeWidth = 2.dp,
-                                    modifier = Modifier
-                                        .size(MaterialTheme.typography.labelLarge.fontSize.value.dp)
+                                AnimatedVisibility(
+                                    visible = loadingIconOnButtonVisible.value
+                                ) {
+                                    Box(
+                                        modifier = Modifier.padding(end = 8.dp)
+                                    ) {
+                                        CircularProgressIndicator(
+                                            color = MaterialTheme.colorScheme.onPrimary,
+                                            strokeWidth = 2.dp,
+                                            modifier = Modifier
+                                                .size(MaterialTheme.typography.labelLarge.fontSize.value.dp)
+                                        )
+                                    }
+                                }
+                                Text(
+                                    text = if (!creatingAccount.value)
+                                        stringResource(login_buttonText)
+                                    else
+                                        stringResource(create_buttonText)
                                 )
                             }
                         }
-
-                        Text(
-                            text = stringResource(login_buttonText)
-                        )
                     }
                 }
 
@@ -440,10 +467,6 @@ fun AccountScreen(
             }
         )
     }
-
-    if (createAccountDialogOpen.value) {
-        CreateAccountFullscreenDialog(createAccountDialogOpen = createAccountDialogOpen)
-    }
 }
 
 private fun textFieldsAreEmpty(
@@ -471,112 +494,6 @@ private fun textFieldsAreEmpty(
     return boolReturn
 }
 
-private fun checkCredentials(
-    username: String,
-    password: String,
-    ctx: Context,
-    scope: CoroutineScope,
-    snackbarHostState: SnackbarHostState,
-    snackbarMessage: MutableState<String>,
-    navController: NavHostController?,
-    loadingIconVisible: MutableState<Boolean>,
-    ngrokLink: String = GlobalData.ngrokServerLinkPrefix
-            + GlobalData.ngrokServerLink
-            + GlobalData.ngrokServerLinkSuffix
-) {
-    @Suppress("SpellCheckingInspection") val url =
-        "$ngrokLink/ControllaAccessoJson.php?Username=$username&Password=$password"
-
-
-    val queue = Volley.newRequestQueue(ctx)
-
-    val request: StringRequest =
-        object : StringRequest(
-            url,
-            Response.Listener { response ->
-                try {
-                    val jsonObject = JSONObject(response)
-
-                    val result = jsonObject.getString("ris")
-
-                    if (result == "1") {
-                        //snackbarMessage.value = ctx.getString(correctCredentials_SnackbarMessage)
-                        GlobalData.loggedInUsername = username
-
-                        navController?.navigate(BottomBarScreen.AccountScreen.route) {
-                            popUpTo(id = navController.graph.findStartDestination().id)
-                            launchSingleTop = true
-                        }
-                    } else {
-                        snackbarMessage.value = ctx.getString(accountDoesntExists)
-                        GlobalData.loggedInUsername = null // Shouldn't be needed, just to be safe
-
-                        scope.launch {
-                            snackbarHostState.showSnackbar(
-                                snackbarMessage.value
-                            )
-                        }
-
-                        loadingIconVisible.value = false
-                    }
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-
-                    loadingIconVisible.value = false
-                }
-            },
-            Response.ErrorListener { error ->
-                Log.e("tag", "error is " + error!!.message)
-
-                // Check if the error was caused by the phone being offline or
-                // if the server is inactive.
-
-                Thread {
-                    if (!isInternetReachable()) {
-                        snackbarMessage.value = ctx.getString(offlineWarning_Message)
-                    } else {
-                        snackbarMessage.value = ctx.getString(serverError_Message)
-                    }
-
-                    scope.launch {
-                        snackbarHostState.showSnackbar(
-                            snackbarMessage.value
-                        )
-                    }
-
-                    loadingIconVisible.value = false
-                }.start()
-            }) {
-            override fun getParams(): Map<String, String> {
-                val params: MutableMap<String, String> = HashMap()
-
-                params["Username"] = username
-                params["Password"] = password
-
-                return params
-            }
-        }
-
-    queue.add(request)
-}
-
-fun isInternetReachable(): Boolean {
-    try {
-// URL to a known source
-        val url = URL("https://www.google.com")
-
-// Open a connection to that source
-        val urlConnect: HttpURLConnection = url.openConnection() as HttpURLConnection
-
-// Trying to retrieve data from the source
-// If there is no connection, this will trigger an exception
-        @Suppress("UNUSED_VARIABLE") val objData: Any = urlConnect.content
-    } catch (e: java.lang.Exception) {
-        e.printStackTrace()
-        return false
-    }
-    return true
-}
 
 @Preview(showBackground = true)
 @Composable

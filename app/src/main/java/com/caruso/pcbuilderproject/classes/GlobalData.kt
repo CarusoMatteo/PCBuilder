@@ -10,8 +10,8 @@ abstract class GlobalData {
         var loggedInUsername: String? = null
 
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "ad69-93-40-210-133"
-        const val ngrokServerLinkSuffix = ".ngrok-free.app"
+        var ngrokServerLink = "2187-93-40-210-84"
+        const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         fun floatToStringChecker(
             number: Float,

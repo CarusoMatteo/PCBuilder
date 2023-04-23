@@ -58,10 +58,16 @@
     <string name="accountDoesntExists">L\'account non esiste.</string>
     <string name="anErrorOccurred_Message">Si è verificato un errore.</string>
     <string name="offlineWarning_Message">Sei offline. Controlla la connessione.</string>
-    <string name="serverError_Message">Impossibile raggiungere il server. Imposta il link corretto.</string>
+    <string name="serverError_Message">Impossibile raggiungere il server.</string>
     <string name="welcomeUser_Text">"Benvenuto "</string>
     <string name="dontHaveAnAccount_Text">Non hai un account?</string>
     <string name="createOne_AccountTextButton">CREANE UNO</string>
     <string name="createAnAccount_Label">Crea un account</string>
     <string name="save_TextButton">Salva</string>
+    <string name="createAnAccount_cardHeader">Crea un account</string>
+    <string name="alreadyHaveAnAccount_Text">Hai già un account?</string>
+    <string name="create_buttonText">Iscriviti</string>
+    <string name="logIn_TextButton">ACCEDI</string>
+    <string name="accountCreatedCorrectly_Message">Account creato correttamente.</string>
+    <string name="usernameAlreadyExists_Message">Esiste già un account con questo Nome Utente.</string>
 </resources>
