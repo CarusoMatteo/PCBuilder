@@ -22,9 +22,6 @@ fun CPUScoreScreen(
             .padding(paddingValues)
             .padding(bottom = 80.dp)//, start = 16.dp, end = 16.dp)
     ) {
-
-        Spacer(modifier = Modifier.height(10.dp))
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -76,7 +73,6 @@ fun CPUScoreScreen(
             )
 
             Spacer(modifier = Modifier.height(10.dp))
-
         }
     }
 }
