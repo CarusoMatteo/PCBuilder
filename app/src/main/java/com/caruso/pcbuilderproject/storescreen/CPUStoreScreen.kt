@@ -46,7 +46,7 @@ fun CPUScoreScreen(
                     socket = "AM5",
                     integratedGraphics = true,
                     fanIncluded = false,
-                    imagePainter = painterResource(id = R.drawable.cpu)
+                    imagePainter = painterResource(id = R.drawable.cpu_placeholder)
                 )
             )
 
@@ -68,7 +68,7 @@ fun CPUScoreScreen(
                     socket = "LGA1700",
                     integratedGraphics = true,
                     fanIncluded = false,
-                    imagePainter = painterResource(id = R.drawable.intel_cpu)
+                    imagePainter = painterResource(id = R.drawable.cpu_placeholder)
                 )
             )
 

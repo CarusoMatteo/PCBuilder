@@ -260,7 +260,7 @@ fun MotherboardSpecsPreview() {
                                 brand = "MSI",
                                 name = "MPG Z790 CARBON",
                                 price = 350.72f,
-                                imagePainter = painterResource(id = R.drawable.cpu),
+                                imagePainter = painterResource(id = R.drawable.cpu_placeholder),
                                 socket = "LGA1700",
                                 chipset = "Z790",
                                 formFactor = "ATX",

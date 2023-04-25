@@ -18,14 +18,14 @@ fun MotherboardStoreScreen(
 ) {
     Column(
         modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(bottom = 80.dp)//, start = 16.dp, end = 16.dp)
+            .fillMaxSize()
+            .padding(paddingValues)
+            .padding(bottom = 80.dp)//, start = 16.dp, end = 16.dp)
     ) {
         Column(
             modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(10.dp))
@@ -38,7 +38,7 @@ fun MotherboardStoreScreen(
                     brand = "MSI",
                     name = "MPG Z790 CARBON",
                     price = 350.72f,
-                    imagePainter = painterResource(id = R.drawable.cpu),
+                    imagePainter = painterResource(id = R.drawable.motherboard_placeholder),
                     socket = "LGA1700",
                     chipset = "Z790",
                     formFactor = "ATX",
@@ -72,7 +72,7 @@ fun MotherboardStoreScreen(
                     brand = "MSI",
                     name = "MPG X670E CARBON WIFI",
                     price = 480.00f,
-                    imagePainter = painterResource(id = R.drawable.cpu),
+                    imagePainter = painterResource(id = R.drawable.motherboard_placeholder),
                     socket = "AM5",
                     chipset = "X670E",
                     formFactor = "ATX",

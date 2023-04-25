@@ -3,9 +3,9 @@ package com.caruso.pcbuilderproject.classes
 import androidx.compose.ui.graphics.painter.Painter
 
 open class Product(
-        open var id: Int,
-        open var brand: String,
-        open var name: String,
-        open var price: Float,
-        open var imagePainter: Painter
+    open val id: Int,
+    open val brand: String,
+    open val name: String,
+    open val price: Float,
+    open val imagePainter: Painter
 )

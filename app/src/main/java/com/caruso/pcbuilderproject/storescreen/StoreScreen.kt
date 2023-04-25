@@ -29,7 +29,6 @@ fun StoreScreen(
 ) {
     val context = LocalContext.current
 
-    val productTypeSelected by remember { mutableStateOf(2) }
     /*
     If 1: CPU,
     If 2: Motherboard,
@@ -72,7 +71,7 @@ fun StoreScreen(
         }
     ) { paddingValues ->
 
-        when (productTypeSelected) {
+        when (GlobalData.getStoreProductTypeSelected()) {
             1 -> CPUScoreScreen(paddingValues = paddingValues)
             2 -> MotherboardStoreScreen(paddingValues = paddingValues)
 

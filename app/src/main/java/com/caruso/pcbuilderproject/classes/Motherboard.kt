@@ -2,71 +2,42 @@ package com.caruso.pcbuilderproject.classes
 
 import androidx.compose.ui.graphics.painter.Painter
 
-/*
-id = 1,
-brand = "MSI",
-name = "MPG Z790 CARBON",
-price = 350.72f,
-imagePainter = painterResource(id = R.drawable.cpu),
-socket = "LGA1700",
-chipset = "Z790",
-formFactor = "ATX",
-memoryType = "DDR4",
-memorySlotNumber = 4,
-maxEthernetSpeed = 2.5f,
-wifiVersion = null,
-bluetoothVersion = null,
-pcie_x16_5_slotNumber = 1,
-pcie_x16_4_slotNumber = 1,
-pcie_x8_4_slotNumber = 0,
-pcie_x4_4_slotNumber = 0,
-pcie_x1_4_slotNumber = 0,
-m2_nvme_5_slotNumber = 1,
-m2_nvme_4_slotNumber = 4,
-m2_sata_slotNumber = 0,
-sata_portNumber = 6,
-esp_cpuPowerHeaderNumber = 2,
-usb_a_2_headerNumber = 2,
-usb_a_32_gen1_headerNumber = 1,
-usb_c_32_gen2_headerNumber = 1
- */
-
 class Motherboard(
-        override var id: Int,
-        override var brand: String,
-        override var name: String,
-        override var price: Float,
-        override var imagePainter: Painter,
+    override var id: Int,               // id = 1
+    override var brand: String,         // brand = "MSI"
+    override var name: String,          // name = "MPG Z790 CARBON"
+    override var price: Float,          // price = 350.72f
+    override var imagePainter: Painter, // imagePainter = painterResource(id = R.drawable.motherboard_placeholder)
 
-        // Specific
-        var socket: String,
-        var chipset: String,
-        var formFactor: String,
+    // Specific
+    var socket: String,                 // socket = "LGA1700"
+    var chipset: String,                // chipset = "Z790"
+    var formFactor: String,             // formFactor = "ATX"
 
-        // RAM Memory
-        var memoryType: String,
-        var memorySlotNumber: Int,
+    // RAM Memory
+    var memoryType: String,             // memoryType = "DDR4"
+    var memorySlotNumber: Int,          // memorySlotNumber = 4
 
-        // Internet and Bluetooth
-        var maxEthernetSpeed: Float,
-        var wifiVersion: String?,
-        var bluetoothVersion: String?,
+    // Internet and Bluetooth
+    var maxEthernetSpeed: Float,        // maxEthernetSpeed = 2.5f
+    var wifiVersion: String?,           // wifiVersion = null
+    var bluetoothVersion: String?,      // bluetoothVersion = null,
 
-        // PCIE slot connectivity
-        var pcie_x16_5_slotNumber: Int,
-        var pcie_x16_4_slotNumber: Int,
-        var pcie_x8_4_slotNumber: Int,
-        var pcie_x4_4_slotNumber: Int,
-        var pcie_x1_4_slotNumber: Int,
+    // PCIE slot connectivity
+    var pcie_x16_5_slotNumber: Int,     // pcie_x16_5_slotNumber = 1
+    var pcie_x16_4_slotNumber: Int,     // pcie_x16_4_slotNumber = 1
+    var pcie_x8_4_slotNumber: Int,      // pcie_x8_4_slotNumber = 0
+    var pcie_x4_4_slotNumber: Int,      // pcie_x4_4_slotNumber = 0
+    var pcie_x1_4_slotNumber: Int,      // pcie_x1_4_slotNumber = 0
 
-        // Storage connectivity
-        var m2_nvme_5_slotNumber: Int,
-        var m2_nvme_4_slotNumber: Int,
-        var m2_sata_slotNumber: Int,
-        var sata_portNumber: Int,
+    // Storage connectivity
+    var m2_nvme_5_slotNumber: Int,      // m2_nvme_5_slotNumber = 1
+    var m2_nvme_4_slotNumber: Int,      // m2_nvme_4_slotNumber = 4
+    var m2_sata_slotNumber: Int,        // m2_sata_slotNumber = 0
+    var sata_portNumber: Int,           // sata_portNumber = 6
 
-        // USB internal headers
-        var usb_a_2_headerNumber: Int,
-        var usb_a_32_gen1_headerNumber: Int,
-        var usb_c_32_gen2_headerNumber: Int
+    // USB internal headers
+    var usb_a_2_headerNumber: Int,      // usb_a_2_headerNumber = 2
+    var usb_a_32_gen1_headerNumber: Int,// usb_a_32_gen1_headerNumber = 1
+    var usb_c_32_gen2_headerNumber: Int // usb_c_32_gen2_headerNumber = 1
 ) : Product(id, brand, name, price, imagePainter)

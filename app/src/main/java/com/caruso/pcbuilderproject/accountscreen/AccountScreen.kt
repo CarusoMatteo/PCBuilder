@@ -148,15 +148,20 @@ fun AccountScreen(
                         .fillMaxWidth(0.9f)
 
                 ) {
-                    Crossfade(targetState = creatingAccount) { creatingAccount ->
-                        Text(
-                            text = if (!creatingAccount.value)
-                                stringResource(login_cardHeader)
-                            else
-                                stringResource(createAnAccount_cardHeader),
-                            fontSize = MaterialTheme.typography.headlineMedium.fontSize,
-                            modifier = Modifier.padding(16.dp)
-                        )
+                    Crossfade(targetState = creatingAccount) { creatingAccountTarget ->
+                        if (creatingAccountTarget.value) {
+                            Text(
+                                text = stringResource(createAnAccount_cardHeader),
+                                fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        } else {
+                            Text(
+                                text = stringResource(login_cardHeader),
+                                fontSize = MaterialTheme.typography.headlineMedium.fontSize,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        }
                     }
 
                     OutlinedTextField(
@@ -238,12 +243,16 @@ fun AccountScreen(
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = if (!creatingAccount.value)
-                                    stringResource(dontHaveAnAccount_Text)
-                                else
+                            if (creatingAccountTarget) {
+                                Text(
                                     stringResource(alreadyHaveAnAccount_Text)
-                            )
+                                )
+                            } else {
+                                Text(
+                                    stringResource(dontHaveAnAccount_Text)
+                                )
+                            }
+
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth(),
@@ -253,10 +262,10 @@ fun AccountScreen(
                                     creatingAccount.value = !creatingAccount.value
                                 }) {
                                     Text(
-                                        text = if (!creatingAccountTarget)
-                                            stringResource(createOne_AccountTextButton)
-                                        else
+                                        text = if (creatingAccountTarget)
                                             stringResource(logIn_TextButton)
+                                        else
+                                            stringResource(createOne_AccountTextButton)
                                     )
                                 }
                             }
@@ -265,7 +274,7 @@ fun AccountScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    Crossfade(targetState = creatingAccount) { creatingAccount ->
+                    Crossfade(targetState = creatingAccount) { creatingAccountTarget ->
 
                         Box(
                             modifier = Modifier.fillMaxWidth(),
@@ -323,26 +332,30 @@ fun AccountScreen(
                                     .padding(bottom = 16.dp)
                                     .fillMaxWidth(0.8f)
                             ) {
-                                AnimatedVisibility(
-                                    visible = loadingIconOnButtonVisible.value
-                                ) {
-                                    Box(
-                                        modifier = Modifier.padding(end = 8.dp)
+
+                                Row {
+                                    AnimatedVisibility(
+                                        visible = loadingIconOnButtonVisible.value
                                     ) {
                                         CircularProgressIndicator(
                                             color = MaterialTheme.colorScheme.onPrimary,
                                             strokeWidth = 2.dp,
                                             modifier = Modifier
                                                 .size(MaterialTheme.typography.labelLarge.fontSize.value.dp)
+                                                .padding(end = 8.dp)
+                                        )
+                                    }
+
+                                    if (creatingAccountTarget.value) {
+                                        Text(
+                                            text = stringResource(create_buttonText)
+                                        )
+                                    } else {
+                                        Text(
+                                            text = stringResource(login_buttonText)
                                         )
                                     }
                                 }
-                                Text(
-                                    text = if (!creatingAccount.value)
-                                        stringResource(login_buttonText)
-                                    else
-                                        stringResource(create_buttonText)
-                                )
                             }
                         }
                     }

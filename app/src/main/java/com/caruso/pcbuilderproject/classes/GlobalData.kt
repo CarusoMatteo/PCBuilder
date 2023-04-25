@@ -1,6 +1,9 @@
 package com.caruso.pcbuilderproject.classes
 
 import android.content.*
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 
 abstract class GlobalData {
     companion object {
@@ -9,9 +12,29 @@ abstract class GlobalData {
         // Contains the Username of the user currently logged-in, otherwise is null
         var loggedInUsername: String? = null
 
+        // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
         var ngrokServerLink = "2187-93-40-210-84"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
+
+        // Contains the product type currently selected in the store
+        private var storeProductTypeSelected: Int = 1
+
+        fun getStoreProductTypeSelected(): Int {
+            return storeProductTypeSelected
+        }
+
+        fun changeStoreProductTypeSelected(
+            newValue: Int,
+            navController: NavHostController,
+        ) {
+            storeProductTypeSelected = newValue
+
+            navController.navigate(BottomBarScreen.StoreScreen.route) {
+                popUpTo(id = navController.graph.findStartDestination().id)
+                launchSingleTop = true
+            }
+        }
 
         fun floatToStringChecker(
             number: Float,

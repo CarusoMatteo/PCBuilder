@@ -152,7 +152,7 @@ fun CPUProductCardPreview() {
                         socket = "AM5",
                         integratedGraphics = true,
                         fanIncluded = false,
-                        imagePainter = painterResource(id = R.drawable.cpu)
+                        imagePainter = painterResource(id = R.drawable.cpu_placeholder)
                 )
         )
     }
