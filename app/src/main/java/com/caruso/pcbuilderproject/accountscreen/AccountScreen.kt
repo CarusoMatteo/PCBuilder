@@ -274,92 +274,95 @@ fun AccountScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    Crossfade(targetState = creatingAccount) { creatingAccountTarget ->
 
-                        Box(
-                            modifier = Modifier.fillMaxWidth(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Button(
-                                onClick = {
-                                    loadingIconOnButtonVisible.value = true
+                    Box(
+                        modifier = Modifier.fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Button(
+                            onClick = {
+                                loadingIconOnButtonVisible.value = true
 
-                                    if (textFieldsAreEmpty(
-                                            username = usernameTextLogIn.text,
-                                            password = passwordTextLogIn.text,
-                                            usernameErrorLogIn = usernameErrorLogIn,
-                                            passwordErrorLogIn = passwordErrorLogIn
-                                        )
-                                    ) {
-                                        if (snackbarHostState != null) {
-                                            if (!creatingAccount.value) {
-                                                ServerFunctions.checkCredentials(
-                                                    username = usernameTextLogIn.text,
-                                                    password = passwordTextLogIn.text,
-                                                    context = context,
-                                                    scope = scope,
-                                                    snackbarHostState = snackbarHostState,
-                                                    snackbarMessage = snackbarMessage,
-                                                    navController = navController,
-                                                    loadingIconVisible = loadingIconOnButtonVisible
-                                                )
-                                            } else {
-                                                ServerFunctions.createAccount(
-                                                    username = usernameTextLogIn.text,
-                                                    password = passwordTextLogIn.text,
-                                                    context = context,
-                                                    scope = scope,
-                                                    snackbarHostState = snackbarHostState,
-                                                    snackbarMessage = snackbarMessage,
-                                                    creatingAccount = creatingAccount,
-                                                    loadingIconVisible = loadingIconOnButtonVisible
-                                                )
-                                            }
+                                if (textFieldsAreEmpty(
+                                        username = usernameTextLogIn.text,
+                                        password = passwordTextLogIn.text,
+                                        usernameErrorLogIn = usernameErrorLogIn,
+                                        passwordErrorLogIn = passwordErrorLogIn
+                                    )
+                                ) {
+                                    if (snackbarHostState != null) {
+                                        if (!creatingAccount.value) {
+                                            ServerFunctions.checkCredentials(
+                                                username = usernameTextLogIn.text,
+                                                password = passwordTextLogIn.text,
+                                                context = context,
+                                                scope = scope,
+                                                snackbarHostState = snackbarHostState,
+                                                snackbarMessage = snackbarMessage,
+                                                navController = navController,
+                                                loadingIconVisible = loadingIconOnButtonVisible
+                                            )
+                                        } else {
+                                            ServerFunctions.createAccount(
+                                                username = usernameTextLogIn.text,
+                                                password = passwordTextLogIn.text,
+                                                context = context,
+                                                scope = scope,
+                                                snackbarHostState = snackbarHostState,
+                                                snackbarMessage = snackbarMessage,
+                                                creatingAccount = creatingAccount,
+                                                loadingIconVisible = loadingIconOnButtonVisible
+                                            )
                                         }
-
-                                        if (GlobalData.loggedInUsername != null)
-                                            navController?.navigate(BottomBarScreen.AccountScreen.route) {
-                                                popUpTo(id = navController.graph.findStartDestination().id)
-                                                launchSingleTop = true
-                                            }
-                                    } else {
-                                        Handler(Looper.getMainLooper()).postDelayed({
-                                            loadingIconOnButtonVisible.value = false
-                                        }, 200)
                                     }
-                                },
-                                modifier = Modifier
-                                    .padding(bottom = 16.dp)
-                                    .fillMaxWidth(0.8f)
+
+                                    if (GlobalData.loggedInUsername != null)
+                                        navController?.navigate(BottomBarScreen.AccountScreen.route) {
+                                            popUpTo(id = navController.graph.findStartDestination().id)
+                                            launchSingleTop = true
+                                        }
+                                } else {
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        loadingIconOnButtonVisible.value = false
+                                    }, 200)
+                                }
+                            },
+                            modifier = Modifier
+                                .padding(bottom = 16.dp)
+                                .fillMaxWidth(0.8f)
+                        ) {
+                            AnimatedVisibility(
+                                visible = loadingIconOnButtonVisible.value
                             ) {
+                                Box(
+                                    modifier = Modifier.padding(end = 8.dp)
+                                ) {
+                                    CircularProgressIndicator(
+                                        color = MaterialTheme.colorScheme.onPrimary,
+                                        strokeWidth = 2.dp,
+                                        modifier = Modifier
+                                            .size(MaterialTheme.typography.labelLarge.fontSize.value.dp)
+                                    )
+                                }
+                            }
 
-                                Row {
-                                    AnimatedVisibility(
-                                        visible = loadingIconOnButtonVisible.value
-                                    ) {
-                                        CircularProgressIndicator(
-                                            color = MaterialTheme.colorScheme.onPrimary,
-                                            strokeWidth = 2.dp,
-                                            modifier = Modifier
-                                                .size(MaterialTheme.typography.labelLarge.fontSize.value.dp)
-                                                .padding(end = 8.dp)
-                                        )
-                                    }
-
-                                    if (creatingAccountTarget.value) {
-                                        Text(
-                                            text = stringResource(create_buttonText)
-                                        )
-                                    } else {
-                                        Text(
-                                            text = stringResource(login_buttonText)
-                                        )
-                                    }
+                            Crossfade(
+                                targetState = creatingAccount
+                            ) { creatingAccountTarget ->
+                                if (creatingAccountTarget.value) {
+                                    Text(
+                                        text = stringResource(create_buttonText)
+                                    )
+                                } else {
+                                    Text(
+                                        text = stringResource(login_buttonText)
+                                    )
                                 }
                             }
                         }
                     }
                 }
+
 
                 Spacer(modifier = Modifier.height(10.dp))
 

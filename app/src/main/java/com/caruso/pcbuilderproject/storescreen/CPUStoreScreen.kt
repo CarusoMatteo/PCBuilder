@@ -2,6 +2,8 @@ package com.caruso.pcbuilderproject.storescreen
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.FilterList
@@ -10,17 +12,55 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
+import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.classes.CPU
+import com.caruso.pcbuilderproject.classes.Filter
+import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CPUScoreScreen(
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    navController: NavHostController? = null,
 ) {
+    val filtersCurrentlyActive = mutableListOf<Filter>()
+
+    filtersCurrentlyActive.add(
+        Filter(
+            name = "Brand",
+            value = "AMD"
+        )
+    )
+
+    filtersCurrentlyActive.add(
+        Filter(
+            name = "Series",
+            value = "Ryzen 7"
+        )
+    )
+
+    filtersCurrentlyActive.add(
+        Filter(
+            name = "Core number",
+            value = "8"
+        )
+    )
+
+    filtersCurrentlyActive.add(
+        Filter(
+            name = "Base clock speed",
+            value = "3" + stringResource(decimalPoint) + "4"
+        )
+    )
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -53,62 +93,39 @@ fun CPUScoreScreen(
                         )
                     }
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .horizontalScroll(rememberScrollState())
+                    LazyRow(
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
-                        FilterChip(
-                            selected = true,
-                            label = { Text(text = "Brand: AMD") },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Check,
-                                    contentDescription = null
-                                )
-                            },
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier.padding(end = 5.dp)
-                        )
+                        items(items = filtersCurrentlyActive, itemContent = { item ->
+                            FilterChip(
+                                selected = true,
+                                label = {
+                                    Text(
+                                        text = item.name + ": " + item.value
+                                    )
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Default.Check,
+                                        contentDescription = null
+                                    )
+                                },
+                                onClick = {
+                                    filtersCurrentlyActive.remove(
+                                        Filter(
+                                            name = item.name,
+                                            value = item.value
+                                        )
+                                    )
 
-                        FilterChip(
-                            selected = true,
-                            label = { Text(text = "Series: Ryzen 7") },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Check,
-                                    contentDescription = null
-                                )
-                            },
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier.padding(end = 5.dp)
-                        )
-
-                        FilterChip(
-                            selected = true,
-                            label = { Text(text = "Core number: 8") },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Check,
-                                    contentDescription = null
-                                )
-                            },
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier.padding(end = 5.dp)
-                        )
-
-                        FilterChip(
-                            selected = true,
-                            label = { Text(text = "Base clock speed: 3.4") },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Default.Check,
-                                    contentDescription = null
-                                )
-                            },
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier.padding(end = 5.dp)
-                        )
+                                    navController?.navigate(BottomBarScreen.StoreScreen.route) {
+                                        popUpTo(id = navController.graph.findStartDestination().id)
+                                        launchSingleTop = true
+                                    }
+                                },
+                                modifier = Modifier.padding(end = 5.dp)
+                            )
+                        })
                     }
                 }
             }

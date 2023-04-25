@@ -62,7 +62,11 @@ fun StoreScreen(
     ) { paddingValues ->
 
         when (storeProductTypeSelected) {
-            1 -> CPUScoreScreen(paddingValues = paddingValues)
+            1 -> CPUScoreScreen(
+                paddingValues = paddingValues,
+                navController = navController
+            )
+
             2 -> MotherboardStoreScreen(paddingValues = paddingValues)
 
             else -> {
