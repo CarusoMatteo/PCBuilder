@@ -69,4 +69,5 @@
     <string name="logIn_TextButton">LOG-IN</string>
     <string name="accountCreatedCorrectly_Message">Account created correctly.</string>
     <string name="usernameAlreadyExists_Message">Account with this username already exists.</string>
+    <string name="incorrect_store_index_Error">INCORRECT STORE INDEX</string>
 </resources>

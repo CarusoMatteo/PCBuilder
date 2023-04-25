@@ -26,6 +26,7 @@ import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.classes.GlobalData
 import com.caruso.pcbuilderproject.classes.ServerFunctions
+import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
@@ -42,8 +43,7 @@ fun AccountScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackbarMessage = remember { (mutableStateOf("")) }
 
-    var serverSettingDialogOpen by remember { mutableStateOf(false) }
-    var serverLinkTextField by rememberSaveable { mutableStateOf(GlobalData.ngrokServerLink) }
+    val serverSettingDialogOpen = remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier
@@ -67,7 +67,7 @@ fun AccountScreen(
                 },
                 actions = {
                     IconButton(
-                        onClick = { serverSettingDialogOpen = true }
+                        onClick = { serverSettingDialogOpen.value = true }
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Settings,
@@ -413,71 +413,9 @@ fun AccountScreen(
         }
     }
 
-    if (serverSettingDialogOpen) {
-        AlertDialog(
-            onDismissRequest = {
-                serverSettingDialogOpen = false
-                serverLinkTextField = GlobalData.ngrokServerLink
-            },
-            title = { Text(text = stringResource(serverSettings_AlertTitle)) },
-            text = {
-                Column(Modifier.fillMaxWidth()) {
-                    Text(text = stringResource(currentLink_Text) + " " + GlobalData.ngrokServerLink)
-                    Spacer(modifier = Modifier.height(10.dp))
-                    FilledTonalButton(
-                        onClick = {
-                            GlobalData.copyToClipboard(
-                                context = context,
-                                text = GlobalData.ngrokServerLinkPrefix +
-                                        GlobalData.ngrokServerLink +
-                                        GlobalData.ngrokServerLinkSuffix
-                            )
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.ContentCopy,
-                            contentDescription = "Copy link",
-                            modifier = Modifier.padding(end = 8.dp)
-                        )
-                        Text(
-                            text = stringResource(copyCurrentServerLink_Button)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(15.dp))
-                    Divider(color = MaterialTheme.colorScheme.onSurface)
-                    Spacer(modifier = Modifier.height(15.dp))
-
-                    Spacer(modifier = Modifier.height(6.dp))
-                    OutlinedTextField(
-                        value = serverLinkTextField,
-                        onValueChange = {
-                            serverLinkTextField = it
-                        },
-                        label = { Text(text = stringResource(insertTheNgrokServerLink_AlertMessage)) },
-                        singleLine = true
-                    )
-                }
-            },
-            confirmButton = {
-                TextButton(
-                    enabled = serverLinkTextField.isNotEmpty(),
-                    onClick = {
-                        serverSettingDialogOpen = false
-                        GlobalData.ngrokServerLink = serverLinkTextField
-                    }) {
-                    Text(text = stringResource(confirm_Button))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = {
-                    serverSettingDialogOpen = false
-                    serverLinkTextField = GlobalData.ngrokServerLink
-                }) {
-                    Text(text = stringResource(cancel_Button))
-                }
-            }
+    if (serverSettingDialogOpen.value) {
+        ServerSettingsDialog(
+            serverSettingDialogOpen = serverSettingDialogOpen
         )
     }
 }

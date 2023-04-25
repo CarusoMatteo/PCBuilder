@@ -18,6 +18,12 @@ abstract class GlobalData {
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
+        // If 1: CPU,
+        // If 2: Motherboard,
+        // If 3: RAM,
+        // If 4: GPU,
+        // If 5: Storage,
+        // If 6: PSU
         private var storeProductTypeSelected: Int = 1
 
         fun getStoreProductTypeSelected(): Int {

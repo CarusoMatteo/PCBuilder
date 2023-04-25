@@ -1,16 +1,17 @@
 package com.caruso.pcbuilderproject.storescreen
 
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.classes.Motherboard
+import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @Composable
 fun MotherboardStoreScreen(
@@ -98,6 +99,20 @@ fun MotherboardStoreScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
+        }
+    }
+}
+
+@Preview
+@Composable
+fun MotherboardStoreScreenPreview() {
+    PCBuilderProjectTheme(darkTheme = true) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            StoreScreen(storeProductTypeSelected = 2)
         }
     }
 }

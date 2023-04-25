@@ -12,8 +12,8 @@ class CPU(
     // Specific
     val series: String,                 // series = "Ryzen 7"
     val coreNumber: Int,                // coreNumber = 8
-    val baseClockSpeed: Float,          // baseClockSpeed = 3.4f [W],
-    val powerConsumption: Int,          // powerConsumption = 125 [GHz]
+    val baseClockSpeed: Float,          // baseClockSpeed = 3.4f [GHz],
+    val powerConsumption: Int,          // powerConsumption = 125 [W]
     val architecture: String,           // architecture = "Zen 4"
     val socket: String,                 // socket = "AM5"
     val integratedGraphics: Boolean,    // integratedGraphics = true
