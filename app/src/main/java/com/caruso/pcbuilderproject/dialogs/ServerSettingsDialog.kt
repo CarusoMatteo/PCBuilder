@@ -1,7 +1,10 @@
 package com.caruso.pcbuilderproject.dialogs
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AssignmentTurnedIn
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -20,6 +23,7 @@ fun ServerSettingsDialog(
 ) {
     val context = LocalContext.current
     var serverLinkTextField by rememberSaveable { mutableStateOf(GlobalData.ngrokServerLink) }
+    val copyToClipboardClicked = remember { mutableStateOf(false) }
 
     AlertDialog(
         onDismissRequest = {
@@ -39,14 +43,28 @@ fun ServerSettingsDialog(
                                     GlobalData.ngrokServerLink +
                                     GlobalData.ngrokServerLinkSuffix
                         )
+                        copyToClipboardClicked.value = true
                     },
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.ContentCopy,
-                        contentDescription = "Copy link",
-                        modifier = Modifier.padding(end = 8.dp)
-                    )
+                    Crossfade(
+                        targetState = copyToClipboardClicked,
+                        animationSpec = tween(300)
+                    ) { copyToClipboardClickedTrigger ->
+                        if (!copyToClipboardClickedTrigger.value)
+                            Icon(
+                                imageVector = Icons.Filled.ContentCopy,
+                                contentDescription = "Copy link",
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                        else {
+                            Icon(
+                                imageVector = Icons.Filled.AssignmentTurnedIn,
+                                contentDescription = "Copy link",
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                        }
+                    }
                     Text(
                         text = stringResource(R.string.copyCurrentServerLink_Button)
                     )
