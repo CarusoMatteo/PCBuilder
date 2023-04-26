@@ -1,5 +1,6 @@
 package com.caruso.pcbuilderproject.storescreen
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -9,13 +10,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
+import com.caruso.pcbuilderproject.classes.CPU
 import com.caruso.pcbuilderproject.classes.GlobalData
+import com.caruso.pcbuilderproject.dialogs.CPUFilterDialog
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
@@ -27,8 +32,9 @@ fun StoreScreen(
     navController: NavHostController? = null,
     storeProductTypeSelected: Int = GlobalData.getStoreProductTypeSelected()
 ) {
-
     val serverSettingDialogOpen = remember { mutableStateOf(false) }
+    val filterCardHidden = remember { mutableStateOf(false) }
+    val filterDialogOpen = remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     Scaffold(
@@ -48,6 +54,21 @@ fun StoreScreen(
                     )
                 },
                 actions = {
+                    AnimatedVisibility(
+                        visible = filterCardHidden.value,
+                        enter = fadeIn(),
+                        exit = fadeOut()
+                    ) {
+                        IconButton(
+                            onClick = { filterDialogOpen.value = true }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.FilterList,
+                                contentDescription = "Open filter list"
+                            )
+                        }
+                    }
+
                     IconButton(
                         onClick = { serverSettingDialogOpen.value = true }
                     ) {
@@ -64,7 +85,41 @@ fun StoreScreen(
         when (storeProductTypeSelected) {
             1 -> CPUScoreScreen(
                 paddingValues = paddingValues,
-                navController = navController
+                filterCardHidden = filterCardHidden,
+                filterDialogOpen = filterDialogOpen,
+                navController = navController,
+                cpus = mutableListOf(
+                    CPU(
+                        id = 1,
+                        brand = "AMD",
+                        series = "Ryzen 7",
+                        name = "7800X3D",
+                        price = 520.99f,
+                        coreNumber = 8,
+                        baseClockSpeed = 4.2f,
+                        powerConsumption = 120,
+                        architecture = "Zen 4",
+                        socket = "AM5",
+                        integratedGraphics = true,
+                        fanIncluded = false,
+                        imagePainter = painterResource(id = R.drawable.cpu_placeholder)
+                    ),
+                    CPU(
+                        id = 2,
+                        brand = "Intel",
+                        series = "Core i7",
+                        name = "13700K",
+                        price = 500.99f,
+                        coreNumber = 16,
+                        baseClockSpeed = 3.4f,
+                        powerConsumption = 125,
+                        architecture = "Rocket Lake",
+                        socket = "LGA1700",
+                        integratedGraphics = true,
+                        fanIncluded = false,
+                        imagePainter = painterResource(id = R.drawable.cpu_placeholder)
+                    )
+                )
             )
 
             2 -> MotherboardStoreScreen(paddingValues = paddingValues)
@@ -91,6 +146,14 @@ fun StoreScreen(
         ServerSettingsDialog(
             serverSettingDialogOpen = serverSettingDialogOpen
         )
+    }
+
+    if (filterDialogOpen.value) {
+        when (storeProductTypeSelected) {
+            1 -> CPUFilterDialog(
+                filterDialogOpen = filterDialogOpen
+            )
+        }
     }
 }
 

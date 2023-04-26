@@ -26,94 +26,94 @@ import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CPUProductCard(
-        modifier: Modifier = Modifier,
-        product: CPU,
-        nameSize: TextStyle = MaterialTheme.typography.titleMedium,
+    modifier: Modifier = Modifier,
+    product: CPU,
+    nameSize: TextStyle = MaterialTheme.typography.titleMedium,
 ) {
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
-            targetValue =
-            if (expandedState) 180f
-            else 0f
+        targetValue =
+        if (expandedState) 180f
+        else 0f
     )
 
     Card(
-            modifier = Modifier
-                    .animateContentSize(
-                            animationSpec = tween(
-                                    durationMillis = 300,
-                                    easing = LinearOutSlowInEasing
-                            )
-                    )
-                    then modifier,
+        modifier = Modifier
+            .animateContentSize(
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = LinearOutSlowInEasing
+                )
+            )
+                then modifier,
 
-            onClick = {
-                expandedState = !expandedState
-            }
+        onClick = {
+            expandedState = !expandedState
+        }
     ) {
         Column(
-                modifier = Modifier.padding(start = 16.dp, end = 0.dp)
+            modifier = Modifier.padding(start = 16.dp, end = 0.dp)
         ) {
             Row(
-                    verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                        painter = product.imagePainter,
-                        contentDescription = "CPU Image",
-                        modifier = Modifier.size(100.dp)
+                    painter = product.imagePainter,
+                    contentDescription = "CPU Image",
+                    modifier = Modifier.size(100.dp)
                 )
 
                 Column(
-                        modifier = Modifier
-                                .padding(all = 20.dp),
-                        verticalArrangement = Arrangement.SpaceAround
+                    modifier = Modifier
+                        .padding(all = 20.dp),
+                    verticalArrangement = Arrangement.SpaceAround
                 ) {
                     Row(
-                            verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Box(modifier = Modifier.fillMaxWidth(0.8f)) {
                             Text(
-                                    text = product.brand + " " + product.series + " " + product.name,
-                                    style = nameSize,
-                                    fontWeight = FontWeight.Bold,
-                                    maxLines = 2
+                                text = product.brand + " " + product.series + " " + product.name,
+                                style = nameSize,
+                                fontWeight = FontWeight.Bold,
+                                maxLines = 2
                             )
                         }
                         Spacer(modifier = Modifier.width(10.dp))
                         Box(
-                                modifier = Modifier.fillMaxWidth(),
-                                contentAlignment = Alignment.CenterEnd,
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.CenterEnd,
                         ) {
                             IconButton(
-                                    onClick = { expandedState = !expandedState },
-                                    modifier = Modifier.rotate(rotationState)
+                                onClick = { expandedState = !expandedState },
+                                modifier = Modifier.rotate(rotationState)
                             ) {
                                 Icon(
-                                        imageVector = Icons.Default.ExpandMore,
-                                        contentDescription = if (!expandedState) "View more" else "View less",
+                                    imageVector = Icons.Default.ExpandMore,
+                                    contentDescription = if (!expandedState) "View more" else "View less",
                                 )
                             }
                         }
                     }
 
                     Row(
-                            verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                                text = floatToStringChecker(
-                                        number = product.price,
-                                        currency = stringResource(R.string.currency).toCharArray()[0],
-                                        decimalPoint = stringResource(id = R.string.decimalPoint).toCharArray()[0]
-                                ),
-                                style = MaterialTheme.typography.bodyMedium
+                            text = floatToStringChecker(
+                                number = product.price,
+                                currency = stringResource(R.string.currency).toCharArray()[0],
+                                decimalPoint = stringResource(id = R.string.decimalPoint).toCharArray()[0]
+                            ),
+                            style = MaterialTheme.typography.bodyMedium
                         )
 
                         Box(
-                                modifier = Modifier.fillMaxWidth(),
-                                contentAlignment = Alignment.BottomEnd
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.BottomEnd
                         ) {
                             Button(
-                                    onClick = { /*TODO*/ },
+                                onClick = { /*TODO*/ },
                             ) {
                                 Text(text = stringResource(R.string.add_Button))
                             }
@@ -122,10 +122,9 @@ fun CPUProductCard(
                 }
             }
 
-
             if (expandedState) {
                 CPUSpecs(
-                        cpu = product
+                    cpu = product
                 )
             }
         }
@@ -137,23 +136,23 @@ fun CPUProductCard(
 fun CPUProductCardPreview() {
     PCBuilderProjectTheme(darkTheme = false) {
         CPUProductCard(
-                modifier = Modifier.fillMaxWidth(0.9f),
-                nameSize = MaterialTheme.typography.titleMedium,
-                product = CPU(
-                        id = 1,
-                        brand = "AMD",
-                        series = "Ryzen 7",
-                        name = "7800X3D",
-                        price = 520.99f,
-                        coreNumber = 8,
-                        baseClockSpeed = 3.4f,
-                        powerConsumption = 125,
-                        architecture = "Zen 4",
-                        socket = "AM5",
-                        integratedGraphics = true,
-                        fanIncluded = false,
-                        imagePainter = painterResource(id = R.drawable.cpu_placeholder)
-                )
+            modifier = Modifier.fillMaxWidth(0.9f),
+            nameSize = MaterialTheme.typography.titleMedium,
+            product = CPU(
+                id = 1,
+                brand = "AMD",
+                series = "Ryzen 7",
+                name = "7800X3D",
+                price = 520.99f,
+                coreNumber = 8,
+                baseClockSpeed = 3.4f,
+                powerConsumption = 125,
+                architecture = "Zen 4",
+                socket = "AM5",
+                integratedGraphics = true,
+                fanIncluded = false,
+                imagePainter = painterResource(id = R.drawable.cpu_placeholder)
+            )
         )
     }
 }

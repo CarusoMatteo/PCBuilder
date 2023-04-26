@@ -7,6 +7,7 @@ import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 
 abstract class GlobalData {
     companion object {
+
         const val dynamicColorActive = false
 
         // Contains the Username of the user currently logged-in, otherwise is null
