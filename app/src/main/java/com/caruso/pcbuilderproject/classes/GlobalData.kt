@@ -26,6 +26,27 @@ abstract class GlobalData {
         // If 6: PSU
         private var storeProductTypeSelected: Int = 1
 
+        // List of all possible filters
+        val filterList: MutableList<Filter> = mutableListOf(
+            FilterList.brandAMD,
+            FilterList.brandIntel,
+            FilterList.seriesRyzen3,
+            FilterList.seriesRyzen5,
+            FilterList.seriesRyzen7,
+            FilterList.seriesRyzen9,
+            FilterList.seriesCoreI3,
+            FilterList.seriesCoreI5,
+            FilterList.seriesCoreI7,
+            FilterList.seriesCoreI9,
+            FilterList.architectureZen3,
+            FilterList.architectureZen4,
+            FilterList.architectureAlderLake,
+            FilterList.architectureRocketLake,
+            FilterList.socketAM4,
+            FilterList.socketAM5,
+            FilterList.socketLGA1700
+        )
+
         fun getStoreProductTypeSelected(): Int {
             return storeProductTypeSelected
         }

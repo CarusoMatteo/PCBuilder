@@ -2,7 +2,7 @@ package com.caruso.pcbuilderproject.classes
 
 import androidx.compose.ui.graphics.painter.Painter
 
-class Motherboard(
+data class Motherboard(
     override var id: Int,               // id = 1
     override var brand: String,         // brand = "MSI"
     override var name: String,          // name = "MPG Z790 CARBON"

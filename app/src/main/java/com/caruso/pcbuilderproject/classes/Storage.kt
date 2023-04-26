@@ -2,7 +2,7 @@ package com.caruso.pcbuilderproject.classes
 
 import androidx.compose.ui.graphics.painter.Painter
 
-class Storage(
+data class Storage(
     override val id: Int,               // id = 1
     override val brand: String,         // brand = "Samsung"
     override val name: String,          // name = "980 Pro"

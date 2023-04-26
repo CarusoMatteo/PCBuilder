@@ -2,7 +2,7 @@ package com.caruso.pcbuilderproject.classes
 
 import androidx.compose.ui.graphics.painter.Painter
 
-class RAM(
+data class RAM(
     override val id: Int,               // id = 1
     override val brand: String,         // brand = "Corsair"
     override val name: String,          // name = "Vengeance RGB"

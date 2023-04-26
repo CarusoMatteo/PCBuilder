@@ -71,4 +71,6 @@
     <string name="accountCreatedCorrectly_Message">Account creato correttamente.</string>
     <string name="usernameAlreadyExists_Message">Esiste già un account con questo Nome Utente.</string>
     <string name="incorrect_store_index_Error">INDICE NEGOZIO INCORRETTO</string>
+    <string name="brand_Text">Marca</string>
+    <string name="series_Text">Serie</string>
 </resources>

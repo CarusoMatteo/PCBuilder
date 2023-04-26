@@ -70,4 +70,6 @@
     <string name="accountCreatedCorrectly_Message">Account created correctly.</string>
     <string name="usernameAlreadyExists_Message">Account with this username already exists.</string>
     <string name="incorrect_store_index_Error">INCORRECT STORE INDEX</string>
+    <string name="brand_Text">Brand</string>
+    <string name="series_Text">Series</string>
 </resources>
