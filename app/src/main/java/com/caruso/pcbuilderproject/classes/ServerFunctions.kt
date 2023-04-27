@@ -56,7 +56,6 @@ abstract class ServerFunctions {
                     "Username=" + username +
                     "&Password=" + password
 
-
             val queue = Volley.newRequestQueue(context)
 
             val request: StringRequest =
@@ -66,11 +65,14 @@ abstract class ServerFunctions {
                         try {
                             val jsonObject = JSONObject(response)
 
-                            val result = jsonObject.getString("ris")
+                            val accountExists = jsonObject.getString("ris") == "1"
 
-                            if (result == "1") {
-                                //snackbarMessage.value = ctx.getString(correctCredentials_SnackbarMessage)
-                                GlobalData.loggedInUsername = username
+                            if (accountExists) {
+                                GlobalData.loggedInUser = User(
+                                    username = username,
+                                    password = password
+                                    // TODO: Add the currently selected products here
+                                )
 
                                 navController?.navigate(BottomBarScreen.AccountScreen.route) {
                                     popUpTo(id = navController.graph.findStartDestination().id)
@@ -78,8 +80,8 @@ abstract class ServerFunctions {
                                 }
                             } else {
                                 snackbarMessage.value = context.getString(accountDoesntExists)
-                                GlobalData.loggedInUsername =
-                                    null // Shouldn't be needed, just to be safe
+                                GlobalData.loggedInUser =
+                                    User() // Shouldn't be needed, just to be safe
 
                                 scope.launch {
                                     snackbarHostState.showSnackbar(

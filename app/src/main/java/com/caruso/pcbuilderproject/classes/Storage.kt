@@ -12,4 +12,4 @@ data class Storage(
     // Specific
     val storageType: String,            // storageType = "NVMe M.2 5.0"
     val storageSize: Int,               // storageSize = 2000
-) : Product(id, brand, name, price, imagePainter)
+) : Component(id, brand, name, price, imagePainter)

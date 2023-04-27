@@ -14,4 +14,4 @@ data class RAM(
     val memorySpeed: Int,               // memorySpeed = 6000 [MT/s]
     val totalSize: Int,                 // totalSize = 32 [GB]
     val numberOfSticks: Int,            // numberOfSticks = 2
-) : Product(id, brand, name, price, imagePainter)
+) : Component(id, brand, name, price, imagePainter)

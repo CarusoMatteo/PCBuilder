@@ -23,4 +23,4 @@ data class GPU(
     val _12VHPWR_headerNumber: Int,     // _12VoltHighPower_headerNumber = 1
     val _8Pin_headerNumber: Int,        // _8Pin_headerNumber = 0
     val _6Pin_headerNumber: Int         // _6Pin_headerNumber = 0
-) : Product(id, brand, name, price, imagePainter)
+) : Component(id, brand, name, price, imagePainter)

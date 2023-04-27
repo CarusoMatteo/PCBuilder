@@ -17,4 +17,4 @@ data class PSU(
     val ESPConnectorNumber: Int,        // ESPConnectorNumber = 3
     val PCIeConnectorNumber: Int,       // PCIeConnectorNumber = 4
     val SATAConnectorNumber: Int,       // SATAConnectorNumber = 14
-) : Product(id, brand, name, price, imagePainter)
+) : Component(id, brand, name, price, imagePainter)

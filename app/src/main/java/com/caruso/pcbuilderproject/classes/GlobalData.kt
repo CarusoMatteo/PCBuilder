@@ -11,11 +11,11 @@ abstract class GlobalData {
         const val dynamicColorActive = false
 
         // Contains the Username of the user currently logged-in, otherwise is null
-        var loggedInUsername: String? = null
+        var loggedInUser: User = User()
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "2187-93-40-210-84"
+        var ngrokServerLink = "2437-93-40-210-196"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store

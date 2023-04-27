@@ -49,7 +49,7 @@ fun StoreScreen(
                 navigationIcon = {
                     Icon(
                         imageVector = BottomBarScreen.StoreScreen.filledIcon,
-                        contentDescription = "Menu",
+                        contentDescription = null,
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp)
                     )
                 },

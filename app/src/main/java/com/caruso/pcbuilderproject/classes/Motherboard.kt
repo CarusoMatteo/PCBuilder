@@ -40,4 +40,4 @@ data class Motherboard(
     var usb_a_2_headerNumber: Int,      // usb_a_2_headerNumber = 2
     var usb_a_32_gen1_headerNumber: Int,// usb_a_32_gen1_headerNumber = 1
     var usb_c_32_gen2_headerNumber: Int // usb_c_32_gen2_headerNumber = 1
-) : Product(id, brand, name, price, imagePainter)
+) : Component(id, brand, name, price, imagePainter)

@@ -35,93 +35,87 @@ fun CPUScoreScreen(
             .padding(paddingValues)
             .padding(bottom = 80.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        val lazyColumnScrollState = rememberLazyListState()
+
+        LazyColumn(
+            state = lazyColumnScrollState,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()
         ) {
+            item {
+                Spacer(modifier = Modifier.height(10.dp))
 
-            val lazyColumnScrollState = rememberLazyListState()
-
-            LazyColumn(
-                state = lazyColumnScrollState
-            ) {
-                item {
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    ElevatedCard(
+                ElevatedCard(
+                    modifier = Modifier
+                        .fillMaxWidth(0.9f)
+                ) {
+                    Row(
                         modifier = Modifier
-                            .fillMaxWidth(0.9f)
+                            .fillMaxWidth()
                     ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
+                        IconButton(
+                            onClick = {
+                                filterDialogOpen.value = true
+                            }
                         ) {
-                            IconButton(
-                                onClick = {
-                                    filterDialogOpen.value = true
+                            Icon(
+                                imageVector = Icons.Default.FilterList,
+                                contentDescription = "Open filter list"
+                            )
+                        }
+
+                        LazyRow(
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            items(items = GlobalData.filterList, itemContent = { item ->
+                                if (item.component == "CPU" && item.active) {
+                                    FilterChip(
+                                        selected = true,
+                                        label = {
+                                            Text(
+                                                text = item.value
+                                            )
+                                        },
+                                        leadingIcon = {
+                                            Icon(
+                                                imageVector = Icons.Default.Check,
+                                                contentDescription = null
+                                            )
+                                        },
+                                        onClick = {
+                                            item.active = false
+
+                                            navController?.navigate(BottomBarScreen.StoreScreen.route) {
+                                                popUpTo(id = navController.graph.findStartDestination().id)
+                                                launchSingleTop = true
+                                            }
+                                        },
+                                        modifier = Modifier.padding(end = 5.dp)
+                                    )
                                 }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.FilterList,
-                                    contentDescription = "Open filter list"
-                                )
-                            }
-
-                            LazyRow(
-                                modifier = Modifier.fillMaxWidth(),
-                            ) {
-                                items(items = GlobalData.filterList, itemContent = { item ->
-                                    if (item.component == "CPU" && item.active) {
-                                        FilterChip(
-                                            selected = true,
-                                            label = {
-                                                Text(
-                                                    text = item.name + ": " + item.value
-                                                )
-                                            },
-                                            leadingIcon = {
-                                                Icon(
-                                                    imageVector = Icons.Default.Check,
-                                                    contentDescription = null
-                                                )
-                                            },
-                                            onClick = {
-                                                item.active = false
-
-                                                navController?.navigate(BottomBarScreen.StoreScreen.route) {
-                                                    popUpTo(id = navController.graph.findStartDestination().id)
-                                                    launchSingleTop = true
-                                                }
-                                            },
-                                            modifier = Modifier.padding(end = 5.dp)
-                                        )
-                                    }
-                                })
-                            }
+                            })
                         }
                     }
                 }
-
-                item {
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
-
-                items(items = cpus) { item ->
-                    CPUProductCard(
-                        modifier = Modifier.fillMaxWidth(0.9f),
-                        nameSize = MaterialTheme.typography.titleMedium,
-                        product = item
-                    )
-
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
             }
 
-            val firstVisibleItemIndex by remember { derivedStateOf { lazyColumnScrollState.firstVisibleItemIndex } }
-            filterCardHidden.value = firstVisibleItemIndex > 0
+            item {
+                Spacer(modifier = Modifier.height(10.dp))
+            }
 
+            items(items = cpus) { item ->
+                CPUProductCard(
+                    modifier = Modifier.fillMaxWidth(0.9f),
+                    nameSize = MaterialTheme.typography.titleMedium,
+                    product = item
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+            }
         }
+
+        val firstVisibleItemIndex by remember { derivedStateOf { lazyColumnScrollState.firstVisibleItemIndex } }
+        filterCardHidden.value = firstVisibleItemIndex > 0
     }
 
     if (filterDialogOpen.value) {

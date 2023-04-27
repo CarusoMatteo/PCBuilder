@@ -18,4 +18,4 @@ class CPU(
     val socket: String,                 // socket = "AM5"
     val integratedGraphics: Boolean,    // integratedGraphics = true
     val fanIncluded: Boolean,           // fanIncluded = false
-) : Product(id, brand, name, price, imagePainter)
+) : Component(id, brand, name, price, imagePainter)
