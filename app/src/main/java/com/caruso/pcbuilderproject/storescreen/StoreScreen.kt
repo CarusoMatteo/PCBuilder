@@ -88,6 +88,7 @@ fun StoreScreen(
                 filterCardHidden = filterCardHidden,
                 filterDialogOpen = filterDialogOpen,
                 navController = navController,
+                snackbarHostState = snackbarHostState,
                 cpus = mutableListOf(
                     CPU(
                         id = 1,
@@ -122,7 +123,7 @@ fun StoreScreen(
                 )
             )
 
-            2 -> MotherboardStoreScreen(paddingValues = paddingValues)
+            2 -> GenericStoreScreen(paddingValues = paddingValues)
 
             else -> {
                 Box(

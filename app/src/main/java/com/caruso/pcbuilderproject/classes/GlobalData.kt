@@ -1,6 +1,7 @@
 package com.caruso.pcbuilderproject.classes
 
 import android.content.*
+import android.util.Log
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
@@ -15,7 +16,7 @@ abstract class GlobalData {
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "2437-93-40-210-196"
+        var ngrokServerLink = "4128-93-40-210-148"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -58,6 +59,11 @@ abstract class GlobalData {
         ) {
             storeProductTypeSelected = newValue
 
+            Log.d(
+                "Go_to_StoreScreen",
+                "Attempting to go to StoreScreen with storeProductTypeSelected = $storeProductTypeSelected."
+            )
+
             navController.navigate(BottomBarScreen.StoreScreen.route) {
                 popUpTo(id = navController.graph.findStartDestination().id)
                 launchSingleTop = true
@@ -95,6 +101,34 @@ abstract class GlobalData {
                 context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("Server link", text)
             clipboardManager.setPrimaryClip(clip)
+        }
+
+        fun login(
+            username: String,
+            cpu: CPU? = null,
+            motherboard: Motherboard? = null,
+            ram: RAM? = null,
+            gpu: GPU? = null,
+            storage: Storage? = null,
+            psu: PSU? = null
+        ) {
+            loggedInUser.username = username
+            loggedInUser.cpuSelected = cpu
+            loggedInUser.motherboardSelected = motherboard
+            loggedInUser.ramSelected = ram
+            loggedInUser.gpuSelected = gpu
+            loggedInUser.storageSelected = storage
+            loggedInUser.psuSelected = psu
+        }
+
+        fun logout() {
+            loggedInUser.username = null
+            loggedInUser.cpuSelected = null
+            loggedInUser.motherboardSelected = null
+            loggedInUser.ramSelected = null
+            loggedInUser.gpuSelected = null
+            loggedInUser.storageSelected = null
+            loggedInUser.psuSelected = null
         }
     }
 }

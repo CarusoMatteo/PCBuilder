@@ -73,4 +73,8 @@
     <string name="brand_Text">Brand</string>
     <string name="series_Text">Series</string>
     <string name="copiedLink_Button">Copied link!</string>
+    <string name="cpu_Text">CPU</string>
+    <string name="empty_Text">Empty</string>
+    <string name="remove_Button">Remove</string>
+    <string name="please_login_first_Message">Please login first.</string>
 </resources>

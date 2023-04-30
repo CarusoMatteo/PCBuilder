@@ -67,11 +67,19 @@ abstract class ServerFunctions {
 
                             val accountExists = jsonObject.getString("ris") == "1"
 
+                            Log.d(
+                                "Check Credentials",
+                                "A response to the Check Credentials call was received. It's: $accountExists."
+                            )
+
                             if (accountExists) {
-                                GlobalData.loggedInUser = User(
+                                Log.d(
+                                    "Check Credentials",
+                                    "The account exists."
+                                )
+
+                                GlobalData.login(
                                     username = username,
-                                    password = password
-                                    // TODO: Add the currently selected products here
                                 )
 
                                 navController?.navigate(BottomBarScreen.AccountScreen.route) {
@@ -79,9 +87,13 @@ abstract class ServerFunctions {
                                     launchSingleTop = true
                                 }
                             } else {
+                                Log.d(
+                                    "Check Credentials",
+                                    "The account doesn't exist."
+                                )
+
                                 snackbarMessage.value = context.getString(accountDoesntExists)
-                                GlobalData.loggedInUser =
-                                    User() // Shouldn't be needed, just to be safe
+                                GlobalData.logout()
 
                                 scope.launch {
                                     snackbarHostState.showSnackbar(

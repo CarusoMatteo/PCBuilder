@@ -10,6 +10,17 @@ data class User(
     var storageSelected: Storage? = null,
     var psuSelected: PSU? = null,
 ) {
+    fun clear() {
+        username = null
+        password = null
+        cpuSelected = null
+        motherboardSelected = null
+        ramSelected = null
+        gpuSelected = null
+        storageSelected = null
+        psuSelected = null
+    }
+
     override fun toString(): String {
         return username.toString()
     }

@@ -11,24 +11,32 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.classes.CPU
 import com.caruso.pcbuilderproject.classes.GlobalData.Companion.floatToStringChecker
+import com.caruso.pcbuilderproject.classes.GlobalData.Companion.loggedInUser
+import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.specslist.CPUSpecs
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CPUProductCard(
     modifier: Modifier = Modifier,
-    product: CPU,
+    cpu: CPU,
     nameSize: TextStyle = MaterialTheme.typography.titleMedium,
+    navController: NavHostController? = null,
+    snackbarHostState: SnackbarHostState? = null
 ) {
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
@@ -36,6 +44,9 @@ fun CPUProductCard(
         if (expandedState) 180f
         else 0f
     )
+    var snackbarMessage by remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     Card(
         modifier = Modifier
@@ -58,7 +69,7 @@ fun CPUProductCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = product.imagePainter,
+                    painter = cpu.imagePainter,
                     contentDescription = "CPU Image",
                     modifier = Modifier.size(100.dp)
                 )
@@ -73,7 +84,7 @@ fun CPUProductCard(
                     ) {
                         Box(modifier = Modifier.fillMaxWidth(0.8f)) {
                             Text(
-                                text = product.brand + " " + product.series + " " + product.name,
+                                text = cpu.brand + " " + cpu.series + " " + cpu.name,
                                 style = nameSize,
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 2
@@ -101,7 +112,7 @@ fun CPUProductCard(
                     ) {
                         Text(
                             text = floatToStringChecker(
-                                number = product.price,
+                                number = cpu.price,
                                 currency = stringResource(R.string.currency).toCharArray()[0],
                                 decimalPoint = stringResource(id = R.string.decimalPoint).toCharArray()[0]
                             ),
@@ -113,7 +124,27 @@ fun CPUProductCard(
                             contentAlignment = Alignment.BottomEnd
                         ) {
                             Button(
-                                onClick = { /*TODO*/ },
+                                onClick = {
+                                    if (loggedInUser.username != null) {
+                                        loggedInUser.cpuSelected = cpu
+
+                                        /*TODO: Edit the database as well as the local user*/
+
+                                        navController?.navigate(BottomBarScreen.PartsListScreen.route) {
+                                            popUpTo(id = navController.graph.findStartDestination().id)
+                                            launchSingleTop = true
+                                        }
+                                    } else {
+                                        snackbarMessage =
+                                            context.getString(R.string.please_login_first_Message)
+
+                                        scope.launch {
+                                            snackbarHostState?.showSnackbar(
+                                                snackbarMessage
+                                            )
+                                        }
+                                    }
+                                },
                             ) {
                                 Text(text = stringResource(R.string.add_Button))
                             }
@@ -124,7 +155,7 @@ fun CPUProductCard(
 
             if (expandedState) {
                 CPUSpecs(
-                    cpu = product
+                    cpu = cpu
                 )
             }
         }
@@ -134,11 +165,11 @@ fun CPUProductCard(
 @Preview
 @Composable
 fun CPUProductCardPreview() {
-    PCBuilderProjectTheme(darkTheme = false) {
+    PCBuilderProjectTheme(darkTheme = true) {
         CPUProductCard(
             modifier = Modifier.fillMaxWidth(0.9f),
             nameSize = MaterialTheme.typography.titleMedium,
-            product = CPU(
+            cpu = CPU(
                 id = 1,
                 brand = "AMD",
                 series = "Ryzen 7",

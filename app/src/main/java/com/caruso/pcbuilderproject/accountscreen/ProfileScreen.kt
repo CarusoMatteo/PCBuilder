@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.classes.GlobalData
-import com.caruso.pcbuilderproject.classes.User
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import kotlinx.coroutines.CoroutineScope
@@ -46,7 +45,7 @@ fun ProfileScreen(
             color = MaterialTheme.colorScheme.onBackground
         )
         Button(onClick = {
-            GlobalData.loggedInUser = User()
+            GlobalData.logout()
 
             navController?.navigate(BottomBarScreen.AccountScreen.route) {
                 popUpTo(id = navController.graph.findStartDestination().id)

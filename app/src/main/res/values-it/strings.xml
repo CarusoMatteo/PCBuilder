@@ -74,4 +74,8 @@
     <string name="brand_Text">Marca</string>
     <string name="series_Text">Serie</string>
     <string name="copiedLink_Button">Link copiato!</string>
+    <string name="cpu_Text">CPU</string>
+    <string name="empty_Text">Nessuno</string>
+    <string name="remove_Button">Rimuovi</string>
+    <string name="please_login_first_Message">Effettua prima l\'accesso.</string>
 </resources>

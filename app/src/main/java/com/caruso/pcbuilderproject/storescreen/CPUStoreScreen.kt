@@ -27,6 +27,7 @@ fun CPUScoreScreen(
     filterCardHidden: MutableState<Boolean>,
     filterDialogOpen: MutableState<Boolean>,
     navController: NavHostController? = null,
+    snackbarHostState: SnackbarHostState? = null,
     cpus: MutableList<CPU>
 ) {
     Column(
@@ -107,7 +108,9 @@ fun CPUScoreScreen(
                 CPUProductCard(
                     modifier = Modifier.fillMaxWidth(0.9f),
                     nameSize = MaterialTheme.typography.titleMedium,
-                    product = item
+                    cpu = item,
+                    navController = navController,
+                    snackbarHostState = snackbarHostState
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))

@@ -14,7 +14,7 @@ import com.caruso.pcbuilderproject.classes.Motherboard
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @Composable
-fun MotherboardStoreScreen(
+fun GenericStoreScreen(
     paddingValues: PaddingValues
 ) {
     Column(
@@ -31,10 +31,10 @@ fun MotherboardStoreScreen(
         ) {
             Spacer(modifier = Modifier.height(10.dp))
 
-            MotherboardProductCard(
+            GenericProductCard(
                 modifier = Modifier.fillMaxWidth(0.9f),
                 nameSize = MaterialTheme.typography.titleMedium,
-                product = Motherboard(
+                component = Motherboard(
                     id = 1,
                     brand = "MSI",
                     name = "MPG Z790 CARBON",
@@ -65,10 +65,10 @@ fun MotherboardStoreScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            MotherboardProductCard(
+            GenericProductCard(
                 modifier = Modifier.fillMaxWidth(0.9f),
                 nameSize = MaterialTheme.typography.titleMedium,
-                product = Motherboard(
+                component = Motherboard(
                     id = 2,
                     brand = "MSI",
                     name = "MPG X670E CARBON WIFI",
@@ -98,7 +98,6 @@ fun MotherboardStoreScreen(
             )
 
             Spacer(modifier = Modifier.height(10.dp))
-
         }
     }
 }
