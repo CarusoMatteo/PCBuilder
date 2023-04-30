@@ -91,7 +91,8 @@ fun ComponentProductCard(
                                     component.brand + " " + component.name,
                                 style = nameSize,
                                 fontWeight = FontWeight.Bold,
-                                maxLines = 2
+                                maxLines = 2,
+                                modifier = Modifier.padding(bottom = 5.dp)
                             )
                         }
                         Spacer(modifier = Modifier.width(10.dp))

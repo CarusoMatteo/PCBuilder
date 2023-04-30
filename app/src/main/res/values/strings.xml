@@ -77,9 +77,9 @@
     <string name="empty_Text">Empty</string>
     <string name="remove_Button">Remove</string>
     <string name="please_login_first_Message">Please login first.</string>
-    <string name="motherboard_Text">Motherboard</string>
+    <string name="motherboard_Text" translatable="false">Motherboard</string>
     <string name="ram_Text" translatable="false">RAM</string>
     <string name="gpu_Text" translatable="false">GPU</string>
-    <string name="storage_Text">Storage</string>
+    <string name="storage_Text" translatable="false">Storage</string>
     <string name="psu_Text" translatable="false">PSU</string>
 </resources>

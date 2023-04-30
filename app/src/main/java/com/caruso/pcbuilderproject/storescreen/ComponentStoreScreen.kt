@@ -27,7 +27,8 @@ fun ComponentStoreScreen(
     filterDialogOpen: MutableState<Boolean>,
     navController: NavHostController? = null,
     snackbarHostState: SnackbarHostState? = null,
-    components: MutableList<Component>
+    components: MutableList<Component>,
+    componentsType: String
 ) {
     Column(
         modifier = Modifier
@@ -68,7 +69,7 @@ fun ComponentStoreScreen(
                             modifier = Modifier.fillMaxWidth(),
                         ) {
                             items(items = GlobalData.filterList, itemContent = { item ->
-                                if (item.component == "CPU" && item.active) {
+                                if (item.component == componentsType && item.active) {
                                     FilterChip(
                                         selected = true,
                                         label = {

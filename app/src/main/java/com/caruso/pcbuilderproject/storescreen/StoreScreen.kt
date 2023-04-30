@@ -120,7 +120,8 @@ fun StoreScreen(
                             fanIncluded = false,
                             imagePainter = painterResource(id = R.drawable.cpu_placeholder)
                         )
-                    )
+                    ),
+                    componentsType = stringResource(cpu_Text)
                 )
             }
 
@@ -186,7 +187,8 @@ fun StoreScreen(
                             usb_a_32_gen1_headerNumber = 1,
                             usb_c_32_gen2_headerNumber = 1
                         )
-                    )
+                    ),
+                    componentsType = stringResource(motherboard_Text)
                 )
             }
 

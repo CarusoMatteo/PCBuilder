@@ -49,6 +49,21 @@ abstract class GlobalData {
             FilterList.socketLGA1700
         )
 
+        val incompatibilityList: MutableList<Incompatibility> = mutableListOf(
+            IncompatibilityList.wrongSocket
+        )
+
+        fun getActiveIncompatibilities(): MutableList<Incompatibility> {
+            val activeIncompatibilities: MutableList<Incompatibility> = mutableListOf()
+
+            incompatibilityList.forEach {
+                if (it.active)
+                    activeIncompatibilities.add(it)
+            }
+
+            return activeIncompatibilities
+        }
+
         fun getStoreProductTypeSelected(): Int {
             return storeProductTypeSelected
         }
