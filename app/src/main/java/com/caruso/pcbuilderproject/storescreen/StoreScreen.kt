@@ -18,8 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.classes.CPU
-import com.caruso.pcbuilderproject.classes.GlobalData
+import com.caruso.pcbuilderproject.classes.*
 import com.caruso.pcbuilderproject.dialogs.CPUFilterDialog
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
@@ -83,47 +82,113 @@ fun StoreScreen(
     ) { paddingValues ->
 
         when (storeProductTypeSelected) {
-            1 -> CPUScoreScreen(
-                paddingValues = paddingValues,
-                filterCardHidden = filterCardHidden,
-                filterDialogOpen = filterDialogOpen,
-                navController = navController,
-                snackbarHostState = snackbarHostState,
-                cpus = mutableListOf(
-                    CPU(
-                        id = 1,
-                        brand = "AMD",
-                        series = "Ryzen 7",
-                        name = "7800X3D",
-                        price = 520.99f,
-                        coreNumber = 8,
-                        baseClockSpeed = 4.2f,
-                        powerConsumption = 120,
-                        architecture = "Zen 4",
-                        socket = "AM5",
-                        integratedGraphics = true,
-                        fanIncluded = false,
-                        imagePainter = painterResource(id = R.drawable.cpu_placeholder)
-                    ),
-                    CPU(
-                        id = 2,
-                        brand = "Intel",
-                        series = "Core i7",
-                        name = "13700K",
-                        price = 500.99f,
-                        coreNumber = 16,
-                        baseClockSpeed = 3.4f,
-                        powerConsumption = 125,
-                        architecture = "Rocket Lake",
-                        socket = "LGA1700",
-                        integratedGraphics = true,
-                        fanIncluded = false,
-                        imagePainter = painterResource(id = R.drawable.cpu_placeholder)
+            1 -> {
+                ComponentStoreScreen(
+                    paddingValues = paddingValues,
+                    filterCardHidden = filterCardHidden,
+                    filterDialogOpen = filterDialogOpen,
+                    navController = navController,
+                    snackbarHostState = snackbarHostState,
+                    components = mutableListOf(
+                        CPU(
+                            id = 1,
+                            brand = "AMD",
+                            series = "Ryzen 7",
+                            name = "7800X3D",
+                            price = 520.99f,
+                            coreNumber = 8,
+                            baseClockSpeed = 4.2f,
+                            powerConsumption = 120,
+                            architecture = "Zen 4",
+                            socket = "AM5",
+                            integratedGraphics = true,
+                            fanIncluded = false,
+                            imagePainter = painterResource(id = R.drawable.cpu_placeholder)
+                        ),
+                        CPU(
+                            id = 2,
+                            brand = "Intel",
+                            series = "Core i7",
+                            name = "13700K",
+                            price = 500.99f,
+                            coreNumber = 16,
+                            baseClockSpeed = 3.4f,
+                            powerConsumption = 125,
+                            architecture = "Rocket Lake",
+                            socket = "LGA1700",
+                            integratedGraphics = true,
+                            fanIncluded = false,
+                            imagePainter = painterResource(id = R.drawable.cpu_placeholder)
+                        )
                     )
                 )
-            )
+            }
 
-            2 -> GenericStoreScreen(paddingValues = paddingValues)
+            2 -> {
+                ComponentStoreScreen(
+                    paddingValues = paddingValues,
+                    filterCardHidden = filterCardHidden,
+                    filterDialogOpen = filterDialogOpen,
+                    navController = navController,
+                    snackbarHostState = snackbarHostState,
+                    components = mutableListOf(
+                        Motherboard(
+                            id = 1,
+                            brand = "MSI",
+                            name = "MPG Z790 CARBON",
+                            price = 350.72f,
+                            imagePainter = painterResource(id = R.drawable.motherboard_placeholder),
+                            socket = "LGA1700",
+                            chipset = "Z790",
+                            formFactor = "ATX",
+                            memoryType = "DDR4",
+                            memorySlotNumber = 4,
+                            maxEthernetSpeed = 2.5f,
+                            wifiVersion = null,
+                            bluetoothVersion = null,
+                            pcie_x16_5_slotNumber = 1,
+                            pcie_x16_4_slotNumber = 1,
+                            pcie_x8_4_slotNumber = 0,
+                            pcie_x4_4_slotNumber = 0,
+                            pcie_x1_4_slotNumber = 0,
+                            m2_nvme_5_slotNumber = 1,
+                            m2_nvme_4_slotNumber = 4,
+                            m2_sata_slotNumber = 0,
+                            sata_portNumber = 6,
+                            usb_a_2_headerNumber = 2,
+                            usb_a_32_gen1_headerNumber = 1,
+                            usb_c_32_gen2_headerNumber = 1
+                        ),
+                        Motherboard(
+                            id = 1,
+                            brand = "MSI",
+                            name = "MPG Z790 CARBON",
+                            price = 350.72f,
+                            imagePainter = painterResource(id = R.drawable.motherboard_placeholder),
+                            socket = "LGA1700",
+                            chipset = "Z790",
+                            formFactor = "ATX",
+                            memoryType = "DDR4",
+                            memorySlotNumber = 4,
+                            maxEthernetSpeed = 2.5f,
+                            wifiVersion = null,
+                            bluetoothVersion = null,
+                            pcie_x16_5_slotNumber = 1,
+                            pcie_x16_4_slotNumber = 1,
+                            pcie_x8_4_slotNumber = 0,
+                            pcie_x4_4_slotNumber = 0,
+                            pcie_x1_4_slotNumber = 0,
+                            m2_nvme_5_slotNumber = 1,
+                            m2_nvme_4_slotNumber = 4,
+                            m2_sata_slotNumber = 0,
+                            sata_portNumber = 6,
+                            usb_a_2_headerNumber = 2,
+                            usb_a_32_gen1_headerNumber = 1,
+                            usb_c_32_gen2_headerNumber = 1
+                        )
+                    )
+                )
+            }
 
             else -> {
                 Box(

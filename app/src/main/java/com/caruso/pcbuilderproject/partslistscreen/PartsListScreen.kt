@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
+import com.caruso.pcbuilderproject.classes.GlobalData
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
@@ -81,7 +82,21 @@ fun PartsListScreen(
                 .padding(bottom = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CPUPartsListItem(modifier = Modifier.fillMaxWidth(0.9f), navController = navController)
+            ComponentPartsListItem(
+                modifier = Modifier.fillMaxWidth(0.9f),
+                navController = navController,
+                component = GlobalData.loggedInUser.cpuSelected,
+                componentType = stringResource(cpu_Text)
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            ComponentPartsListItem(
+                modifier = Modifier.fillMaxWidth(0.9f),
+                navController = navController,
+                component = GlobalData.loggedInUser.motherboardSelected,
+                componentType = stringResource(motherboard_Text)
+            )
 
             /*
             Box(
