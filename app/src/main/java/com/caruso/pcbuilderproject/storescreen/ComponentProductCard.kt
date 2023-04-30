@@ -21,19 +21,20 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
-import com.caruso.pcbuilderproject.classes.CPU
+import com.caruso.pcbuilderproject.classes.*
 import com.caruso.pcbuilderproject.classes.GlobalData.Companion.floatToStringChecker
 import com.caruso.pcbuilderproject.classes.GlobalData.Companion.loggedInUser
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.specslist.CPUSpecs
+import com.caruso.pcbuilderproject.specslist.MotherboardSpecs
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CPUProductCard(
+fun ComponentProductCard(
     modifier: Modifier = Modifier,
-    cpu: CPU,
+    component: Component,
     nameSize: TextStyle = MaterialTheme.typography.titleMedium,
     navController: NavHostController? = null,
     snackbarHostState: SnackbarHostState? = null
@@ -69,8 +70,8 @@ fun CPUProductCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = cpu.imagePainter,
-                    contentDescription = "CPU Image",
+                    painter = component.imagePainter,
+                    contentDescription = null,
                     modifier = Modifier.size(100.dp)
                 )
 
@@ -84,7 +85,10 @@ fun CPUProductCard(
                     ) {
                         Box(modifier = Modifier.fillMaxWidth(0.8f)) {
                             Text(
-                                text = cpu.brand + " " + cpu.series + " " + cpu.name,
+                                text = if (component is CPU)
+                                    component.brand + " " + component.series + " " + component.name
+                                else
+                                    component.brand + " " + component.name,
                                 style = nameSize,
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 2
@@ -112,7 +116,7 @@ fun CPUProductCard(
                     ) {
                         Text(
                             text = floatToStringChecker(
-                                number = cpu.price,
+                                number = component.price,
                                 currency = stringResource(R.string.currency).toCharArray()[0],
                                 decimalPoint = stringResource(id = R.string.decimalPoint).toCharArray()[0]
                             ),
@@ -126,7 +130,18 @@ fun CPUProductCard(
                             Button(
                                 onClick = {
                                     if (loggedInUser.username != null) {
-                                        loggedInUser.cpuSelected = cpu
+
+                                        when (component) {
+                                            is CPU -> loggedInUser.cpuSelected = component
+                                            is Motherboard -> loggedInUser.motherboardSelected =
+                                                component
+
+                                            is RAM -> loggedInUser.ramSelected = component
+                                            is GPU -> loggedInUser.gpuSelected = component
+                                            is Storage -> loggedInUser.storageSelected = component
+                                            is PSU -> loggedInUser.psuSelected = component
+                                        }
+
 
                                         /*TODO: Edit the database as well as the local user*/
 
@@ -154,9 +169,14 @@ fun CPUProductCard(
             }
 
             if (expandedState) {
-                CPUSpecs(
-                    cpu = cpu
-                )
+                when (component) {
+                    is CPU -> CPUSpecs(cpu = component)
+                    is Motherboard -> MotherboardSpecs(motherboard = component)
+                    // is RAM -> TODO: RAMSpecs(ram = component)
+                    // is GPU -> TODO: GPUSpecs(gpu = component)
+                    // is Storage -> TODO: StorageSpecs(storage = component)
+                    // is PSU -> TODO: PSUSpecs(psu = component)
+                }
             }
         }
     }
@@ -166,10 +186,10 @@ fun CPUProductCard(
 @Composable
 fun CPUProductCardPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
-        CPUProductCard(
+        ComponentProductCard(
             modifier = Modifier.fillMaxWidth(0.9f),
             nameSize = MaterialTheme.typography.titleMedium,
-            cpu = CPU(
+            component = CPU(
                 id = 1,
                 brand = "AMD",
                 series = "Ryzen 7",

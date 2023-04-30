@@ -15,8 +15,8 @@ sealed class BottomBarScreen(
     object PartsListScreen : BottomBarScreen(
         route = "partsListScreen",
         titleResourceId = R.string.partsList_NavBarItem,
-        filledIcon = Icons.Filled.ViewList,
-        outlinedIcon = Icons.Outlined.ViewList,
+        filledIcon = Icons.Filled.Construction,
+        outlinedIcon = Icons.Outlined.Build,
     )
 
     object StoreScreen : BottomBarScreen(

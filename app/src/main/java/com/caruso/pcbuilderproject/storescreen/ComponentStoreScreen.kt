@@ -14,21 +14,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.caruso.pcbuilderproject.classes.CPU
-import com.caruso.pcbuilderproject.classes.GlobalData
+import com.caruso.pcbuilderproject.classes.*
 import com.caruso.pcbuilderproject.dialogs.CPUFilterDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CPUScoreScreen(
+fun ComponentStoreScreen(
     paddingValues: PaddingValues,
     filterCardHidden: MutableState<Boolean>,
     filterDialogOpen: MutableState<Boolean>,
     navController: NavHostController? = null,
     snackbarHostState: SnackbarHostState? = null,
-    cpus: MutableList<CPU>
+    components: MutableList<Component>
 ) {
     Column(
         modifier = Modifier
@@ -104,11 +103,11 @@ fun CPUScoreScreen(
                 Spacer(modifier = Modifier.height(10.dp))
             }
 
-            items(items = cpus) { item ->
-                CPUProductCard(
+            items(items = components) { item ->
+                ComponentProductCard(
                     modifier = Modifier.fillMaxWidth(0.9f),
                     nameSize = MaterialTheme.typography.titleMedium,
-                    cpu = item,
+                    component = item,
                     navController = navController,
                     snackbarHostState = snackbarHostState
                 )
@@ -122,9 +121,14 @@ fun CPUScoreScreen(
     }
 
     if (filterDialogOpen.value) {
-        CPUFilterDialog(
-            filterDialogOpen = filterDialogOpen
-        )
+        when (GlobalData.getStoreProductTypeSelected()) {
+            1 -> CPUFilterDialog(filterDialogOpen = filterDialogOpen)
+            // 2 -> TODO: MotherboardFilterDialog(filterDialogOpen = filterDialogOpen)
+            // 3 -> TODO: RAMFilterDialog(filterDialogOpen = filterDialogOpen)
+            // 4 -> TODO: GPUFilterDialog(filterDialogOpen = filterDialogOpen)
+            // 5 -> TODO: StorageFilterDialog(filterDialogOpen = filterDialogOpen)
+            // 6 -> TODO: PSUFilterDialog(filterDialogOpen = filterDialogOpen)
+        }
     }
 }
 
