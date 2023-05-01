@@ -1,4 +1,4 @@
-package com.caruso.pcbuilderproject.dialogs
+package com.caruso.pcbuilderproject.filters.componentfilter
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -14,7 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.filters.FilterLazyGrid
+import com.caruso.pcbuilderproject.filters.FilterListHeader
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

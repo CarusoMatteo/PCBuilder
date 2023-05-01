@@ -1,4 +1,4 @@
-package com.caruso.pcbuilderproject.dialogs
+package com.caruso.pcbuilderproject.filters
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons

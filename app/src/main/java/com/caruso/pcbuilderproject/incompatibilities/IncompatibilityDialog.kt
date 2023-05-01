@@ -1,4 +1,4 @@
-package com.caruso.pcbuilderproject.dialogs
+package com.caruso.pcbuilderproject.incompatibilities
 
 import android.util.Log
 import androidx.compose.foundation.layout.Column
@@ -9,8 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.caruso.pcbuilderproject.R.string.ok_Text
-import com.caruso.pcbuilderproject.classes.Incompatibility
-import com.caruso.pcbuilderproject.classes.IncompatibilityList
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @Composable

@@ -1,4 +1,4 @@
-package com.caruso.pcbuilderproject.dialogs
+package com.caruso.pcbuilderproject.filters
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.padding
@@ -11,8 +11,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.caruso.pcbuilderproject.classes.*
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import com.caruso.pcbuilderproject.utilities.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
