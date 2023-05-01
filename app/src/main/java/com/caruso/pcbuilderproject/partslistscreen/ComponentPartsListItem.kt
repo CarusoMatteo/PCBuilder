@@ -20,17 +20,17 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.utilities.*
+import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.PSU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
-import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityList
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import com.caruso.pcbuilderproject.utilities.GlobalData
 
 @Composable
 fun ComponentPartsListItem(
@@ -148,7 +148,7 @@ fun ComponentPartsListItem(
                                             is PSU -> GlobalData.loggedInUser.psuSelected = null
                                         }
 
-                                        IncompatibilityList.checkForIncompatibilities()
+                                        IncompatibilityList.checkForIncompatibilities(context = context)
 
                                         navController?.navigate(BottomBarScreen.PartsListScreen.route) {
                                             popUpTo(id = navController.graph.findStartDestination().id)

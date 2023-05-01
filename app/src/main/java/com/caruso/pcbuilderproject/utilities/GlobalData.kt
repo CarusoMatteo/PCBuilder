@@ -1,7 +1,6 @@
 package com.caruso.pcbuilderproject.utilities
 
 import android.content.*
-import android.util.Log
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.componentsclasses.*
@@ -79,11 +78,6 @@ abstract class GlobalData {
             navController: NavHostController,
         ) {
             storeProductTypeSelected = newValue
-
-            Log.d(
-                "Go_to_StoreScreen",
-                "Attempting to go to StoreScreen with storeProductTypeSelected = $storeProductTypeSelected."
-            )
 
             navController.navigate(BottomBarScreen.StoreScreen.route) {
                 popUpTo(id = navController.graph.findStartDestination().id)

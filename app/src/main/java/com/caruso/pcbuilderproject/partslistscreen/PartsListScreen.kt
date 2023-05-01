@@ -1,6 +1,5 @@
 package com.caruso.pcbuilderproject.partslistscreen
 
-import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -18,13 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.utilities.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType
-import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityDialog
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.incompatibilities.Incompatibility
+import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import com.caruso.pcbuilderproject.utilities.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -128,15 +127,6 @@ fun PartsListScreen(
                                 onClick = {
                                     incompatibilityDialogVisible.value = true
                                     currentIncompatibilityClicked.value = item
-
-                                    Log.d(
-                                        "Incompatibility_dialog_status",
-                                        "IncompatibilityDialogVisible is now: ${incompatibilityDialogVisible.value}."
-                                    )
-                                    Log.d(
-                                        "Incompatibility_dialog_status",
-                                        "currentIncompatibilityClicked is now: ${currentIncompatibilityClicked.value}."
-                                    )
 
                                     navController?.navigate(BottomBarScreen.PartsListScreen.route) {
                                         popUpTo(id = navController.graph.findStartDestination().id)

@@ -20,7 +20,7 @@ fun MotherboardSpecs(
 ) {
     Column {
         SpecListItem(
-            leftItem = stringResource(socketType_Label),
+            leftItem = stringResource(socket_Text),
             rightItem = motherboard.socket
         )
         Divider(

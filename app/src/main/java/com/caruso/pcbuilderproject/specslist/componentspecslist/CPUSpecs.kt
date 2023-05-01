@@ -44,14 +44,14 @@ fun CPUSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         SpecListItem(
-            leftItem = stringResource(architecture_Label),
+            leftItem = stringResource(architecture_Text),
             rightItem = cpu.architecture
         )
         Divider(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(leftItem = stringResource(socketType_Label), rightItem = cpu.socket)
+        SpecListItem(leftItem = stringResource(socket_Text), rightItem = cpu.socket)
         Divider(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant

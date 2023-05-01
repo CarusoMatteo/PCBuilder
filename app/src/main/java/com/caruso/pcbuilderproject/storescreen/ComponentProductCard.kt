@@ -21,15 +21,15 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
-import com.caruso.pcbuilderproject.utilities.*
-import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.floatToStringChecker
-import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.loggedInUser
 import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityList
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.specslist.componentspecslist.CPUSpecs
 import com.caruso.pcbuilderproject.specslist.componentspecslist.MotherboardSpecs
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import com.caruso.pcbuilderproject.utilities.*
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.floatToStringChecker
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.loggedInUser
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -145,7 +145,7 @@ fun ComponentProductCard(
                                             is PSU -> loggedInUser.psuSelected = component
                                         }
 
-                                        IncompatibilityList.checkForIncompatibilities()
+                                        IncompatibilityList.checkForIncompatibilities(context = context)
 
                                         // TODO: Edit the database as well as the local user
 

@@ -1,6 +1,5 @@
 package com.caruso.pcbuilderproject.incompatibilities
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.*
@@ -30,11 +29,6 @@ fun IncompatibilityDialog(
             TextButton(
                 onClick = {
                     incompatibilityDialogVisible.value = false
-
-                    Log.d(
-                        "Incompatibility_dialog_status",
-                        "IncompatibilityDialogVisible is now: ${incompatibilityDialogVisible.value}."
-                    )
                 }) {
                 Text(text = stringResource(ok_Text))
             }

@@ -16,8 +16,8 @@
     <string name="numberOfCores_Label">Number of cores</string>
     <string name="baseClockSpeed_Label">Base clock speed</string>
     <string name="powerConsumption_Label">Power Consumption</string>
-    <string name="architecture_Label">Architecture</string>
-    <string name="socketType_Label">Socket type</string>
+    <string name="architecture_Text">Architecture</string>
+    <string name="socket_Text">Socket type</string>
     <string name="integratedGraphics_Label">Integrated graphics</string>
     <string name="coolerIncluded_Label">Cooler included</string>
     <string name="yes_Label">Yes</string>
@@ -77,10 +77,15 @@
     <string name="empty_Text">Empty</string>
     <string name="remove_Button">Remove</string>
     <string name="please_login_first_Message">Please login first.</string>
-    <string name="motherboard_Text" translatable="false">Motherboard</string>
+    <string name="motherboard_Text">Motherboard</string>
     <string name="ram_Text" translatable="false">RAM</string>
     <string name="gpu_Text" translatable="false">GPU</string>
-    <string name="storage_Text" translatable="false">Storage</string>
+    <string name="storage_Text">Storage</string>
     <string name="psu_Text" translatable="false">PSU</string>
     <string name="ok_Text">OK</string>
+    <string name="cpuFilters_Title">CPU filters</string>
+    <string name="incompatible_cpu">Incompatible CPU</string>
+    <string name="incompatible_cpu_description1">The CPU\'s socket (</string>
+    <string name="incompatible_cpu_description2">) is different from the Motherboard\'s socket (</string>
+    <string name="incompatible_cpu_description3">).</string>
 </resources>

@@ -48,7 +48,7 @@ fun CPUFilterDialog(
                             )
                         }
                     },
-                    title = { Text(text = "Filters") }
+                    title = { Text(text = stringResource(cpuFilters_Title)) }
                 )
             }
         ) { paddingValues ->
@@ -63,7 +63,7 @@ fun CPUFilterDialog(
 
                 FilterLazyGrid(
                     component = CPU,
-                    name = "Brand"
+                    name = stringResource(brand_Text)
                 )
 
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
@@ -74,7 +74,7 @@ fun CPUFilterDialog(
 
                 FilterLazyGrid(
                     component = CPU,
-                    name = "Series"
+                    name = stringResource(series_Text)
                 )
 
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))

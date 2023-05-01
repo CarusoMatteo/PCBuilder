@@ -17,8 +17,8 @@
     <string name="numberOfCores_Label">Numero di core</string>
     <string name="baseClockSpeed_Label">Velocità clock base</string>
     <string name="powerConsumption_Label">Consumo di energia</string>
-    <string name="architecture_Label">Architettura</string>
-    <string name="socketType_Label">Tipo socket</string>
+    <string name="architecture_Text">Architettura</string>
+    <string name="socket_Text">Tipo socket</string>
     <string name="integratedGraphics_Label">Grafica integrata</string>
     <string name="coolerIncluded_Label">Ventola inclusa</string>
     <string name="yes_Label">Sì</string>
@@ -80,4 +80,9 @@
     <string name="ok_Text">OK</string>
     <string name="motherboard_Text">Scheda madre</string>
     <string name="storage_Text">Archiviazione</string>
+    <string name="cpuFilters_Title">Filtri CPU</string>
+    <string name="incompatible_cpu">CPU incompatibile</string>
+    <string name="incompatible_cpu_description1">Il socket della CPU (</string>
+    <string name="incompatible_cpu_description2">) è diverso dal socket della Scheda madre (</string>
+    <string name="incompatible_cpu_description3">).</string>
 </resources>
