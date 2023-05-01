@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.classes.*
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.dialogs.CPUFilterDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
@@ -28,7 +29,7 @@ fun ComponentStoreScreen(
     navController: NavHostController? = null,
     snackbarHostState: SnackbarHostState? = null,
     components: MutableList<Component>,
-    componentsType: String
+    componentsType: Int
 ) {
     Column(
         modifier = Modifier
@@ -123,19 +124,19 @@ fun ComponentStoreScreen(
 
     if (filterDialogOpen.value) {
         when (GlobalData.getStoreProductTypeSelected()) {
-            1 -> CPUFilterDialog(filterDialogOpen = filterDialogOpen)
-            // 2 -> TODO: MotherboardFilterDialog(filterDialogOpen = filterDialogOpen)
-            // 3 -> TODO: RAMFilterDialog(filterDialogOpen = filterDialogOpen)
-            // 4 -> TODO: GPUFilterDialog(filterDialogOpen = filterDialogOpen)
-            // 5 -> TODO: StorageFilterDialog(filterDialogOpen = filterDialogOpen)
-            // 6 -> TODO: PSUFilterDialog(filterDialogOpen = filterDialogOpen)
+            CPU -> CPUFilterDialog(filterDialogOpen = filterDialogOpen)
+            // ComponentType.MOTHERBOARD -> TODO: MotherboardFilterDialog(filterDialogOpen = filterDialogOpen)
+            // ComponentType.RAM -> TODO: RAMFilterDialog(filterDialogOpen = filterDialogOpen)
+            // ComponentType.GPU -> TODO: GPUFilterDialog(filterDialogOpen = filterDialogOpen)
+            // ComponentType.STORAGE -> TODO: StorageFilterDialog(filterDialogOpen = filterDialogOpen)
+            // ComponentType.PSU -> TODO: PSUFilterDialog(filterDialogOpen = filterDialogOpen)
         }
     }
 }
 
 @Preview
 @Composable
-fun CPUStoreScreenPreview() {
+fun ComponentStoreScreenPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
         Box(
             modifier = Modifier

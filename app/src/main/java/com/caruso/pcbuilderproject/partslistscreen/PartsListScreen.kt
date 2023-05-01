@@ -18,8 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.classes.GlobalData
-import com.caruso.pcbuilderproject.classes.Incompatibility
+import com.caruso.pcbuilderproject.classes.*
 import com.caruso.pcbuilderproject.dialogs.IncompatibilityDialog
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
@@ -104,71 +103,53 @@ fun PartsListScreen(
                     )
                 }
             ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 10.dp, end = 10.dp)
+
                 ) {
-                    IconButton(
-                        onClick = {
-                            filterDialogOpen.value = true
+                    items(items = GlobalData.incompatibilityList, itemContent = { item ->
+                        if (item.active) {
+                            FilterChip(
+                                selected = true,
+                                label = {
+                                    Text(
+                                        text = item.name
+                                    )
+                                },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Default.Error,
+                                        contentDescription = null
+                                    )
+                                },
+                                onClick = {
+                                    incompatibilityDialogVisible.value = true
+                                    currentIncompatibilityClicked.value = item
+
+                                    Log.d(
+                                        "Incompatibility_dialog_status",
+                                        "IncompatibilityDialogVisible is now: ${incompatibilityDialogVisible.value}."
+                                    )
+                                    Log.d(
+                                        "Incompatibility_dialog_status",
+                                        "currentIncompatibilityClicked is now: ${currentIncompatibilityClicked.value}."
+                                    )
+
+                                    navController?.navigate(BottomBarScreen.PartsListScreen.route) {
+                                        popUpTo(id = navController.graph.findStartDestination().id)
+                                        launchSingleTop = true
+                                    }
+                                },
+                                colors = FilterChipDefaults.filterChipColors(
+                                    selectedContainerColor = MaterialTheme.colorScheme.error,
+                                    selectedLabelColor = MaterialTheme.colorScheme.onError,
+                                    selectedLeadingIconColor = MaterialTheme.colorScheme.onError
+                                ),
+                                modifier = Modifier.padding(end = 5.dp)
+                            )
                         }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.FilterList,
-                            contentDescription = "Open filter list"
-                        )
-                    }
-
-                    LazyRow(
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        items(items = GlobalData.incompatibilityList, itemContent = { item ->
-                            if (item.active) {
-                                FilterChip(
-                                    selected = true,
-                                    label = {
-                                        Text(
-                                            text = item.name
-                                        )
-                                    },
-                                    leadingIcon = {
-                                        Icon(
-                                            imageVector = Icons.Default.Error,
-                                            contentDescription = null
-                                        )
-                                    },
-                                    onClick = {
-                                        // TODO: Clicked on an incompatibility
-                                        //  This is only temporary
-                                        //item.active = false
-
-                                        incompatibilityDialogVisible.value = true
-                                        currentIncompatibilityClicked.value = item
-
-                                        Log.d(
-                                            "Incompatibility_dialog_status",
-                                            "IncompatibilityDialogVisible is now: ${incompatibilityDialogVisible.value}."
-                                        )
-                                        Log.d(
-                                            "Incompatibility_dialog_status",
-                                            "currentIncompatibilityClicked is now: ${currentIncompatibilityClicked.value}."
-                                        )
-
-                                        navController?.navigate(BottomBarScreen.PartsListScreen.route) {
-                                            popUpTo(id = navController.graph.findStartDestination().id)
-                                            launchSingleTop = true
-                                        }
-                                    },
-                                    colors = FilterChipDefaults.filterChipColors(
-                                        selectedContainerColor = MaterialTheme.colorScheme.error,
-                                        selectedLabelColor = MaterialTheme.colorScheme.onError,
-                                        selectedLeadingIconColor = MaterialTheme.colorScheme.onError
-                                    ),
-                                    modifier = Modifier.padding(end = 5.dp)
-                                )
-                            }
-                        })
-                    }
+                    })
                 }
             }
 
@@ -178,7 +159,7 @@ fun PartsListScreen(
                 modifier = Modifier.fillMaxWidth(0.9f),
                 navController = navController,
                 component = GlobalData.loggedInUser.cpuSelected,
-                componentType = stringResource(cpu_Text)
+                componentType = ComponentType.CPU
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -187,7 +168,7 @@ fun PartsListScreen(
                 modifier = Modifier.fillMaxWidth(0.9f),
                 navController = navController,
                 component = GlobalData.loggedInUser.motherboardSelected,
-                componentType = stringResource(motherboard_Text)
+                componentType = ComponentType.MOTHERBOARD
             )
 
             /*

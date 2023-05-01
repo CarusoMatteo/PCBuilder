@@ -19,6 +19,12 @@ import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.classes.*
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.GPU
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.MOTHERBOARD
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.PSU
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.RAM
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.STORAGE
 import com.caruso.pcbuilderproject.dialogs.CPUFilterDialog
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
@@ -42,7 +48,20 @@ fun StoreScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(store_NavBarItem))
+                    Text(
+                        text =
+                        stringResource(store_NavBarItem) + ": " + when (GlobalData.getStoreProductTypeSelected()) {
+                            CPU -> stringResource(cpu_Text)
+                            MOTHERBOARD -> stringResource(motherboard_Text)
+                            RAM -> stringResource(ram_Text)
+                            GPU -> stringResource(gpu_Text)
+                            STORAGE -> stringResource(storage_Text)
+                            PSU -> stringResource(psu_Text)
+                            else -> stringResource(incorrect_store_index_Error)
+                        }
+
+
+                    )
                 },
                 scrollBehavior = scrollBehavior,
                 navigationIcon = {
@@ -82,7 +101,7 @@ fun StoreScreen(
     ) { paddingValues ->
 
         when (storeProductTypeSelected) {
-            1 -> {
+            CPU -> {
                 ComponentStoreScreen(
                     paddingValues = paddingValues,
                     filterCardHidden = filterCardHidden,
@@ -121,11 +140,11 @@ fun StoreScreen(
                             imagePainter = painterResource(id = R.drawable.cpu_placeholder)
                         )
                     ),
-                    componentsType = stringResource(cpu_Text)
+                    componentsType = CPU
                 )
             }
 
-            2 -> {
+            MOTHERBOARD -> {
                 ComponentStoreScreen(
                     paddingValues = paddingValues,
                     filterCardHidden = filterCardHidden,
@@ -188,7 +207,7 @@ fun StoreScreen(
                             usb_c_32_gen2_headerNumber = 1
                         )
                     ),
-                    componentsType = stringResource(motherboard_Text)
+                    componentsType = MOTHERBOARD
                 )
             }
 
@@ -217,10 +236,13 @@ fun StoreScreen(
     }
 
     if (filterDialogOpen.value) {
-        when (storeProductTypeSelected) {
-            1 -> CPUFilterDialog(
-                filterDialogOpen = filterDialogOpen
-            )
+        when (GlobalData.getStoreProductTypeSelected()) {
+            CPU -> CPUFilterDialog(filterDialogOpen = filterDialogOpen)
+            // ComponentType.MOTHERBOARD -> TODO: MotherboardFilterDialog(filterDialogOpen = filterDialogOpen)
+            // ComponentType.RAM -> TODO: RAMFilterDialog(filterDialogOpen = filterDialogOpen)
+            // ComponentType.GPU -> TODO: GPUFilterDialog(filterDialogOpen = filterDialogOpen)
+            // ComponentType.STORAGE -> TODO: StorageFilterDialog(filterDialogOpen = filterDialogOpen)
+            // ComponentType.PSU -> TODO: PSUFilterDialog(filterDialogOpen = filterDialogOpen)
         }
     }
 }

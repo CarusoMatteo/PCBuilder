@@ -145,7 +145,7 @@ fun ComponentProductCard(
 
                                         IncompatibilityList.checkForIncompatibilities()
 
-                                        /*TODO: Edit the database as well as the local user*/
+                                        // TODO: Edit the database as well as the local user
 
                                         navController?.navigate(BottomBarScreen.PartsListScreen.route) {
                                             popUpTo(id = navController.graph.findStartDestination().id)
@@ -186,7 +186,7 @@ fun ComponentProductCard(
 
 @Preview
 @Composable
-fun CPUProductCardPreview() {
+fun ComponentProductCardPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
         ComponentProductCard(
             modifier = Modifier.fillMaxWidth(0.9f),

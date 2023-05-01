@@ -78,4 +78,6 @@
     <string name="remove_Button">Rimuovi</string>
     <string name="please_login_first_Message">Effettua prima l\'accesso.</string>
     <string name="ok_Text">OK</string>
+    <string name="motherboard_Text">Scheda madre</string>
+    <string name="storage_Text">Archiviazione</string>
 </resources>

@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.caruso.pcbuilderproject.R.string.*
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +60,7 @@ fun CPUFilterDialog(
                 )
 
                 FilterLazyGrid(
-                    component = "CPU",
+                    component = CPU,
                     name = "Brand"
                 )
 
@@ -70,7 +71,7 @@ fun CPUFilterDialog(
                 )
 
                 FilterLazyGrid(
-                    component = "CPU",
+                    component = CPU,
                     name = "Series"
                 )
 

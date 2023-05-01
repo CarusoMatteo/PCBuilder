@@ -11,14 +11,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.caruso.pcbuilderproject.classes.GlobalData
+import com.caruso.pcbuilderproject.classes.*
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterLazyGrid(
     modifier: Modifier = Modifier,
-    component: String,
+    component: Int,
     name: String
 ) {
     LazyVerticalGrid(
@@ -70,7 +70,7 @@ fun FilterLazyGridPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
         Surface {
             FilterLazyGrid(
-                component = "CPU",
+                component = ComponentType.CPU,
                 name = "Series"
             )
         }

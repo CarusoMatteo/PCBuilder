@@ -12,7 +12,7 @@ abstract class GlobalData {
         const val dynamicColorActive = false
 
         // Contains the Username of the user currently logged-in, otherwise is null
-        var loggedInUser: User = User()
+        var loggedInUser: User = User("Admin")
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
@@ -20,13 +20,13 @@ abstract class GlobalData {
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
-        // If 1: CPU,
-        // If 2: Motherboard,
-        // If 3: RAM,
-        // If 4: GPU,
-        // If 5: Storage,
-        // If 6: PSU
-        private var storeProductTypeSelected: Int = 1
+        // If 0: CPU,
+        // If 1: Motherboard,
+        // If 2: RAM,
+        // If 3: GPU,
+        // If 4: Storage,
+        // If 5: PSU
+        private var storeProductTypeSelected: Int = ComponentType.CPU
 
         // List of all possible filters
         val filterList: MutableList<Filter> = mutableListOf(

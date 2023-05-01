@@ -21,6 +21,12 @@ import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.classes.*
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.GPU
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.MOTHERBOARD
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.PSU
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.RAM
+import com.caruso.pcbuilderproject.classes.ComponentType.Companion.STORAGE
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
@@ -28,7 +34,7 @@ import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 fun ComponentPartsListItem(
     modifier: Modifier = Modifier,
     component: Component?,
-    componentType: String,
+    componentType: Int,
     nameSize: TextStyle = MaterialTheme.typography.titleMedium,
     navController: NavHostController? = null
 ) {
@@ -52,12 +58,12 @@ fun ComponentPartsListItem(
                 } else {
                     Image(
                         painter = when (componentType) {
-                            stringResource(cpu_Text) -> painterResource(id = R.drawable.cpu_placeholder)
-                            stringResource(motherboard_Text) -> painterResource(id = R.drawable.motherboard_placeholder)
-                            // stringResource(ram_Text) -> painterResource(id = R.drawable.ram_placeholder)
-                            // stringResource(gpu_Text) -> painterResource(id = R.drawable.gpu_placeholder)
-                            // stringResource(storage_Text) -> painterResource(id = R.drawable.storage_placeholder)
-                            // stringResource(psu_Text) -> painterResource(id = R.drawable.psu_placeholder)
+                            CPU -> painterResource(id = R.drawable.cpu_placeholder)
+                            MOTHERBOARD -> painterResource(id = R.drawable.motherboard_placeholder)
+                            // RAM -> painterResource(id = R.drawable.ram_placeholder)
+                            // ComponentType.GPU -> painterResource(id = R.drawable.gpu_placeholder)
+                            // ComponentType.STORAGE -> painterResource(id = R.drawable.storage_placeholder)
+                            // ComponentType.PSU -> painterResource(id = R.drawable.psu_placeholder)
                             else -> {
                                 painterResource(id = R.drawable.cpu_placeholder)
                             }
@@ -83,13 +89,22 @@ fun ComponentPartsListItem(
                                     else
                                         component.brand + " " + component.name
                                 } else {
-                                    componentType
+                                    when (componentType) {
+                                        CPU -> context.getString(cpu_Text)
+                                        MOTHERBOARD -> context.getString(motherboard_Text)
+                                        RAM -> context.getString(ram_Text)
+                                        GPU -> context.getString(gpu_Text)
+                                        STORAGE -> context.getString(storage_Text)
+                                        PSU -> context.getString(psu_Text)
+                                        else -> context.getString(psu_Text)
+                                    }
                                 },
                                 style = nameSize,
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 2,
                                 modifier = Modifier.padding(bottom = 5.dp)
                             )
+
                         }
                     }
 
@@ -141,17 +156,7 @@ fun ComponentPartsListItem(
                                         if (navController != null) {
 
                                             GlobalData.changeStoreProductTypeSelected(
-                                                newValue = when (componentType) {
-                                                    context.getString(cpu_Text) -> 1
-                                                    context.getString(motherboard_Text) -> 2
-                                                    context.getString(ram_Text) -> 3
-                                                    context.getString(gpu_Text) -> 4
-                                                    context.getString(storage_Text) -> 5
-                                                    context.getString(psu_Text) -> 6
-                                                    else -> {
-                                                        0
-                                                    }
-                                                },
+                                                newValue = componentType,
                                                 navController = navController
                                             )
                                         }
@@ -184,21 +189,21 @@ fun ComponentPartsListItem(
 
 @Preview
 @Composable
-fun CPUPartsListItemPreview() {
+fun ComponentPartsListItemPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
         Surface(modifier = Modifier.fillMaxWidth()) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 ComponentPartsListItem(
                     modifier = Modifier.fillMaxWidth(0.9f),
                     component = null,
-                    componentType = "CPU"
+                    componentType = CPU
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 ComponentPartsListItem(
                     modifier = Modifier.fillMaxWidth(0.9f),
-                    componentType = "CPU",
+                    componentType = CPU,
                     component = CPU(
                         id = 1,
                         brand = "AMD",
