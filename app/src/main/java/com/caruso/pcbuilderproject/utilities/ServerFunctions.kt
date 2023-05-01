@@ -1,4 +1,4 @@
-package com.caruso.pcbuilderproject.classes
+package com.caruso.pcbuilderproject.utilities
 
 import android.content.Context
 import android.util.Log

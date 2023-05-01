@@ -1,6 +1,6 @@
-package com.caruso.pcbuilderproject.classes
+package com.caruso.pcbuilderproject.incompatibilities
 
-import com.caruso.pcbuilderproject.classes.GlobalData.Companion.loggedInUser
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.loggedInUser
 
 abstract class IncompatibilityList {
     companion object {

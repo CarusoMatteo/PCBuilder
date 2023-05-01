@@ -1,4 +1,4 @@
-package com.caruso.pcbuilderproject.classes
+package com.caruso.pcbuilderproject.incompatibilities
 
 data class Incompatibility(
     val name: String,

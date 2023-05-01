@@ -18,9 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.classes.*
-import com.caruso.pcbuilderproject.dialogs.IncompatibilityDialog
+import com.caruso.pcbuilderproject.utilities.*
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType
+import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityDialog
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
+import com.caruso.pcbuilderproject.incompatibilities.Incompatibility
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 

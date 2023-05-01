@@ -1,8 +1,9 @@
-package com.caruso.pcbuilderproject.classes
+package com.caruso.pcbuilderproject.user
+
+import com.caruso.pcbuilderproject.componentsclasses.*
 
 data class User(
     var username: String? = null,
-    var password: String? = null,
     var cpuSelected: CPU? = null,
     var motherboardSelected: Motherboard? = null,
     var ramSelected: RAM? = null,
@@ -12,7 +13,6 @@ data class User(
 ) {
     fun clear() {
         username = null
-        password = null
         cpuSelected = null
         motherboardSelected = null
         ramSelected = null

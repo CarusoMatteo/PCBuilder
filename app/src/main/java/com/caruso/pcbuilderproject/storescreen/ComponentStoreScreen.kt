@@ -14,9 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.caruso.pcbuilderproject.classes.*
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.CPU
-import com.caruso.pcbuilderproject.dialogs.CPUFilterDialog
+import com.caruso.pcbuilderproject.utilities.*
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.componentsclasses.Component
+import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 

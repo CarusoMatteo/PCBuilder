@@ -1,9 +1,9 @@
-package com.caruso.pcbuilderproject.classes
+package com.caruso.pcbuilderproject.filters
 
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
 
 // This class contains every possible filter.
-class FilterList {
+abstract class FilterList {
     companion object {
         //region CPU Filters
 

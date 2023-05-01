@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.caruso.pcbuilderproject.classes.GlobalData
+import com.caruso.pcbuilderproject.utilities.GlobalData
 
 private val DarkColorScheme = darkColorScheme(
     primary = md_theme_dark_primary,

@@ -16,10 +16,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.classes.GlobalData
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import com.caruso.pcbuilderproject.utilities.GlobalData
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,10 +79,7 @@ fun AccountScreen(
         } else {
             ProfileScreen(
                 paddingValues = paddingValues,
-                navController = navController,
-                snackbarHostState = snackbarHostState,
-                context = context,
-                scope = scope
+                navController = navController
             )
         }
     }

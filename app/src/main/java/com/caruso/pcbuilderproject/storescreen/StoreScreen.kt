@@ -18,17 +18,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.classes.*
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.CPU
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.GPU
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.MOTHERBOARD
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.PSU
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.RAM
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.STORAGE
-import com.caruso.pcbuilderproject.dialogs.CPUFilterDialog
+import com.caruso.pcbuilderproject.componentsclasses.CPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.PSU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
+import com.caruso.pcbuilderproject.componentsclasses.Motherboard
+import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import com.caruso.pcbuilderproject.utilities.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -180,30 +182,30 @@ fun StoreScreen(
                             usb_c_32_gen2_headerNumber = 1
                         ),
                         Motherboard(
-                            id = 1,
+                            id = 2,
                             brand = "MSI",
-                            name = "MPG Z790 CARBON",
-                            price = 350.72f,
+                            name = "MPG X670E CARBON WIFI",
+                            price = 480.00f,
                             imagePainter = painterResource(id = R.drawable.motherboard_placeholder),
-                            socket = "LGA1700",
-                            chipset = "Z790",
+                            socket = "AM5",
+                            chipset = "X670E",
                             formFactor = "ATX",
-                            memoryType = "DDR4",
+                            memoryType = "DDR5",
                             memorySlotNumber = 4,
                             maxEthernetSpeed = 2.5f,
-                            wifiVersion = null,
-                            bluetoothVersion = null,
-                            pcie_x16_5_slotNumber = 1,
+                            wifiVersion = "6E",
+                            bluetoothVersion = "5.3",
+                            pcie_x16_5_slotNumber = 2,
                             pcie_x16_4_slotNumber = 1,
                             pcie_x8_4_slotNumber = 0,
                             pcie_x4_4_slotNumber = 0,
                             pcie_x1_4_slotNumber = 0,
-                            m2_nvme_5_slotNumber = 1,
-                            m2_nvme_4_slotNumber = 4,
+                            m2_nvme_5_slotNumber = 2,
+                            m2_nvme_4_slotNumber = 2,
                             m2_sata_slotNumber = 0,
                             sata_portNumber = 6,
                             usb_a_2_headerNumber = 2,
-                            usb_a_32_gen1_headerNumber = 1,
+                            usb_a_32_gen1_headerNumber = 2,
                             usb_c_32_gen2_headerNumber = 1
                         )
                     ),

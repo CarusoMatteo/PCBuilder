@@ -20,13 +20,15 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.classes.*
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.CPU
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.GPU
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.MOTHERBOARD
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.PSU
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.RAM
-import com.caruso.pcbuilderproject.classes.ComponentType.Companion.STORAGE
+import com.caruso.pcbuilderproject.utilities.*
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.PSU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
+import com.caruso.pcbuilderproject.componentsclasses.*
+import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityList
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 

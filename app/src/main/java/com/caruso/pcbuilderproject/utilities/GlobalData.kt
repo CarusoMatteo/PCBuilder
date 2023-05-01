@@ -1,10 +1,16 @@
-package com.caruso.pcbuilderproject.classes
+package com.caruso.pcbuilderproject.utilities
 
 import android.content.*
 import android.util.Log
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import com.caruso.pcbuilderproject.componentsclasses.*
+import com.caruso.pcbuilderproject.filters.Filter
+import com.caruso.pcbuilderproject.filters.FilterList
+import com.caruso.pcbuilderproject.incompatibilities.Incompatibility
+import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityList
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
+import com.caruso.pcbuilderproject.user.User
 
 abstract class GlobalData {
     companion object {
@@ -137,13 +143,7 @@ abstract class GlobalData {
         }
 
         fun logout() {
-            loggedInUser.username = null
-            loggedInUser.cpuSelected = null
-            loggedInUser.motherboardSelected = null
-            loggedInUser.ramSelected = null
-            loggedInUser.gpuSelected = null
-            loggedInUser.storageSelected = null
-            loggedInUser.psuSelected = null
+            loggedInUser.clear()
         }
     }
 }

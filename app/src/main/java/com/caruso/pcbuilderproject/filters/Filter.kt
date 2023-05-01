@@ -1,4 +1,4 @@
-package com.caruso.pcbuilderproject.classes
+package com.caruso.pcbuilderproject.filters
 
 data class Filter(
     val name: String,

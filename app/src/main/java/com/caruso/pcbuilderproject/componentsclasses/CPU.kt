@@ -1,4 +1,4 @@
-package com.caruso.pcbuilderproject.classes
+package com.caruso.pcbuilderproject.componentsclasses
 
 import androidx.compose.ui.graphics.painter.Painter
 

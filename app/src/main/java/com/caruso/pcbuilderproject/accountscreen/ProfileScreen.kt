@@ -1,31 +1,26 @@
 package com.caruso.pcbuilderproject.accountscreen
 
-import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.caruso.pcbuilderproject.classes.GlobalData
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
-import kotlinx.coroutines.CoroutineScope
+import com.caruso.pcbuilderproject.utilities.GlobalData
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(all = 0.dp),
-    snackbarHostState: SnackbarHostState? = null,
-    navController: NavHostController? = null,
-    context: Context = LocalContext.current,
-    scope: CoroutineScope = rememberCoroutineScope()
+    // snackbarHostState: SnackbarHostState? = null,
+    navController: NavHostController? = null
 ) {
     val loadingIconOnButtonVisible = remember {
         mutableStateOf(false)
@@ -34,7 +29,8 @@ fun ProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(paddingValues)
+                then modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {

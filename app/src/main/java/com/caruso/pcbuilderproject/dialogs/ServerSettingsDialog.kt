@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.classes.GlobalData
+import com.caruso.pcbuilderproject.utilities.GlobalData
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

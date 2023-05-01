@@ -1,4 +1,4 @@
-package com.caruso.pcbuilderproject.classes
+package com.caruso.pcbuilderproject.componentsclasses
 
 abstract class ComponentType {
     companion object {
