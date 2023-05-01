@@ -131,6 +131,8 @@ fun ComponentPartsListItem(
                                             is PSU -> GlobalData.loggedInUser.psuSelected = null
                                         }
 
+                                        IncompatibilityList.checkForIncompatibilities()
+
                                         navController?.navigate(BottomBarScreen.PartsListScreen.route) {
                                             popUpTo(id = navController.graph.findStartDestination().id)
                                             launchSingleTop = true

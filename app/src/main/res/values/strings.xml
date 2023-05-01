@@ -82,4 +82,5 @@
     <string name="gpu_Text" translatable="false">GPU</string>
     <string name="storage_Text" translatable="false">Storage</string>
     <string name="psu_Text" translatable="false">PSU</string>
+    <string name="ok_Text">OK</string>
 </resources>
