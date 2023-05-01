@@ -143,6 +143,7 @@ fun ComponentProductCard(
                                             is PSU -> loggedInUser.psuSelected = component
                                         }
 
+                                        IncompatibilityList.checkForIncompatibilities()
 
                                         /*TODO: Edit the database as well as the local user*/
 

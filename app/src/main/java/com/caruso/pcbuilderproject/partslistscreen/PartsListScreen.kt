@@ -1,5 +1,6 @@
 package com.caruso.pcbuilderproject.partslistscreen
 
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -18,6 +19,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.classes.GlobalData
+import com.caruso.pcbuilderproject.classes.Incompatibility
+import com.caruso.pcbuilderproject.dialogs.IncompatibilityDialog
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
@@ -31,7 +34,8 @@ fun PartsListScreen(
     val filterCardHidden = remember { mutableStateOf(false) }
     val filterDialogOpen = remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    rememberCoroutineScope()
+    val incompatibilityDialogVisible = remember { mutableStateOf(false) }
+    val currentIncompatibilityClicked = remember { mutableStateOf(Incompatibility("", "")) }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -89,14 +93,6 @@ fun PartsListScreen(
             ElevatedCard(
                 modifier = Modifier
                     .fillMaxWidth(0.9f),
-
-                /*
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
-                    contentColor = MaterialTheme.colorScheme.onErrorContainer
-                )
-                 */
-
                 colors = if (
                     GlobalData.getActiveIncompatibilities().isEmpty()
                 ) {
@@ -107,7 +103,6 @@ fun PartsListScreen(
                         contentColor = MaterialTheme.colorScheme.onErrorContainer
                     )
                 }
-
             ) {
                 Row(
                     modifier = Modifier
@@ -145,7 +140,19 @@ fun PartsListScreen(
                                     onClick = {
                                         // TODO: Clicked on an incompatibility
                                         //  This is only temporary
-                                        item.active = false
+                                        //item.active = false
+
+                                        incompatibilityDialogVisible.value = true
+                                        currentIncompatibilityClicked.value = item
+
+                                        Log.d(
+                                            "Incompatibility_dialog_status",
+                                            "IncompatibilityDialogVisible is now: ${incompatibilityDialogVisible.value}."
+                                        )
+                                        Log.d(
+                                            "Incompatibility_dialog_status",
+                                            "currentIncompatibilityClicked is now: ${currentIncompatibilityClicked.value}."
+                                        )
 
                                         navController?.navigate(BottomBarScreen.PartsListScreen.route) {
                                             popUpTo(id = navController.graph.findStartDestination().id)
@@ -238,6 +245,13 @@ fun PartsListScreen(
     if (serverSettingDialogOpen.value) {
         ServerSettingsDialog(
             serverSettingDialogOpen = serverSettingDialogOpen
+        )
+    }
+
+    if (incompatibilityDialogVisible.value) {
+        IncompatibilityDialog(
+            incompatibility = currentIncompatibilityClicked.value,
+            incompatibilityDialogVisible = incompatibilityDialogVisible
         )
     }
 }
