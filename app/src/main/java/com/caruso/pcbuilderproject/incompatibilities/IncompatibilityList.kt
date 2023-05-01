@@ -7,15 +7,17 @@ import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.loggedInUser
 
 abstract class IncompatibilityList {
     companion object {
-        var wrongSocket =
-            Incompatibility(
-                "Incompatible CPU",
-                "This CPU won't fit in this motherboard's socket.",
-                false
-            )
 
+        // region Incompatibilities declaration
+        var wrongSocket = Incompatibility()
+
+        // endregion
+
+        // TODO: When an incompatibility is added it must be initialized here,
+        //  the relative condition for activation
+        //  and the localized (String Resource) name and description must be put here
         fun checkForIncompatibilities(context: Context) {
-            // Test for Wrong socket
+            // region Test for Wrong socket
 
             // If both a CPU and a Motherboard have been selected
             if (loggedInUser.cpuSelected != null && loggedInUser.motherboardSelected != null) {
@@ -33,12 +35,17 @@ abstract class IncompatibilityList {
                         ))
 
                     wrongSocket.active = true
-                } else {Log.d("WrongSocketCheck", "The sockets are the same.")
+                } else {
+                    Log.d("WrongSocketCheck", "The sockets are the same.")
                     wrongSocket.active = false
                 }
             } else {
                 wrongSocket.active = false
             }
+
+            // endregion
+
+
         }
     }
 }

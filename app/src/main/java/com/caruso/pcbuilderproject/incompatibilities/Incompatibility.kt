@@ -1,8 +1,8 @@
 package com.caruso.pcbuilderproject.incompatibilities
 
 data class Incompatibility(
-    var name: String,
-    var description: String,
+    var name: String = "",
+    var description: String = "",
     var active: Boolean = false,
 ) {
     override fun toString(): String {
