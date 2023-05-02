@@ -21,7 +21,10 @@ data class Filter(
             else
                 this.value
         }\", Component: \"${
-            ComponentType.toString(this.component)
+            ComponentType.toString(
+                componentType = this.component,
+                context = null
+            )
         }\"}"
     }
 }

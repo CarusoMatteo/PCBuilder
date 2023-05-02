@@ -10,21 +10,26 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.caruso.pcbuilderproject.utilities.*
-import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.R.string.store_NavBarItem
 import com.caruso.pcbuilderproject.componentsclasses.Component
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import com.caruso.pcbuilderproject.utilities.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComponentStoreScreen(
     paddingValues: PaddingValues,
+    topAppBarTitle: MutableState<String>,
     filterCardHidden: MutableState<Boolean>,
     filterDialogOpen: MutableState<Boolean>,
     navController: NavHostController? = null,
@@ -120,7 +125,24 @@ fun ComponentStoreScreen(
         }
 
         val firstVisibleItemIndex by remember { derivedStateOf { lazyColumnScrollState.firstVisibleItemIndex } }
-        filterCardHidden.value = firstVisibleItemIndex > 0
+
+        if (firstVisibleItemIndex > 0) {
+            filterCardHidden.value = true
+
+            topAppBarTitle.value = ComponentType.toString(
+                componentType = GlobalData.getStoreProductTypeSelected(),
+                context = LocalContext.current
+            )
+        } else {
+            filterCardHidden.value = false
+
+            topAppBarTitle.value = stringResource(store_NavBarItem) +
+                    ": " +
+                    ComponentType.toString(
+                        componentType = GlobalData.getStoreProductTypeSelected(),
+                        context = LocalContext.current
+                    )
+        }
     }
 
     if (filterDialogOpen.value) {

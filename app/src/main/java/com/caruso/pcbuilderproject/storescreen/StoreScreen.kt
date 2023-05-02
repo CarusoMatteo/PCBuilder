@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,16 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.componentsclasses.CPU
+import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
-import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
-import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.PSU
-import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
-import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
-import com.caruso.pcbuilderproject.componentsclasses.Motherboard
-import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
+import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.*
@@ -39,7 +35,19 @@ fun StoreScreen(
     navController: NavHostController? = null,
     storeProductTypeSelected: Int = GlobalData.getStoreProductTypeSelected()
 ) {
+    val context = LocalContext.current
+
+    val storeNavBarItem = stringResource(store_NavBarItem)
+
     val serverSettingDialogOpen = remember { mutableStateOf(false) }
+    val topAppBarTitle = remember {
+        mutableStateOf(
+            "$storeNavBarItem: " + ComponentType.toString(
+                componentType = GlobalData.getStoreProductTypeSelected(),
+                context = context
+            )
+        )
+    }
     val filterCardHidden = remember { mutableStateOf(false) }
     val filterDialogOpen = remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -51,18 +59,7 @@ fun StoreScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text =
-                        stringResource(store_NavBarItem) + ": " + when (GlobalData.getStoreProductTypeSelected()) {
-                            CPU -> stringResource(cpu_Text)
-                            MOTHERBOARD -> stringResource(motherboard_Text)
-                            RAM -> stringResource(ram_Text)
-                            GPU -> stringResource(gpu_Text)
-                            STORAGE -> stringResource(storage_Text)
-                            PSU -> stringResource(psu_Text)
-                            else -> stringResource(incorrect_store_index_Error)
-                        }
-
-
+                        text = topAppBarTitle.value
                     )
                 },
                 scrollBehavior = scrollBehavior,
@@ -142,7 +139,8 @@ fun StoreScreen(
                             imagePainter = painterResource(id = R.drawable.cpu_placeholder)
                         )
                     ),
-                    componentsType = CPU
+                    componentsType = CPU,
+                    topAppBarTitle = topAppBarTitle
                 )
             }
 
@@ -209,7 +207,8 @@ fun StoreScreen(
                             usb_c_32_gen2_headerNumber = 1
                         )
                     ),
-                    componentsType = MOTHERBOARD
+                    componentsType = MOTHERBOARD,
+                    topAppBarTitle = topAppBarTitle
                 )
             }
 
