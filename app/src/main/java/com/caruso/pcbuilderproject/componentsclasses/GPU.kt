@@ -1,13 +1,11 @@
 package com.caruso.pcbuilderproject.componentsclasses
 
-import androidx.compose.ui.graphics.painter.Painter
-
 data class GPU(
     override val id: Int,               // id = 1
     override val brand: String,         // brand = "Asus"
     override val name: String,          // name = "TUF"
     override val price: Float,          // price = 1600f
-    override val imagePainter: Painter, // imagePainter = painterResource(id = R.drawable.gpu_placeholder)
+    override val imagePainterId: Int, // imagePainter = painterResource(id = R.drawable.gpu_placeholder)
 
     // Specific
     val chipsetBrand: String,           // chipsetBrand = "NVIDIA"
@@ -23,4 +21,4 @@ data class GPU(
     val _12VHPWR_headerNumber: Int,     // _12VoltHighPower_headerNumber = 1
     val _8Pin_headerNumber: Int,        // _8Pin_headerNumber = 0
     val _6Pin_headerNumber: Int         // _6Pin_headerNumber = 0
-) : Component(id, brand, name, price, imagePainter)
+) : Component(id, brand, name, price, imagePainterId)

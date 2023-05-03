@@ -9,8 +9,15 @@ import androidx.navigation.NavHostController
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.componentsclasses.ComponentType
+import com.caruso.pcbuilderproject.componentsclasses.*
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.cpus
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.gpus
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.motherboards
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.psus
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.rams
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.storages
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -227,7 +234,6 @@ abstract class ServerFunctions {
             scope: CoroutineScope,
             snackbarHostState: SnackbarHostState,
             snackbarMessage: MutableState<String>,
-            //navController: NavHostController?,
             ngrokLink: String = GlobalData.ngrokServerLinkPrefix
                     + GlobalData.ngrokServerLink
                     + GlobalData.ngrokServerLinkSuffix
@@ -261,26 +267,48 @@ abstract class ServerFunctions {
                             )
 
                             if (jsonObject.getString("Empty") != "true") {
+                                cpus.clear()
+
                                 for (i in 1 until jsonObject.length()) {
 
                                     val currentObject: JSONObject = jsonObject["$i"] as JSONObject
 
                                     Log.d("CPUResponse", currentObject.toString())
 
-                                    Log.e(
-                                        "CPUResponse",
-                                        "I'm trying to print the name of the CPU: it's " +
-                                                currentObject.getString("Brand") + " " +
-                                                currentObject.getString("Series") + " " +
-                                                currentObject.getString("Name")
+                                    cpus.add(
+                                        CPU(
+                                            id = currentObject.getString("IdCPU")
+                                                .toInt(),
+                                            brand = currentObject.getString("Brand"),
+                                            series = currentObject.getString("Series"),
+                                            name = currentObject.getString("Name"),
+                                            price = currentObject.getString("Price")
+                                                .toFloat(),
+                                            imagePainterId = R.drawable.cpu_placeholder /*currentObject.getString("ImageURL")*/,
+                                            coreNumber = currentObject.getString("NumberOfCores")
+                                                .toInt(),
+                                            baseClockSpeed = currentObject.getString("ClockSpeed")
+                                                .toFloat(),
+                                            powerConsumption = currentObject.getString("TDP")
+                                                .toInt(),
+                                            architecture = currentObject.getString("Architecture"),
+                                            socket = currentObject.getString("Socket"),
+                                            integratedGraphics = currentObject.getString("IntegratedGraphics") == "1",
+                                            fanIncluded = currentObject.getString("CoolerIncluded") == "1"
+                                        )
                                     )
-
-                                    // IT WORKS!
-                                    // TODO: Save it in the list and print it
                                 }
                             } else {
                                 Log.d("CPUResponse", "No components found")
+                                cpus.clear()
                             }
+
+                            /*
+                            navController?.navigate(BottomBarScreen.StoreScreen.route) {
+                                popUpTo(id = navController.graph.findStartDestination().id)
+                                launchSingleTop = true
+                            }
+                             */
 
                         } catch (e: JSONException) {
                             e.printStackTrace()
@@ -288,6 +316,15 @@ abstract class ServerFunctions {
                     },
                     Response.ErrorListener { error ->
                         Log.e("CPUResponse", "Error is " + error!!.message)
+
+                        when (componentType) {
+                            ComponentType.CPU -> cpus.clear()
+                            ComponentType.MOTHERBOARD -> motherboards.clear()
+                            ComponentType.RAM -> rams.clear()
+                            ComponentType.GPU -> gpus.clear()
+                            ComponentType.STORAGE -> storages.clear()
+                            ComponentType.PSU -> psus.clear()
+                        }
 
                         // Check if the error was caused by the phone being offline or
                         // if the server is inactive.

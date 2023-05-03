@@ -53,7 +53,7 @@ fun ComponentPartsListItem(
             ) {
                 if (component != null) {
                     Image(
-                        painter = component.imagePainter,
+                        painter = painterResource(component.imagePainterId),
                         contentDescription = null,
                         modifier = Modifier.size(100.dp)
                     )
@@ -219,7 +219,7 @@ fun ComponentPartsListItemPreview() {
                         socket = "AM5",
                         integratedGraphics = true,
                         fanIncluded = false,
-                        imagePainter = painterResource(id = R.drawable.cpu_placeholder)
+                        imagePainterId = R.drawable.cpu_placeholder
                     )
                 )
             }

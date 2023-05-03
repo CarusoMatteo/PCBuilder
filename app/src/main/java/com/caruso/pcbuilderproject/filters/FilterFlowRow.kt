@@ -19,7 +19,8 @@ import com.caruso.pcbuilderproject.utilities.GlobalData
 fun FilterFlowRow(
     modifier: Modifier = Modifier,
     component: Int,
-    name: String
+    name: String,
+    somethingWasChanged: MutableState<Boolean>
 ) {
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -54,6 +55,7 @@ fun FilterFlowRow(
                         }
                     },
                     onClick = {
+                        somethingWasChanged.value = true
                         filterActive = !filterActive
                         item.active = !item.active
                     }
@@ -69,7 +71,8 @@ fun FilterFlowRowPreview() {
         Surface {
             FilterFlowRow(
                 component = ComponentType.CPU,
-                name = "Series"
+                name = "Series",
+                somethingWasChanged = remember { mutableStateOf(false) }
             )
         }
     }

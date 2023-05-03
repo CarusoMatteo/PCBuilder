@@ -1,5 +1,6 @@
 package com.caruso.pcbuilderproject.storescreen
 
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,6 +28,7 @@ import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.*
 
+@Suppress("UNCHECKED_CAST")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StoreScreen(
@@ -51,16 +52,6 @@ fun StoreScreen(
     val filterCardHidden = remember { mutableStateOf(false) }
     val filterDialogOpen = remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-
-    if (snackbarHostState != null) {
-        ServerFunctions.getComponents(
-            componentType = CPU,
-            context = context,
-            snackbarHostState = snackbarHostState,
-            snackbarMessage = remember { mutableStateOf("") },
-            scope = rememberCoroutineScope()
-        )
-    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -109,6 +100,17 @@ fun StoreScreen(
         }
     ) { paddingValues ->
 
+        if (snackbarHostState != null) {
+            ServerFunctions.getComponents(
+                componentType = CPU,
+                context = LocalContext.current,
+                snackbarHostState = snackbarHostState,
+                snackbarMessage = remember { mutableStateOf("") },
+                scope = rememberCoroutineScope()
+            )
+        } else
+            Log.e("Error", "SnackbarHostState is null.")
+
         when (storeProductTypeSelected) {
             CPU -> {
                 ComponentStoreScreen(
@@ -117,38 +119,7 @@ fun StoreScreen(
                     filterDialogOpen = filterDialogOpen,
                     navController = navController,
                     snackbarHostState = snackbarHostState,
-                    components = mutableListOf(
-                        CPU(
-                            id = 1,
-                            brand = "AMD",
-                            series = "Ryzen 7",
-                            name = "7800X3D",
-                            price = 520.99f,
-                            coreNumber = 8,
-                            baseClockSpeed = 4.2f,
-                            powerConsumption = 120,
-                            architecture = "Zen 4",
-                            socket = "AM5",
-                            integratedGraphics = true,
-                            fanIncluded = false,
-                            imagePainter = painterResource(id = R.drawable.cpu_placeholder)
-                        ),
-                        CPU(
-                            id = 2,
-                            brand = "Intel",
-                            series = "Core i7",
-                            name = "13700K",
-                            price = 500.99f,
-                            coreNumber = 16,
-                            baseClockSpeed = 3.4f,
-                            powerConsumption = 125,
-                            architecture = "Raptor Lake",
-                            socket = "LGA1700",
-                            integratedGraphics = true,
-                            fanIncluded = false,
-                            imagePainter = painterResource(id = R.drawable.cpu_placeholder)
-                        )
-                    ),
+                    components = ComponentsList.cpus as MutableList<Component>,
                     componentsType = CPU,
                     topAppBarTitle = topAppBarTitle
                 )
@@ -167,7 +138,7 @@ fun StoreScreen(
                             brand = "MSI",
                             name = "MPG Z790 CARBON",
                             price = 350.72f,
-                            imagePainter = painterResource(id = R.drawable.motherboard_placeholder),
+                            imagePainterId = R.drawable.motherboard_placeholder,
                             socket = "LGA1700",
                             chipset = "Z790",
                             formFactor = "ATX",
@@ -194,7 +165,7 @@ fun StoreScreen(
                             brand = "MSI",
                             name = "MPG X670E CARBON WIFI",
                             price = 480.00f,
-                            imagePainter = painterResource(id = R.drawable.motherboard_placeholder),
+                            imagePainterId = R.drawable.motherboard_placeholder,
                             socket = "AM5",
                             chipset = "X670E",
                             formFactor = "ATX",
@@ -248,7 +219,10 @@ fun StoreScreen(
 
     if (filterDialogOpen.value) {
         when (GlobalData.getStoreProductTypeSelected()) {
-            CPU -> CPUFilterDialog(filterDialogOpen = filterDialogOpen)
+            CPU -> CPUFilterDialog(
+                filterDialogOpen = filterDialogOpen,
+                navController = navController
+            )
             // ComponentType.MOTHERBOARD -> TODO: MotherboardFilterDialog(filterDialogOpen = filterDialogOpen)
             // ComponentType.RAM -> TODO: RAMFilterDialog(filterDialogOpen = filterDialogOpen)
             // ComponentType.GPU -> TODO: GPUFilterDialog(filterDialogOpen = filterDialogOpen)

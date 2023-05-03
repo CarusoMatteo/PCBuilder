@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,7 +17,7 @@ import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 fun CPUSpecs(
     cpu: CPU
 ) {
-    Column {
+    Column(modifier = Modifier.fillMaxWidth()) {
         SpecListItem(
             leftItem = stringResource(numberOfCores_Text),
             rightItem = cpu.coreNumber.toString()
@@ -29,7 +28,8 @@ fun CPUSpecs(
         )
         SpecListItem(
             leftItem = stringResource(baseClockSpeed_Text),
-            rightItem = cpu.baseClockSpeed.toString()
+            rightItem = cpu.baseClockSpeed.toString(),
+            unitOfMeasurement = "GHz"
         )
         Divider(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
@@ -37,7 +37,8 @@ fun CPUSpecs(
         )
         SpecListItem(
             leftItem = stringResource(powerConsumption_Text),
-            rightItem = cpu.powerConsumption.toString()
+            rightItem = cpu.powerConsumption.toString(),
+            unitOfMeasurement = "W"
         )
         Divider(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
@@ -96,7 +97,7 @@ fun CPUSpecsPreview() {
                         socket = "AM5",
                         integratedGraphics = true,
                         fanIncluded = false,
-                        imagePainter = painterResource(id = R.drawable.cpu_placeholder)
+                        imagePainterId = R.drawable.cpu_placeholder
                     )
                 )
             }

@@ -1,5 +1,8 @@
 package com.caruso.pcbuilderproject.storescreen
 
+import android.os.Handler
+import android.os.Looper
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -16,9 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.caruso.pcbuilderproject.R.string.store_NavBarItem
-import com.caruso.pcbuilderproject.componentsclasses.Component
-import com.caruso.pcbuilderproject.componentsclasses.ComponentType
+import com.caruso.pcbuilderproject.R.string.*
+import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
@@ -111,16 +113,58 @@ fun ComponentStoreScreen(
                 Spacer(modifier = Modifier.height(10.dp))
             }
 
-            items(items = components) { item ->
-                ComponentProductCard(
-                    modifier = Modifier.fillMaxWidth(0.9f),
-                    nameSize = MaterialTheme.typography.titleMedium,
-                    component = item,
-                    navController = navController,
-                    snackbarHostState = snackbarHostState
-                )
+            if (components.isNotEmpty()) {
+                items(items = components) { item ->
+                    ComponentProductCard(
+                        modifier = Modifier.fillMaxWidth(0.9f),
+                        nameSize = MaterialTheme.typography.titleMedium,
+                        component = item,
+                        navController = navController,
+                        snackbarHostState = snackbarHostState
+                    )
 
-                Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+            } else {
+                item {
+                    var noItemsFoundCardVisible by remember { mutableStateOf(false) }
+
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        noItemsFoundCardVisible = true
+                    }, 200)
+
+                    AnimatedVisibility(visible = noItemsFoundCardVisible) {
+                        Card(
+                            modifier = Modifier.fillMaxWidth(0.9f),
+                        ) {
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(all = 20.dp)
+                            ) {
+                                Text(text = stringResource(noItemsFound_Text))
+                                Button(onClick = {
+                                    GlobalData.getActiveFilters()
+                                        .filter { it.component == componentsType }
+                                        .forEach {
+                                            it.active = false
+                                        }
+
+                                    navController?.navigate(BottomBarScreen.StoreScreen.route) {
+                                        popUpTo(id = navController.graph.findStartDestination().id)
+                                        launchSingleTop = true
+                                    }
+                                }) {
+                                    Text(text = stringResource(clearFilters_Button))
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+                    }
+                }
             }
         }
 
@@ -147,7 +191,10 @@ fun ComponentStoreScreen(
 
     if (filterDialogOpen.value) {
         when (GlobalData.getStoreProductTypeSelected()) {
-            CPU -> CPUFilterDialog(filterDialogOpen = filterDialogOpen)
+            CPU -> CPUFilterDialog(
+                filterDialogOpen = filterDialogOpen,
+                navController = navController
+            )
             // ComponentType.MOTHERBOARD -> TODO: MotherboardFilterDialog(filterDialogOpen = filterDialogOpen)
             // ComponentType.RAM -> TODO: RAMFilterDialog(filterDialogOpen = filterDialogOpen)
             // ComponentType.GPU -> TODO: GPUFilterDialog(filterDialogOpen = filterDialogOpen)

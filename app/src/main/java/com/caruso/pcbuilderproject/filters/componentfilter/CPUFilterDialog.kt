@@ -16,22 +16,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.filters.FilterFlowRow
 import com.caruso.pcbuilderproject.filters.FilterListHeader
+import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun CPUFilterDialog(
-    filterDialogOpen: MutableState<Boolean>
+    filterDialogOpen: MutableState<Boolean>,
+    navController: NavHostController?
 ) {
+    val somethingWasChanged = remember { mutableStateOf(false) }
+
     Dialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
         onDismissRequest = {
             filterDialogOpen.value = false
+            if (somethingWasChanged.value)
+                navController?.navigate(BottomBarScreen.StoreScreen.route) {
+                    popUpTo(id = navController.graph.findStartDestination().id)
+                    launchSingleTop = true
+                }
         },
     ) {
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -45,6 +56,11 @@ fun CPUFilterDialog(
                     navigationIcon = {
                         IconButton(onClick = {
                             filterDialogOpen.value = false
+                            if (somethingWasChanged.value)
+                                navController?.navigate(BottomBarScreen.StoreScreen.route) {
+                                    popUpTo(id = navController.graph.findStartDestination().id)
+                                    launchSingleTop = true
+                                }
                         }) {
                             Icon(
                                 imageVector = Icons.Default.ArrowBack,
@@ -69,7 +85,8 @@ fun CPUFilterDialog(
 
                 FilterFlowRow(
                     component = CPU,
-                    name = stringResource(brand_Text)
+                    name = stringResource(brand_Text),
+                    somethingWasChanged = somethingWasChanged
                 )
 
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
@@ -80,7 +97,8 @@ fun CPUFilterDialog(
 
                 FilterFlowRow(
                     component = CPU,
-                    name = stringResource(series_Text)
+                    name = stringResource(series_Text),
+                    somethingWasChanged = somethingWasChanged
                 )
 
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
@@ -91,7 +109,8 @@ fun CPUFilterDialog(
 
                 FilterFlowRow(
                     component = CPU,
-                    name = stringResource(architecture_Text)
+                    name = stringResource(architecture_Text),
+                    somethingWasChanged = somethingWasChanged
                 )
 
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
@@ -102,7 +121,8 @@ fun CPUFilterDialog(
 
                 FilterFlowRow(
                     component = CPU,
-                    name = stringResource(socket_Text)
+                    name = stringResource(socket_Text),
+                    somethingWasChanged = somethingWasChanged
                 )
 
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
@@ -113,7 +133,8 @@ fun CPUFilterDialog(
 
                 FilterFlowRow(
                     component = CPU,
-                    name = stringResource(integratedGraphics_Text)
+                    name = stringResource(integratedGraphics_Text),
+                    somethingWasChanged = somethingWasChanged
                 )
             }
         }
@@ -125,9 +146,8 @@ fun CPUFilterDialog(
 fun CPUFilterDialogPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
         CPUFilterDialog(
-            filterDialogOpen = remember {
-                mutableStateOf(true)
-            }
+            filterDialogOpen = remember { mutableStateOf(true) },
+            navController = null
         )
     }
 }

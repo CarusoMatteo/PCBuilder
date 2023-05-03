@@ -1,13 +1,11 @@
 package com.caruso.pcbuilderproject.componentsclasses
 
-import androidx.compose.ui.graphics.painter.Painter
-
 data class Motherboard(
     override var id: Int,               // id = 1
     override var brand: String,         // brand = "MSI"
     override var name: String,          // name = "MPG Z790 CARBON"
     override var price: Float,          // price = 350.72f
-    override var imagePainter: Painter, // imagePainter = painterResource(id = R.drawable.motherboard_placeholder)
+    override var imagePainterId: Int, // imagePainter = painterResource(id = R.drawable.motherboard_placeholder)
 
     // Specific
     var socket: String,                 // socket = "LGA1700"
@@ -40,4 +38,4 @@ data class Motherboard(
     var usb_a_2_headerNumber: Int,      // usb_a_2_headerNumber = 2
     var usb_a_32_gen1_headerNumber: Int,// usb_a_32_gen1_headerNumber = 1
     var usb_c_32_gen2_headerNumber: Int // usb_c_32_gen2_headerNumber = 1
-) : Component(id, brand, name, price, imagePainter)
+) : Component(id, brand, name, price, imagePainterId)

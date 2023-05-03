@@ -21,7 +21,7 @@ abstract class GlobalData {
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "dc5f-93-40-208-13"
+        var ngrokServerLink = "5dad-93-40-208-13"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store

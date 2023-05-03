@@ -1,13 +1,11 @@
 package com.caruso.pcbuilderproject.componentsclasses
 
-import androidx.compose.ui.graphics.painter.Painter
-
 class CPU(
     override val id: Int,               // id = 1
     override val brand: String,         // brand = "AMD"
     override val name: String,          // name = "7800X3D"
     override val price: Float,          // price = 520.99f
-    override val imagePainter: Painter, // imagePainter = painterResource(id = R.drawable.cpu_placeholder)
+    override val imagePainterId: Int, // imagePainter = painterResource(id = R.drawable.cpu_placeholder)
 
     // Specific
     val series: String,                 // series = "Ryzen 7"
@@ -18,4 +16,4 @@ class CPU(
     val socket: String,                 // socket = "AM5"
     val integratedGraphics: Boolean,    // integratedGraphics = true
     val fanIncluded: Boolean,           // fanIncluded = false
-) : Component(id, brand, name, price, imagePainter)
+) : Component(id, brand, name, price, imagePainterId)

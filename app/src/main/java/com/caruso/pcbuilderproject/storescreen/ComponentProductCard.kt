@@ -72,7 +72,7 @@ fun ComponentProductCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = component.imagePainter,
+                    painter = painterResource( component.imagePainterId),
                     contentDescription = null,
                     modifier = Modifier.size(100.dp)
                 )
@@ -206,7 +206,7 @@ fun ComponentProductCardPreview() {
                 socket = "AM5",
                 integratedGraphics = true,
                 fanIncluded = false,
-                imagePainter = painterResource(id = R.drawable.cpu_placeholder)
+                imagePainterId = R.drawable.cpu_placeholder
             )
         )
     }

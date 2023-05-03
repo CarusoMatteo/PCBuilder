@@ -89,4 +89,6 @@
     <string name="incompatible_cpu_description3">).</string>
     <string name="integratedGraphics_Text">Integrated graphics</string>
     <string name="search_Button">Search</string>
+    <string name="noItemsFound_Text">No items found.</string>
+    <string name="clearFilters_Button">Clear filters</string>
 </resources>
