@@ -3,8 +3,8 @@ package com.caruso.pcbuilderproject.partslistscreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -174,11 +174,11 @@ fun ComponentPartsListItem(
                                     Text(text = stringResource(remove_Button))
                                 } else {
                                     Icon(
-                                        imageVector = Icons.Filled.Add,
+                                        imageVector = Icons.Filled.Search,
                                         contentDescription = null,
                                         modifier = Modifier.padding(end = 8.dp)
                                     )
-                                    Text(text = stringResource(add_Button))
+                                    Text(text = stringResource(search_Button))
                                 }
                             }
                         }

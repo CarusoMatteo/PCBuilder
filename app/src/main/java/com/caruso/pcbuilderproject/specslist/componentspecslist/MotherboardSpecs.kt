@@ -28,7 +28,7 @@ fun MotherboardSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         SpecListItem(
-            leftItem = stringResource(chipset_Label),
+            leftItem = stringResource(chipset_Text),
             rightItem = motherboard.chipset
         )
         Divider(
@@ -36,7 +36,7 @@ fun MotherboardSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         SpecListItem(
-            leftItem = stringResource(formFactor_Label),
+            leftItem = stringResource(formFactor_Text),
             rightItem = motherboard.formFactor
         )
         Divider(
@@ -44,7 +44,7 @@ fun MotherboardSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         SpecListItem(
-            leftItem = stringResource(memoryType_Label),
+            leftItem = stringResource(memoryType_Text),
             rightItem = motherboard.memoryType
         )
         Divider(
@@ -52,7 +52,7 @@ fun MotherboardSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         SpecListItem(
-            leftItem = stringResource(memorySlotNumber_Label),
+            leftItem = stringResource(memorySlotNumber_Text),
             rightItem = motherboard.memorySlotNumber.toString()
         )
         Divider(
@@ -71,8 +71,8 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(wifiIncluded_Label),
-                rightItem = stringResource(id = no_Label)
+                leftItem = stringResource(wifiIncluded_Text),
+                rightItem = stringResource(id = no_Text)
             )
         } else {
             Divider(
@@ -81,7 +81,7 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(wifiVersion_Label),
+                leftItem = stringResource(wifiVersion_Text),
                 rightItem = motherboard.wifiVersion.toString()
             )
         }
@@ -93,8 +93,8 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(bluetoothIncluded_Label),
-                rightItem = stringResource(id = no_Label)
+                leftItem = stringResource(bluetoothIncluded_Text),
+                rightItem = stringResource(id = no_Text)
             )
         } else {
             Divider(
@@ -103,7 +103,7 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(bluetoothVersion_Label),
+                leftItem = stringResource(bluetoothVersion_Text),
                 rightItem = motherboard.bluetoothVersion.toString()
             )
         }
@@ -115,7 +115,7 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(pcie_x16_5_0_slots_Label),
+                leftItem = stringResource(pcie_x16_5_0_slots_Text),
                 rightItem = motherboard.pcie_x16_5_slotNumber.toString()
             )
         }
@@ -127,7 +127,7 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(pcie_x16_4_0_slots_Label),
+                leftItem = stringResource(pcie_x16_4_0_slots_Text),
                 rightItem = motherboard.pcie_x16_4_slotNumber.toString()
             )
         }
@@ -139,7 +139,7 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(pcie_x8_4_0_slots_Label),
+                leftItem = stringResource(pcie_x8_4_0_slots_Text),
                 rightItem = motherboard.pcie_x8_4_slotNumber.toString()
             )
         }
@@ -151,7 +151,7 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(pcie_x4_4_0_slots_Label),
+                leftItem = stringResource(pcie_x4_4_0_slots_Text),
                 rightItem = motherboard.pcie_x4_4_slotNumber.toString()
             )
         }
@@ -163,7 +163,7 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(pcie_x1_4_0_slots_Label),
+                leftItem = stringResource(pcie_x1_4_0_slots_Text),
                 rightItem = motherboard.pcie_x1_4_slotNumber.toString()
             )
         }
@@ -175,7 +175,7 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(m_2_nvme_5_0_slots_Label),
+                leftItem = stringResource(m_2_nvme_5_0_slots_Text),
                 rightItem = motherboard.m2_nvme_5_slotNumber.toString()
             )
         }
@@ -187,7 +187,7 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(m_2_nvme_4_0_slots_Label),
+                leftItem = stringResource(m_2_nvme_4_0_slots_Text),
                 rightItem = motherboard.m2_nvme_4_slotNumber.toString()
             )
         }
@@ -199,7 +199,7 @@ fun MotherboardSpecs(
             )
 
             SpecListItem(
-                leftItem = stringResource(m_2_sata_slots_Label),
+                leftItem = stringResource(m_2_sata_slots_Text),
                 rightItem = motherboard.m2_sata_slotNumber.toString()
             )
         }
@@ -210,7 +210,7 @@ fun MotherboardSpecs(
         )
 
         SpecListItem(
-            leftItem = stringResource(sata_ports_Label),
+            leftItem = stringResource(sata_ports_Text),
             rightItem = motherboard.sata_portNumber.toString()
         )
 
@@ -220,7 +220,7 @@ fun MotherboardSpecs(
         )
 
         SpecListItem(
-            leftItem = stringResource(usb_a_2_0_headers_Label),
+            leftItem = stringResource(usb_a_2_0_headers_Text),
             rightItem = motherboard.usb_a_2_headerNumber.toString()
         )
 
@@ -230,7 +230,7 @@ fun MotherboardSpecs(
         )
 
         SpecListItem(
-            leftItem = stringResource(usb_a_3_2_gen_1_headers_Label),
+            leftItem = stringResource(usb_a_3_2_gen_1_headers_Text),
             rightItem = motherboard.usb_a_32_gen1_headerNumber.toString()
         )
 
@@ -240,7 +240,7 @@ fun MotherboardSpecs(
         )
 
         SpecListItem(
-            leftItem = stringResource(usb_c_3_2_gen_2_headers_Label),
+            leftItem = stringResource(usb_c_3_2_gen_2_headers_Text),
             rightItem = motherboard.usb_c_32_gen2_headerNumber.toString()
         )
     }

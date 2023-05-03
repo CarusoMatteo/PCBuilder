@@ -2,12 +2,13 @@ package com.caruso.pcbuilderproject.filters
 
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType
 
-data class Filter(
+class Filter(
     val name: String = "",
+    var nameNotLocalized: String = "",
     val value: String = "",
     var component: Int = ComponentType.CPU,
     var active: Boolean = false,
-    var sql: String = ""
+    var valueNotLocalized: String = value
 ) {
     override fun toString(): String {
         return "{Name: \"${

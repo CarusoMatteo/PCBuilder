@@ -10,6 +10,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.caruso.pcbuilderproject.R.string.*
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -214,6 +215,95 @@ abstract class ServerFunctions {
                             }
 
                             loadingIconVisible.value = false
+                        }.start()
+                    }) {}
+
+            queue.add(request)
+        }
+
+        fun getComponents(
+            componentType: Int,
+            context: Context,
+            scope: CoroutineScope,
+            snackbarHostState: SnackbarHostState,
+            snackbarMessage: MutableState<String>,
+            //navController: NavHostController?,
+            ngrokLink: String = GlobalData.ngrokServerLinkPrefix
+                    + GlobalData.ngrokServerLink
+                    + GlobalData.ngrokServerLinkSuffix
+        ) {
+            var url = when (componentType) {
+                ComponentType.CPU -> "$ngrokLink/SelectFromCPU.php?"
+                else -> ""
+            }
+            val activeFilters =
+                GlobalData.getActiveFilters().filter { it.component == componentType }
+
+            activeFilters.forEach { item ->
+                url += "${item.nameNotLocalized}${item.valueNotLocalized.replace(" ", "")}=1&"
+            }
+
+            Log.d("CPUResponse", "Attempting to ask this link: $url")
+
+            val queue = Volley.newRequestQueue(context)
+
+            val request: StringRequest =
+                object : StringRequest(
+                    url,
+                    Response.Listener { response ->
+                        try {
+                            val jsonObject = JSONObject(response)
+                            //val result = jsonObject.getString("UsernameAlreadyUsed")
+
+                            Log.d(
+                                "CPUResponse",
+                                "The length of the JsonObject is ${jsonObject.length()}, ${jsonObject.length() - 1} are components."
+                            )
+
+                            if (jsonObject.getString("Empty") != "true") {
+                                for (i in 1 until jsonObject.length()) {
+
+                                    val currentObject: JSONObject = jsonObject["$i"] as JSONObject
+
+                                    Log.d("CPUResponse", currentObject.toString())
+
+                                    Log.e(
+                                        "CPUResponse",
+                                        "I'm trying to print the name of the CPU: it's " +
+                                                currentObject.getString("Brand") + " " +
+                                                currentObject.getString("Series") + " " +
+                                                currentObject.getString("Name")
+                                    )
+
+                                    // IT WORKS!
+                                    // TODO: Save it in the list and print it
+                                }
+                            } else {
+                                Log.d("CPUResponse", "No components found")
+                            }
+
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    },
+                    Response.ErrorListener { error ->
+                        Log.e("CPUResponse", "Error is " + error!!.message)
+
+                        // Check if the error was caused by the phone being offline or
+                        // if the server is inactive.
+                        Thread {
+                            if (!isInternetReachable()) {
+                                snackbarMessage.value =
+                                    context.getString(offlineWarning_Message)
+                            } else {
+                                snackbarMessage.value = context.getString(serverError_Message)
+                            }
+
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    snackbarMessage.value
+                                )
+                            }
                         }.start()
                     }) {}
 

@@ -75,13 +75,13 @@ fun ComponentStoreScreen(
                         LazyRow(
                             modifier = Modifier.fillMaxWidth(),
                         ) {
-                            items(items = GlobalData.filterList, itemContent = { item ->
-                                if (item.component == componentsType && item.active) {
+                            items(items = GlobalData.getActiveFilters(), itemContent = { item ->
+                                if (item.component == componentsType) {
                                     FilterChip(
                                         selected = true,
                                         label = {
                                             Text(
-                                                text = item.value
+                                                text = item.name + ": " + item.value
                                             )
                                         },
                                         leadingIcon = {
@@ -166,7 +166,7 @@ fun ComponentStoreScreenPreview() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            StoreScreen(storeProductTypeSelected = 1)
+            StoreScreen(storeProductTypeSelected = CPU)
         }
     }
 }

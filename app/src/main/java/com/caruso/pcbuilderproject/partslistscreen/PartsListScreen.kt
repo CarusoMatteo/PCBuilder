@@ -4,6 +4,8 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -85,7 +87,8 @@ fun PartsListScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(bottom = 80.dp),
+                .padding(bottom = 80.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(10.dp))
@@ -105,7 +108,8 @@ fun PartsListScreen(
                 }
             ) {
                 LazyRow(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(start = 10.dp, end = 10.dp)
 
                 ) {
@@ -163,55 +167,7 @@ fun PartsListScreen(
                 componentType = ComponentType.MOTHERBOARD
             )
 
-            /*
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background),
-                contentAlignment = Alignment.Center
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-
-
-                    Text(
-                        text = "PARTS LIST",
-                        fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(0.9f),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Button(onClick = {
-                            if (navController != null) {
-                                GlobalData.changeStoreProductTypeSelected(
-                                    newValue = 1,
-                                    navController = navController
-                                )
-                            }
-                        }) {
-                            Text(text = "Go to CPU")
-                        }
-
-                        Button(onClick = {
-                            if (navController != null) {
-                                GlobalData.changeStoreProductTypeSelected(
-                                    newValue = 2,
-                                    navController = navController
-                                )
-                            }
-                        }) {
-                            Text(text = "Go to Motherboard")
-                        }
-                    }
-                }
-            }
-             */
+            Spacer(modifier = Modifier.height(10.dp))
         }
     }
 

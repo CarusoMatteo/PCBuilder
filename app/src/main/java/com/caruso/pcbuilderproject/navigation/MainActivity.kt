@@ -40,87 +40,112 @@ fun initializeFilters(context: Context) {
     FilterList.brandAMD = Filter(
         name = context.getString(brand_Text),
         value = "AMD",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "brand"
     )
     FilterList.brandIntel = Filter(
         name = context.getString(brand_Text),
         value = "Intel",
-        component = ComponentType.CPU
-    )
-    FilterList.seriesRyzen3 = Filter(
-        name = context.getString(series_Text),
-        value = "Ryzen 3",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "brand"
     )
     FilterList.seriesRyzen5 = Filter(
         name = context.getString(series_Text),
         value = "Ryzen 5",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "series"
     )
     FilterList.seriesRyzen7 = Filter(
         name = context.getString(series_Text),
         value = "Ryzen 7",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "series"
     )
     FilterList.seriesRyzen9 = Filter(
         name = context.getString(series_Text),
         value = "Ryzen 9",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "series"
     )
     FilterList.seriesCoreI3 = Filter(
         name = context.getString(series_Text),
         value = "Core i3",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "series"
     )
     FilterList.seriesCoreI5 = Filter(
         name = context.getString(series_Text),
         value = "Core i5",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "series"
     )
     FilterList.seriesCoreI7 = Filter(
         name = context.getString(series_Text),
         value = "Core i7",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "series"
     )
     FilterList.seriesCoreI9 = Filter(
         name = context.getString(series_Text),
         value = "Core i9",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "series"
     )
     FilterList.architectureZen3 = Filter(
         name = context.getString(architecture_Text),
         value = "Zen 3",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "architecture"
     )
     FilterList.architectureZen4 = Filter(
         name = context.getString(architecture_Text),
         value = "Zen 4",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "architecture"
     )
     FilterList.architectureAlderLake = Filter(
         name = context.getString(architecture_Text),
         value = "Alder Lake",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "architecture"
     )
-    FilterList.architectureRocketLake = Filter(
+    FilterList.architectureRaptorLake = Filter(
         name = context.getString(architecture_Text),
-        value = "Rocket Lake",
-        component = ComponentType.CPU
+        value = "Raptor Lake",
+        component = ComponentType.CPU,
+        nameNotLocalized = "architecture"
     )
     FilterList.socketAM4 = Filter(
         name = context.getString(socket_Text),
         value = "AM4",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "socket"
     )
     FilterList.socketAM5 = Filter(
         name = context.getString(socket_Text),
         value = "AM5",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "socket"
     )
     FilterList.socketLGA1700 = Filter(
         name = context.getString(socket_Text),
         value = "LGA1700",
-        component = ComponentType.CPU
+        component = ComponentType.CPU,
+        nameNotLocalized = "socket"
+    )
+    FilterList.integratedGraphicsYes = Filter(
+        name = context.getString(integratedGraphics_Text),
+        value = context.getString(yes_Text),
+        component = ComponentType.CPU,
+        nameNotLocalized = "integratedGraphics",
+        valueNotLocalized ="Yes"
+    )
+    FilterList.integratedGraphicsNo = Filter(
+        name = context.getString(integratedGraphics_Text),
+        value = context.getString(no_Text),
+        component = ComponentType.CPU,
+        nameNotLocalized = "integratedGraphics",
+        valueNotLocalized ="No"
     )
 
     // endregion

@@ -20,7 +20,7 @@ fun CPUSpecs(
 ) {
     Column {
         SpecListItem(
-            leftItem = stringResource(numberOfCores_Label),
+            leftItem = stringResource(numberOfCores_Text),
             rightItem = cpu.coreNumber.toString()
         )
         Divider(
@@ -28,7 +28,7 @@ fun CPUSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         SpecListItem(
-            leftItem = stringResource(baseClockSpeed_Label),
+            leftItem = stringResource(baseClockSpeed_Text),
             rightItem = cpu.baseClockSpeed.toString()
         )
         Divider(
@@ -36,7 +36,7 @@ fun CPUSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         SpecListItem(
-            leftItem = stringResource(powerConsumption_Label),
+            leftItem = stringResource(powerConsumption_Text),
             rightItem = cpu.powerConsumption.toString()
         )
         Divider(
@@ -57,9 +57,9 @@ fun CPUSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         SpecListItem(
-            leftItem = stringResource(integratedGraphics_Label),
-            rightItem = if (cpu.integratedGraphics) stringResource(yes_Label) else stringResource(
-                no_Label
+            leftItem = stringResource(integratedGraphics_Text),
+            rightItem = if (cpu.integratedGraphics) stringResource(yes_Text) else stringResource(
+                no_Text
             )
         )
         Divider(
@@ -67,8 +67,8 @@ fun CPUSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         SpecListItem(
-            leftItem = stringResource(coolerIncluded_Label),
-            rightItem = if (cpu.fanIncluded) stringResource(yes_Label) else stringResource(no_Label)
+            leftItem = stringResource(coolerIncluded_Text),
+            rightItem = if (cpu.fanIncluded) stringResource(yes_Text) else stringResource(no_Text)
         )
     }
 }

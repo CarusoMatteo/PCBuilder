@@ -3,11 +3,14 @@ package com.caruso.pcbuilderproject.filters.componentfilter
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -15,7 +18,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
-import com.caruso.pcbuilderproject.filters.FilterLazyGrid
+import com.caruso.pcbuilderproject.filters.FilterFlowRow
 import com.caruso.pcbuilderproject.filters.FilterListHeader
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
@@ -25,17 +28,18 @@ import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 fun CPUFilterDialog(
     filterDialogOpen: MutableState<Boolean>
 ) {
-    //val context = LocalContext.current
-
     Dialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
         onDismissRequest = {
             filterDialogOpen.value = false
         },
     ) {
+        val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+
         Scaffold(
             modifier = Modifier
-                .fillMaxSize(1f),
+                .fillMaxSize()
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
                 TopAppBar(
                     navigationIcon = {
@@ -48,20 +52,22 @@ fun CPUFilterDialog(
                             )
                         }
                     },
-                    title = { Text(text = stringResource(cpuFilters_Title)) }
+                    title = { Text(text = stringResource(cpuFilters_Title)) },
+                    scrollBehavior = scrollBehavior
                 )
             }
         ) { paddingValues ->
             Column(
                 modifier = Modifier
                     .padding(paddingValues)
-                    .padding(20.dp)
+                    .padding(start = 20.dp, end = 20.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
                 FilterListHeader(
                     text = stringResource(brand_Text)
                 )
 
-                FilterLazyGrid(
+                FilterFlowRow(
                     component = CPU,
                     name = stringResource(brand_Text)
                 )
@@ -72,13 +78,43 @@ fun CPUFilterDialog(
                     text = stringResource(series_Text)
                 )
 
-                FilterLazyGrid(
+                FilterFlowRow(
                     component = CPU,
                     name = stringResource(series_Text)
                 )
 
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
 
+                FilterListHeader(
+                    text = stringResource(architecture_Text)
+                )
+
+                FilterFlowRow(
+                    component = CPU,
+                    name = stringResource(architecture_Text)
+                )
+
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(socket_Text)
+                )
+
+                FilterFlowRow(
+                    component = CPU,
+                    name = stringResource(socket_Text)
+                )
+
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(integratedGraphics_Text)
+                )
+
+                FilterFlowRow(
+                    component = CPU,
+                    name = stringResource(integratedGraphics_Text)
+                )
             }
         }
     }

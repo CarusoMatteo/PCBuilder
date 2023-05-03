@@ -11,7 +11,6 @@ abstract class FilterList {
 
         var brandAMD: Filter = Filter()
         var brandIntel: Filter = Filter()
-        var seriesRyzen3: Filter = Filter()
         var seriesRyzen5: Filter = Filter()
         var seriesRyzen7: Filter = Filter()
         var seriesRyzen9: Filter = Filter()
@@ -22,10 +21,12 @@ abstract class FilterList {
         var architectureZen3: Filter = Filter()
         var architectureZen4: Filter = Filter()
         var architectureAlderLake: Filter = Filter()
-        var architectureRocketLake: Filter = Filter()
+        var architectureRaptorLake: Filter = Filter()
         var socketAM4: Filter = Filter()
         var socketAM5: Filter = Filter()
         var socketLGA1700: Filter = Filter()
+        var integratedGraphicsYes: Filter = Filter()
+        var integratedGraphicsNo: Filter = Filter()
 
         // endregion
 
@@ -48,6 +49,5 @@ abstract class FilterList {
         //region TODO: PSU Filters declaration
 
         //endregion
-
     }
 }

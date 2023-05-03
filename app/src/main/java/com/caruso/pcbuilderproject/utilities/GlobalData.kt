@@ -21,7 +21,7 @@ abstract class GlobalData {
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "d1bc-93-40-208-28"
+        var ngrokServerLink = "dc5f-93-40-208-13"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -37,7 +37,6 @@ abstract class GlobalData {
         val filterList: MutableList<Filter> = mutableListOf(
             FilterList.brandAMD,
             FilterList.brandIntel,
-            FilterList.seriesRyzen3,
             FilterList.seriesRyzen5,
             FilterList.seriesRyzen7,
             FilterList.seriesRyzen9,
@@ -48,11 +47,24 @@ abstract class GlobalData {
             FilterList.architectureZen3,
             FilterList.architectureZen4,
             FilterList.architectureAlderLake,
-            FilterList.architectureRocketLake,
+            FilterList.architectureRaptorLake,
             FilterList.socketAM4,
             FilterList.socketAM5,
-            FilterList.socketLGA1700
+            FilterList.socketLGA1700,
+            FilterList.integratedGraphicsYes,
+            FilterList.integratedGraphicsNo
         )
+
+        fun getActiveFilters(): MutableList<Filter> {
+            val activeFilters: MutableList<Filter> = mutableListOf()
+
+            filterList.forEach {
+                if (it.active)
+                    activeFilters.add(it)
+            }
+
+            return activeFilters
+        }
 
         val incompatibilityList: MutableList<Incompatibility> = mutableListOf(
             IncompatibilityList.wrongSocket

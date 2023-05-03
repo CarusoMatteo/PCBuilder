@@ -52,6 +52,16 @@ fun StoreScreen(
     val filterDialogOpen = remember { mutableStateOf(false) }
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
+    if (snackbarHostState != null) {
+        ServerFunctions.getComponents(
+            componentType = CPU,
+            context = context,
+            snackbarHostState = snackbarHostState,
+            snackbarMessage = remember { mutableStateOf("") },
+            scope = rememberCoroutineScope()
+        )
+    }
+
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
 
@@ -132,7 +142,7 @@ fun StoreScreen(
                             coreNumber = 16,
                             baseClockSpeed = 3.4f,
                             powerConsumption = 125,
-                            architecture = "Rocket Lake",
+                            architecture = "Raptor Lake",
                             socket = "LGA1700",
                             integratedGraphics = true,
                             fanIncluded = false,
