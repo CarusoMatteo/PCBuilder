@@ -1,5 +1,6 @@
 package com.caruso.pcbuilderproject.partslistscreen
 
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -32,6 +33,8 @@ import com.caruso.pcbuilderproject.utilities.*
 fun PartsListScreen(
     navController: NavHostController? = null
 ) {
+    Log.d("PartsList Loading", "Currently loading PartsListScreen.")
+
     val serverSettingDialogOpen = remember { mutableStateOf(false) }
     val filterCardHidden = remember { mutableStateOf(false) }
     val filterDialogOpen = remember { mutableStateOf(false) }

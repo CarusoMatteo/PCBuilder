@@ -1,8 +1,6 @@
 package com.caruso.pcbuilderproject.storescreen
 
-import android.os.Handler
-import android.os.Looper
-import androidx.compose.animation.AnimatedVisibility
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -26,6 +24,7 @@ import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.*
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.noItemsFoundCardVisible
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,6 +94,8 @@ fun ComponentStoreScreen(
                                         onClick = {
                                             item.active = false
 
+                                            GlobalData.askingToReloadStore = true
+
                                             navController?.navigate(BottomBarScreen.StoreScreen.route) {
                                                 popUpTo(id = navController.graph.findStartDestination().id)
                                                 launchSingleTop = true
@@ -113,57 +114,82 @@ fun ComponentStoreScreen(
                 Spacer(modifier = Modifier.height(10.dp))
             }
 
-            if (components.isNotEmpty()) {
-                items(items = components) { item ->
-                    ComponentProductCard(
+            items(items = components) { item ->
+                ComponentProductCard(
+                    modifier = Modifier.fillMaxWidth(0.9f),
+                    nameSize = MaterialTheme.typography.titleMedium,
+                    component = item,
+                    navController = navController,
+                    snackbarHostState = snackbarHostState
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+
+            item {
+                Log.d(
+                    "Change to noItemsFoundCardVisible",
+                    "Checking noItemsFoundCardVisible. It's: $noItemsFoundCardVisible."
+                )
+
+                val serverIsReachable: MutableState<Boolean> = remember { mutableStateOf(true) }
+
+                if (noItemsFoundCardVisible) {
+                    Thread {
+                        serverIsReachable.value = ServerFunctions.isServerReachable()
+                    }.start()
+
+                    Card(
                         modifier = Modifier.fillMaxWidth(0.9f),
-                        nameSize = MaterialTheme.typography.titleMedium,
-                        component = item,
-                        navController = navController,
-                        snackbarHostState = snackbarHostState
-                    )
-
-                    Spacer(modifier = Modifier.height(10.dp))
-                }
-            } else {
-                item {
-                    var noItemsFoundCardVisible by remember { mutableStateOf(false) }
-
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        noItemsFoundCardVisible = true
-                    }, 200)
-
-                    AnimatedVisibility(visible = noItemsFoundCardVisible) {
-                        Card(
-                            modifier = Modifier.fillMaxWidth(0.9f),
+                    ) {
+                        Column(
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(all = 20.dp)
                         ) {
-                            Column(
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(all = 20.dp)
-                            ) {
-                                Text(text = stringResource(noItemsFound_Text))
-                                Button(onClick = {
+                            Text(
+                                text = if (serverIsReachable.value)
+                                    stringResource(noItemsFound_Text)
+                                else
+                                    stringResource(serverError_Message)
+                            )
+
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            Button(onClick = {
+                                if (serverIsReachable.value)
                                     GlobalData.getActiveFilters()
                                         .filter { it.component == componentsType }
-                                        .forEach {
-                                            it.active = false
-                                        }
+                                        .forEach { it.active = false }
 
-                                    navController?.navigate(BottomBarScreen.StoreScreen.route) {
-                                        popUpTo(id = navController.graph.findStartDestination().id)
-                                        launchSingleTop = true
-                                    }
-                                }) {
-                                    Text(text = stringResource(clearFilters_Button))
+                                GlobalData.askingToReloadStore = true
+
+                                navController?.navigate(BottomBarScreen.StoreScreen.route) {
+                                    popUpTo(id = navController.graph.findStartDestination().id)
+                                    launchSingleTop = true
                                 }
+                            }) {
+                                Text(
+                                    // If either the server is not reachable, or there are no active filters for this component type
+                                    text = if ((!serverIsReachable.value) ||
+                                        (GlobalData.getActiveFilters().none {
+                                            it.component == componentsType
+                                        })
+                                    ) {
+                                        stringResource(
+                                            tryAgain_Button
+                                        )
+                                    } else {
+                                        stringResource(clearFilters_Button)
+                                    }
+                                )
                             }
                         }
-
-                        Spacer(modifier = Modifier.height(10.dp))
                     }
+
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
             }
         }
@@ -174,7 +200,7 @@ fun ComponentStoreScreen(
             filterCardHidden.value = true
 
             topAppBarTitle.value = ComponentType.toString(
-                componentType = GlobalData.getStoreProductTypeSelected(),
+                componentType = componentsType,
                 context = LocalContext.current
             )
         } else {
@@ -183,7 +209,7 @@ fun ComponentStoreScreen(
             topAppBarTitle.value = stringResource(store_NavBarItem) +
                     ": " +
                     ComponentType.toString(
-                        componentType = GlobalData.getStoreProductTypeSelected(),
+                        componentType = componentsType,
                         context = LocalContext.current
                     )
         }
@@ -213,7 +239,7 @@ fun ComponentStoreScreenPreview() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            StoreScreen(storeProductTypeSelected = CPU)
+            StoreScreen(componentType = CPU)
         }
     }
 }

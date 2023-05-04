@@ -17,11 +17,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.PSU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
@@ -34,8 +37,10 @@ import com.caruso.pcbuilderproject.utilities.*
 fun StoreScreen(
     snackbarHostState: SnackbarHostState? = null,
     navController: NavHostController? = null,
-    storeProductTypeSelected: Int = GlobalData.getStoreProductTypeSelected()
+    componentType: Int = GlobalData.getStoreProductTypeSelected()
 ) {
+    Log.d("StoreScreen Loading", "Currently loading StoreScreen.")
+
     val context = LocalContext.current
 
     val storeNavBarItem = stringResource(store_NavBarItem)
@@ -100,113 +105,48 @@ fun StoreScreen(
         }
     ) { paddingValues ->
 
-        if (snackbarHostState != null) {
+        if (GlobalData.askingToReloadStore && navController != null) {
             ServerFunctions.getComponents(
-                componentType = CPU,
+                componentType = componentType,
                 context = LocalContext.current,
-                snackbarHostState = snackbarHostState,
-                snackbarMessage = remember { mutableStateOf("") },
-                scope = rememberCoroutineScope()
+                navController = navController
             )
-        } else
-            Log.e("Error", "SnackbarHostState is null.")
 
-        when (storeProductTypeSelected) {
-            CPU -> {
-                ComponentStoreScreen(
-                    paddingValues = paddingValues,
-                    filterCardHidden = filterCardHidden,
-                    filterDialogOpen = filterDialogOpen,
-                    navController = navController,
-                    snackbarHostState = snackbarHostState,
-                    components = ComponentsList.cpus as MutableList<Component>,
-                    componentsType = CPU,
-                    topAppBarTitle = topAppBarTitle
+            GlobalData.askingToReloadStore = false
+        }
+
+        if (ComponentType.isValid(componentType = componentType)) {
+            ComponentStoreScreen(
+                paddingValues = paddingValues,
+                filterCardHidden = filterCardHidden,
+                filterDialogOpen = filterDialogOpen,
+                navController = navController,
+                snackbarHostState = snackbarHostState,
+                components = when (componentType) {
+                    CPU -> ComponentsList.cpus as MutableList<Component>
+                    MOTHERBOARD -> ComponentsList.motherboards as MutableList<Component>
+                    RAM -> ComponentsList.rams as MutableList<Component>
+                    GPU -> ComponentsList.gpus as MutableList<Component>
+                    STORAGE -> ComponentsList.storages as MutableList<Component>
+                    PSU -> ComponentsList.psus as MutableList<Component>
+                    else -> ComponentsList.cpus as MutableList<Component>
+                },
+                componentsType = componentType,
+                topAppBarTitle = topAppBarTitle
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.background),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = stringResource(incorrect_store_index_Error),
+                    fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
-            }
-
-            MOTHERBOARD -> {
-                ComponentStoreScreen(
-                    paddingValues = paddingValues,
-                    filterCardHidden = filterCardHidden,
-                    filterDialogOpen = filterDialogOpen,
-                    navController = navController,
-                    snackbarHostState = snackbarHostState,
-                    components = mutableListOf(
-                        Motherboard(
-                            id = 1,
-                            brand = "MSI",
-                            name = "MPG Z790 CARBON",
-                            price = 350.72f,
-                            imagePainterId = R.drawable.motherboard_placeholder,
-                            socket = "LGA1700",
-                            chipset = "Z790",
-                            formFactor = "ATX",
-                            memoryType = "DDR4",
-                            memorySlotNumber = 4,
-                            maxEthernetSpeed = 2.5f,
-                            wifiVersion = null,
-                            bluetoothVersion = null,
-                            pcie_x16_5_slotNumber = 1,
-                            pcie_x16_4_slotNumber = 1,
-                            pcie_x8_4_slotNumber = 0,
-                            pcie_x4_4_slotNumber = 0,
-                            pcie_x1_4_slotNumber = 0,
-                            m2_nvme_5_slotNumber = 1,
-                            m2_nvme_4_slotNumber = 4,
-                            m2_sata_slotNumber = 0,
-                            sata_portNumber = 6,
-                            usb_a_2_headerNumber = 2,
-                            usb_a_32_gen1_headerNumber = 1,
-                            usb_c_32_gen2_headerNumber = 1
-                        ),
-                        Motherboard(
-                            id = 2,
-                            brand = "MSI",
-                            name = "MPG X670E CARBON WIFI",
-                            price = 480.00f,
-                            imagePainterId = R.drawable.motherboard_placeholder,
-                            socket = "AM5",
-                            chipset = "X670E",
-                            formFactor = "ATX",
-                            memoryType = "DDR5",
-                            memorySlotNumber = 4,
-                            maxEthernetSpeed = 2.5f,
-                            wifiVersion = "6E",
-                            bluetoothVersion = "5.3",
-                            pcie_x16_5_slotNumber = 2,
-                            pcie_x16_4_slotNumber = 1,
-                            pcie_x8_4_slotNumber = 0,
-                            pcie_x4_4_slotNumber = 0,
-                            pcie_x1_4_slotNumber = 0,
-                            m2_nvme_5_slotNumber = 2,
-                            m2_nvme_4_slotNumber = 2,
-                            m2_sata_slotNumber = 0,
-                            sata_portNumber = 6,
-                            usb_a_2_headerNumber = 2,
-                            usb_a_32_gen1_headerNumber = 2,
-                            usb_c_32_gen2_headerNumber = 1
-                        )
-                    ),
-                    componentsType = MOTHERBOARD,
-                    topAppBarTitle = topAppBarTitle
-                )
-            }
-
-            else -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.background),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(incorrect_store_index_Error),
-                        fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                }
             }
         }
     }

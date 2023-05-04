@@ -19,6 +19,10 @@ import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.ps
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.rams
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.storages
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.ngrokServerLink
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.ngrokServerLinkPrefix
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.ngrokServerLinkSuffix
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.noItemsFoundCardVisible
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.json.JSONException
@@ -30,6 +34,8 @@ abstract class ServerFunctions {
     companion object {
         fun isInternetReachable(): Boolean {
             try {
+                Log.d("Is Internet Reachable", "Trying to reach Google.com")
+
                 // URL to a known source
                 val url = URL("https://www.google.com")
 
@@ -41,8 +47,44 @@ abstract class ServerFunctions {
                 @Suppress("UNUSED_VARIABLE") val objData: Any = urlConnect.content
             } catch (e: java.lang.Exception) {
                 e.printStackTrace()
+                Log.d("Is Internet Reachable", "Google.com is not reachable.")
                 return false
             }
+
+            Log.d("Is Internet Reachable", "Google.com is reachable.")
+            return true
+        }
+
+        fun isServerReachable(): Boolean {
+            try {
+                Log.d(
+                    "Is Server Reachable",
+                    "Trying to reach ${ngrokServerLinkPrefix + ngrokServerLink + ngrokServerLinkSuffix}."
+                )
+
+                // URL to a known source
+                val url = URL(ngrokServerLinkPrefix + ngrokServerLink + ngrokServerLinkSuffix)
+
+                // Open a connection to that source
+                val urlConnect: HttpURLConnection = url.openConnection() as HttpURLConnection
+
+                // Trying to retrieve data from the source
+                // If there is no connection, this will trigger an exception
+                @Suppress("UNUSED_VARIABLE") val objData: Any = urlConnect.content
+            } catch (e: java.lang.Exception) {
+                e.printStackTrace()
+
+                Log.d(
+                    "Is Server Reachable",
+                    "${ngrokServerLinkPrefix + ngrokServerLink + ngrokServerLinkSuffix} is not reachable."
+                )
+                return false
+            }
+
+            Log.d(
+                "Is Server Reachable",
+                "${ngrokServerLinkPrefix + ngrokServerLink + ngrokServerLinkSuffix} is reachable."
+            )
             return true
         }
 
@@ -55,9 +97,9 @@ abstract class ServerFunctions {
             snackbarMessage: MutableState<String>,
             navController: NavHostController?,
             loadingIconVisible: MutableState<Boolean>,
-            ngrokLink: String = GlobalData.ngrokServerLinkPrefix
-                    + GlobalData.ngrokServerLink
-                    + GlobalData.ngrokServerLinkSuffix
+            ngrokLink: String = ngrokServerLinkPrefix
+                    + ngrokServerLink
+                    + ngrokServerLinkSuffix
         ) {
             val url = ngrokLink +
                     "/CheckCredentials.php?" +
@@ -152,9 +194,9 @@ abstract class ServerFunctions {
             snackbarMessage: MutableState<String>,
             creatingAccount: MutableState<Boolean>,
             loadingIconVisible: MutableState<Boolean>,
-            ngrokLink: String = GlobalData.ngrokServerLinkPrefix
-                    + GlobalData.ngrokServerLink
-                    + GlobalData.ngrokServerLinkSuffix
+            ngrokLink: String = ngrokServerLinkPrefix
+                    + ngrokServerLink
+                    + ngrokServerLinkSuffix
         ) {
             val url = ngrokLink +
                     "/CreateAccount.php?" +
@@ -231,17 +273,21 @@ abstract class ServerFunctions {
         fun getComponents(
             componentType: Int,
             context: Context,
-            scope: CoroutineScope,
-            snackbarHostState: SnackbarHostState,
-            snackbarMessage: MutableState<String>,
-            ngrokLink: String = GlobalData.ngrokServerLinkPrefix
-                    + GlobalData.ngrokServerLink
-                    + GlobalData.ngrokServerLinkSuffix
+            navController: NavHostController,
+            ngrokLink: String = ngrokServerLinkPrefix
+                    + ngrokServerLink
+                    + ngrokServerLinkSuffix
         ) {
             var url = when (componentType) {
                 ComponentType.CPU -> "$ngrokLink/SelectFromCPU.php?"
+                ComponentType.MOTHERBOARD -> "$ngrokLink/SelectFromMotherboard.php?"
+                ComponentType.RAM -> "$ngrokLink/SelectFromRAM.php?"
+                ComponentType.GPU -> "$ngrokLink/SelectFromGPU.php?"
+                ComponentType.STORAGE -> "$ngrokLink/SelectFromStorage.php?"
+                ComponentType.PSU -> "$ngrokLink/SelectFromPSU.php?"
                 else -> ""
             }
+
             val activeFilters =
                 GlobalData.getActiveFilters().filter { it.component == componentType }
 
@@ -259,7 +305,6 @@ abstract class ServerFunctions {
                     Response.Listener { response ->
                         try {
                             val jsonObject = JSONObject(response)
-                            //val result = jsonObject.getString("UsernameAlreadyUsed")
 
                             Log.d(
                                 "CPUResponse",
@@ -267,7 +312,14 @@ abstract class ServerFunctions {
                             )
 
                             if (jsonObject.getString("Empty") != "true") {
-                                cpus.clear()
+                                noItemsFoundCardVisible = false
+
+                                Log.d(
+                                    "Change to noItemsFoundCardVisible",
+                                    "noItemsFoundCardVisible is now $noItemsFoundCardVisible."
+                                )
+
+                                ComponentsList.clearCPUs()
 
                                 for (i in 1 until jsonObject.length()) {
 
@@ -300,22 +352,44 @@ abstract class ServerFunctions {
                                 }
                             } else {
                                 Log.d("CPUResponse", "No components found")
-                                cpus.clear()
+                                noItemsFoundCardVisible = true
+
+                                Log.d(
+                                    "Change to noItemsFoundCardVisible",
+                                    "noItemsFoundCardVisible is now $noItemsFoundCardVisible."
+                                )
+
+                                ComponentsList.clearCPUs()
                             }
 
-                            /*
-                            navController?.navigate(BottomBarScreen.StoreScreen.route) {
+                            navController.navigate(BottomBarScreen.StoreScreen.route) {
                                 popUpTo(id = navController.graph.findStartDestination().id)
                                 launchSingleTop = true
                             }
-                             */
-
                         } catch (e: JSONException) {
+                            noItemsFoundCardVisible = true
+
+                            Log.d(
+                                "Change to noItemsFoundCardVisible",
+                                "noItemsFoundCardVisible is now $noItemsFoundCardVisible."
+                            )
+
                             e.printStackTrace()
+
+                            navController.navigate(BottomBarScreen.StoreScreen.route) {
+                                popUpTo(id = navController.graph.findStartDestination().id)
+                                launchSingleTop = true
+                            }
                         }
                     },
                     Response.ErrorListener { error ->
                         Log.e("CPUResponse", "Error is " + error!!.message)
+                        noItemsFoundCardVisible = true
+
+                        Log.d(
+                            "Change to noItemsFoundCardVisible",
+                            "noItemsFoundCardVisible is now $noItemsFoundCardVisible."
+                        )
 
                         when (componentType) {
                             ComponentType.CPU -> cpus.clear()
@@ -326,22 +400,10 @@ abstract class ServerFunctions {
                             ComponentType.PSU -> psus.clear()
                         }
 
-                        // Check if the error was caused by the phone being offline or
-                        // if the server is inactive.
-                        Thread {
-                            if (!isInternetReachable()) {
-                                snackbarMessage.value =
-                                    context.getString(offlineWarning_Message)
-                            } else {
-                                snackbarMessage.value = context.getString(serverError_Message)
-                            }
-
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    snackbarMessage.value
-                                )
-                            }
-                        }.start()
+                        navController.navigate(BottomBarScreen.StoreScreen.route) {
+                            popUpTo(id = navController.graph.findStartDestination().id)
+                            launchSingleTop = true
+                        }
                     }) {}
 
             queue.add(request)

@@ -88,4 +88,5 @@
     <string name="search_Button">Cerca</string>
     <string name="noItemsFound_Text">Nessun componente trovato</string>
     <string name="clearFilters_Button">Svuota filtri</string>
+    <string name="tryAgain_Button">Riprova</string>
 </resources>

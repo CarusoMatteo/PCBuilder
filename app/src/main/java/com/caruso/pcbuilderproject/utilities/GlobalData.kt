@@ -21,7 +21,7 @@ abstract class GlobalData {
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "5dad-93-40-208-13"
+        var ngrokServerLink = "75b0-93-40-208-13"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -32,6 +32,9 @@ abstract class GlobalData {
         // If 4: Storage,
         // If 5: PSU
         private var storeProductTypeSelected: Int = ComponentType.CPU
+
+        var askingToReloadStore = true
+        var noItemsFoundCardVisible = false
 
         // List of all possible filters
         val filterList: MutableList<Filter> = mutableListOf(
@@ -90,6 +93,7 @@ abstract class GlobalData {
             navController: NavHostController,
         ) {
             storeProductTypeSelected = newValue
+            askingToReloadStore = true
 
             navController.navigate(BottomBarScreen.StoreScreen.route) {
                 popUpTo(id = navController.graph.findStartDestination().id)

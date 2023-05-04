@@ -24,6 +24,7 @@ import com.caruso.pcbuilderproject.filters.FilterFlowRow
 import com.caruso.pcbuilderproject.filters.FilterListHeader
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import com.caruso.pcbuilderproject.utilities.GlobalData
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -38,11 +39,14 @@ fun CPUFilterDialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
         onDismissRequest = {
             filterDialogOpen.value = false
-            if (somethingWasChanged.value)
+            if (somethingWasChanged.value) {
+                GlobalData.askingToReloadStore = true
+
                 navController?.navigate(BottomBarScreen.StoreScreen.route) {
                     popUpTo(id = navController.graph.findStartDestination().id)
                     launchSingleTop = true
                 }
+            }
         },
     ) {
         val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -56,11 +60,13 @@ fun CPUFilterDialog(
                     navigationIcon = {
                         IconButton(onClick = {
                             filterDialogOpen.value = false
-                            if (somethingWasChanged.value)
+                            if (somethingWasChanged.value){
+                                GlobalData.askingToReloadStore = true
+
                                 navController?.navigate(BottomBarScreen.StoreScreen.route) {
                                     popUpTo(id = navController.graph.findStartDestination().id)
                                     launchSingleTop = true
-                                }
+                                }}
                         }) {
                             Icon(
                                 imageVector = Icons.Default.ArrowBack,

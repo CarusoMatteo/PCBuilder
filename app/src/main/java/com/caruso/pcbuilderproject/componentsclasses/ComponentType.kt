@@ -34,5 +34,11 @@ abstract class ComponentType {
                     else -> "Not valid"
                 }
         }
+
+        fun isValid(componentType: Int): Boolean {
+            return (componentType == 0) || (componentType == 1) ||
+                    (componentType == 2) || (componentType == 3) ||
+                    (componentType == 4) || (componentType == 5)
+        }
     }
 }

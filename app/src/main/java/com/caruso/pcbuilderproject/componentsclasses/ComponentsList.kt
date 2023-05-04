@@ -2,12 +2,12 @@ package com.caruso.pcbuilderproject.componentsclasses
 
 class ComponentsList {
     companion object {
-        var cpus: MutableList<CPU> = mutableListOf()
-        var motherboards: MutableList<Motherboard> = mutableListOf()
-        var rams: MutableList<RAM> = mutableListOf()
-        var gpus: MutableList<GPU> = mutableListOf()
-        var storages: MutableList<Storage> = mutableListOf()
-        var psus: MutableList<PSU> = mutableListOf()
+        var cpus = mutableListOf<CPU>()
+        var motherboards = mutableListOf<Motherboard>()
+        var rams = mutableListOf<RAM>()
+        var gpus = mutableListOf<GPU>()
+        var storages = mutableListOf<Storage>()
+        var psus = mutableListOf<PSU>()
 
         fun clearCPUs() {
             cpus = mutableListOf()

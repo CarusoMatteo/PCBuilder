@@ -91,4 +91,5 @@
     <string name="search_Button">Search</string>
     <string name="noItemsFound_Text">No items found.</string>
     <string name="clearFilters_Button">Clear filters</string>
+    <string name="tryAgain_Button">Try Again</string>
 </resources>
