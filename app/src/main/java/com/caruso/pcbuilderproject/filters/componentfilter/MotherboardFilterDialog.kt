@@ -24,7 +24,7 @@ import com.caruso.pcbuilderproject.filters.FilterFlowRow
 import com.caruso.pcbuilderproject.filters.FilterListHeader
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
-import com.caruso.pcbuilderproject.utilities.GlobalData
+import com.caruso.pcbuilderproject.utilities.ServerFunctions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -40,7 +40,7 @@ fun MotherboardFilterDialog(
         onDismissRequest = {
             filterDialogOpen.value = false
             if (somethingWasChanged.value) {
-                GlobalData.askingToReloadStore = true
+                ServerFunctions.askingToReloadStore = true
 
                 navController?.navigate(BottomBarScreen.StoreScreen.route) {
                     popUpTo(id = navController.graph.findStartDestination().id)
@@ -61,7 +61,7 @@ fun MotherboardFilterDialog(
                         IconButton(onClick = {
                             filterDialogOpen.value = false
                             if (somethingWasChanged.value) {
-                                GlobalData.askingToReloadStore = true
+                                ServerFunctions.askingToReloadStore = true
 
                                 navController?.navigate(BottomBarScreen.StoreScreen.route) {
                                     popUpTo(id = navController.graph.findStartDestination().id)

@@ -79,7 +79,7 @@
     <string name="ok_Text">OK</string>
     <string name="motherboard_Text">Scheda madre</string>
     <string name="storage_Text">Archiviazione</string>
-    <string name="cpuFilters_Title">Filtri CPU</string>
+    <string name="cpuFilters_Title">Filtri Processori</string>
     <string name="incompatible_cpu">CPU incompatibile</string>
     <string name="incompatible_cpu_description1">Il socket della CPU (</string>
     <string name="incompatible_cpu_description2">) è diverso dal socket della Scheda madre (</string>
@@ -91,5 +91,11 @@
     <string name="tryAgain_Button">Riprova</string>
     <string name="anyPcie5ExpansionSlot_Text">Slot di espansione PCIe 5.0 presente</string>
     <string name="anyNvmeM25Slot_Text">Slot di archiviazione NVMe M.2 5.0 presente</string>
-    <string name="motherboardFilters_Title">Filtri Scheda madre</string>
+    <string name="motherboardFilters_Title">Filtri Schede madri</string>
+    <string name="cpus_Text">Processori</string>
+    <string name="motherboards_Text">Schede madri</string>
+    <string name="rams_Text">Memorie RAM</string>
+    <string name="gpus_Text">Schede video</string>
+    <string name="storages_Text">Archiviazioni</string>
+    <string name="psus_Text">Alimentatori</string>
 </resources>

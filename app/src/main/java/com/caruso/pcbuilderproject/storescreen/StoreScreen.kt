@@ -48,7 +48,7 @@ fun StoreScreen(
     val serverSettingDialogOpen = remember { mutableStateOf(false) }
     val topAppBarTitle = remember {
         mutableStateOf(
-            "$storeNavBarItem: " + ComponentType.toString(
+            "$storeNavBarItem — " + ComponentType.toStringPlural(
                 componentType = GlobalData.getStoreProductTypeSelected(),
                 context = context
             )
@@ -105,14 +105,14 @@ fun StoreScreen(
         }
     ) { paddingValues ->
 
-        if (GlobalData.askingToReloadStore && navController != null) {
+        if (ServerFunctions.askingToReloadStore && navController != null) {
             ServerFunctions.getComponents(
                 componentType = componentType,
                 context = LocalContext.current,
                 navController = navController
             )
 
-            GlobalData.askingToReloadStore = false
+            ServerFunctions.askingToReloadStore = false
         }
 
         if (ComponentType.isValid(componentType = componentType)) {

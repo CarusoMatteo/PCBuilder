@@ -15,7 +15,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.*
@@ -23,7 +22,6 @@ import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
 import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
 import com.caruso.pcbuilderproject.filters.componentfilter.MotherboardFilterDialog
-import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.*
 import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.noItemsFoundCardVisible
@@ -96,12 +94,7 @@ fun ComponentStoreScreen(
                                         onClick = {
                                             item.active = false
 
-                                            GlobalData.askingToReloadStore = true
-
-                                            navController?.navigate(BottomBarScreen.StoreScreen.route) {
-                                                popUpTo(id = navController.graph.findStartDestination().id)
-                                                launchSingleTop = true
-                                            }
+                                            ServerFunctions.askingToReloadStore = true
                                         },
                                         modifier = Modifier.padding(end = 5.dp)
                                     )
@@ -166,12 +159,7 @@ fun ComponentStoreScreen(
                                         .filter { it.component == componentsType }
                                         .forEach { it.active = false }
 
-                                GlobalData.askingToReloadStore = true
-
-                                navController?.navigate(BottomBarScreen.StoreScreen.route) {
-                                    popUpTo(id = navController.graph.findStartDestination().id)
-                                    launchSingleTop = true
-                                }
+                                ServerFunctions.askingToReloadStore = true
                             }) {
                                 Text(
                                     // If either the server is not reachable, or there are no active filters for this component type
@@ -201,7 +189,7 @@ fun ComponentStoreScreen(
         if (firstVisibleItemIndex > 0) {
             filterCardHidden.value = true
 
-            topAppBarTitle.value = ComponentType.toString(
+            topAppBarTitle.value = ComponentType.toStringPlural(
                 componentType = componentsType,
                 context = LocalContext.current
             )
@@ -209,8 +197,8 @@ fun ComponentStoreScreen(
             filterCardHidden.value = false
 
             topAppBarTitle.value = stringResource(store_NavBarItem) +
-                    ": " +
-                    ComponentType.toString(
+                    " — " +
+                    ComponentType.toStringPlural(
                         componentType = componentsType,
                         context = LocalContext.current
                     )

@@ -33,7 +33,6 @@ abstract class GlobalData {
         // If 5: PSU
         private var storeProductTypeSelected: Int = ComponentType.CPU
 
-        var askingToReloadStore = true
         var noItemsFoundCardVisible = false
 
         // List of all possible filters
@@ -124,14 +123,13 @@ abstract class GlobalData {
             navController: NavHostController,
         ) {
             storeProductTypeSelected = newValue
-            askingToReloadStore = true
+            ServerFunctions.askingToReloadStore = true
 
             navController.navigate(BottomBarScreen.StoreScreen.route) {
                 popUpTo(id = navController.graph.findStartDestination().id)
                 launchSingleTop = true
             }
         }
-
         fun floatToStringChecker(
             number: Float,
             currency: Char = '€',

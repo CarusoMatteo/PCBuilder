@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection", "SpellCheckingInspection")
+
 package com.caruso.pcbuilderproject.ui.theme
 
 import androidx.compose.ui.graphics.Color

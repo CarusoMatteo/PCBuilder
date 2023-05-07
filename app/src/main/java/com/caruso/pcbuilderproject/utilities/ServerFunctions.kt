@@ -39,6 +39,8 @@ import java.net.URL
 
 abstract class ServerFunctions {
     companion object {
+        var askingToReloadStore = true
+
         fun isInternetReachable(): Boolean {
             try {
                 Log.d("Is Internet Reachable", "Trying to reach Google.com")

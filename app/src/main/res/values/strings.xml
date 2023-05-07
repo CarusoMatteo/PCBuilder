@@ -95,4 +95,10 @@
     <string name="anyPcie5ExpansionSlot_Text">PCIe 5.0 expansion slot present</string>
     <string name="anyNvmeM25Slot_Text">NVMe M.2 5.0 storage slot present</string>
     <string name="motherboardFilters_Title">Motherboard filters</string>
+    <string name="cpus_Text">CPUs</string>
+    <string name="motherboards_Text">Motherboards</string>
+    <string name="rams_Text">RAMs</string>
+    <string name="gpus_Text">GPUs</string>
+    <string name="storages_Text">Storages</string>
+    <string name="psus_Text">PSUs</string>
 </resources>

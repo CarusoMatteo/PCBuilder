@@ -13,7 +13,7 @@ abstract class ComponentType {
         const val PSU = 5
 
         fun toString(componentType: Int, context: Context?): String {
-            if (context != null)
+            if (context != null) {
                 return when (componentType) {
                     CPU -> context.getString(cpu_Text)
                     MOTHERBOARD -> context.getString(motherboard_Text)
@@ -23,7 +23,7 @@ abstract class ComponentType {
                     PSU -> context.getString(psu_Text)
                     else -> "Not valid"
                 }
-            else
+            } else {
                 return when (componentType) {
                     CPU -> "CPU"
                     MOTHERBOARD -> "Motherboard"
@@ -33,6 +33,31 @@ abstract class ComponentType {
                     PSU -> "PSU"
                     else -> "Not valid"
                 }
+            }
+        }
+
+        fun toStringPlural(componentType: Int, context: Context?): String {
+            if (context != null) {
+                return when (componentType) {
+                    CPU -> context.getString(cpus_Text)
+                    MOTHERBOARD -> context.getString(motherboards_Text)
+                    RAM -> context.getString(rams_Text)
+                    GPU -> context.getString(gpus_Text)
+                    STORAGE -> context.getString(storages_Text)
+                    PSU -> context.getString(psus_Text)
+                    else -> "Not valid"
+                }
+            } else {
+                return when (componentType) {
+                    CPU -> "CPUs"
+                    MOTHERBOARD -> "Motherboards"
+                    RAM -> "RAMs"
+                    GPU -> "GPUs"
+                    STORAGE -> "Storages"
+                    PSU -> "PSUs"
+                    else -> "Not valid"
+                }
+            }
         }
 
         fun isValid(componentType: Int): Boolean {
