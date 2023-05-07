@@ -15,4 +15,8 @@ data class PSU(
     val ESPConnectorNumber: Int,        // ESPConnectorNumber = 3
     val PCIeConnectorNumber: Int,       // PCIeConnectorNumber = 4
     val SATAConnectorNumber: Int,       // SATAConnectorNumber = 14
-) : Component(id, brand, name, price, imagePainterId)
+) : Component(id, brand, name, price, imagePainterId){
+    override fun toInt(): Int {
+        return ComponentType.PSU
+    }
+}

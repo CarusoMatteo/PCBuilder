@@ -20,8 +20,8 @@ import com.caruso.pcbuilderproject.utilities.GlobalData
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(all = 0.dp),
-    // snackbarHostState: SnackbarHostState? = null,
-    navController: NavHostController? = null
+    //snackbarHostState: SnackbarHostState?,
+    navController: NavHostController?
 ) {
     val loadingIconOnButtonVisible = remember {
         mutableStateOf(false)
@@ -78,7 +78,10 @@ fun ProfileScreen(
 fun ProfileScreenPreview() {
     PCBuilderProjectTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            ProfileScreen()
+            ProfileScreen(
+                //snackbarHostState = null,
+                navController = null
+            )
         }
     }
 }

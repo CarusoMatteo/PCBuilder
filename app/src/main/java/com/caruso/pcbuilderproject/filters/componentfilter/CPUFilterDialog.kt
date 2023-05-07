@@ -144,6 +144,18 @@ fun CPUFilterDialog(
                     somethingWasChanged = somethingWasChanged
                 )
 
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(coolerIncluded_Text)
+                )
+
+                FilterFlowRow(
+                    component = CPU,
+                    name = stringResource(coolerIncluded_Text),
+                    somethingWasChanged = somethingWasChanged
+                )
+
                 Spacer(modifier = Modifier.height(15.dp))
             }
         }

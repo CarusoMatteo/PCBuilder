@@ -148,6 +148,20 @@ fun initializeFilters(context: Context) {
         nameNotLocalized = "integratedGraphics",
         valueNotLocalized = "No"
     )
+    FilterList.coolerIncludedYes = Filter(
+        name = context.getString(coolerIncluded_Text),
+        value = context.getString(yes_Text),
+        component = CPU,
+        nameNotLocalized = "coolerIncluded",
+        valueNotLocalized = "Yes"
+    )
+    FilterList.coolerIncludedNo = Filter(
+        name = context.getString(coolerIncluded_Text),
+        value = context.getString(no_Text),
+        component = CPU,
+        nameNotLocalized = "coolerIncluded",
+        valueNotLocalized = "No"
+    )
 
     // endregion
 

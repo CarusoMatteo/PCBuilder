@@ -11,6 +11,7 @@ abstract class ComponentType {
         const val GPU = 3
         const val STORAGE = 4
         const val PSU = 5
+        const val NOT_VALID = -1
 
         fun toString(componentType: Int, context: Context?): String {
             if (context != null) {

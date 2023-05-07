@@ -25,8 +25,8 @@ import com.caruso.pcbuilderproject.utilities.GlobalData
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountScreen(
-    snackbarHostState: SnackbarHostState? = null,
-    navController: NavHostController? = null
+    snackbarHostState: SnackbarHostState?,
+    navController: NavHostController?
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -79,7 +79,8 @@ fun AccountScreen(
         } else {
             ProfileScreen(
                 paddingValues = paddingValues,
-                navController = navController
+                navController = navController,
+                //snackbarHostState = snackbarHostState
             )
         }
     }
@@ -101,7 +102,10 @@ fun AccountScreenPreview() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            AccountScreen()
+            AccountScreen(
+                snackbarHostState = null,
+                navController = null
+            )
         }
     }
 }

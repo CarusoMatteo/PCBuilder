@@ -30,7 +30,8 @@ import com.caruso.pcbuilderproject.utilities.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PartsListScreen(
-    navController: NavHostController? = null
+    snackbarHostState: SnackbarHostState?,
+    navController: NavHostController?
 ) {
     Log.d("PartsList Loading", "Currently loading PartsListScreen.")
 
@@ -152,7 +153,8 @@ fun PartsListScreen(
                 modifier = Modifier.fillMaxWidth(0.9f),
                 navController = navController,
                 component = GlobalData.loggedInUser.cpuSelected,
-                componentType = ComponentType.CPU
+                componentType = ComponentType.CPU,
+                snackbarHostState = snackbarHostState
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -161,7 +163,8 @@ fun PartsListScreen(
                 modifier = Modifier.fillMaxWidth(0.9f),
                 navController = navController,
                 component = GlobalData.loggedInUser.motherboardSelected,
-                componentType = ComponentType.MOTHERBOARD
+                componentType = ComponentType.MOTHERBOARD,
+                snackbarHostState = snackbarHostState
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -186,6 +189,9 @@ fun PartsListScreen(
 @Composable
 fun PartsListScreenPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
-        PartsListScreen()
+        PartsListScreen(
+            navController = null,
+            snackbarHostState = null
+        )
     }
 }

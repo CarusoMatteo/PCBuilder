@@ -27,10 +27,12 @@ abstract class FilterList {
         var socketLGA1700_CPU: Filter = Filter()
         var integratedGraphicsYes: Filter = Filter()
         var integratedGraphicsNo: Filter = Filter()
+        var coolerIncludedYes: Filter = Filter()
+        var coolerIncludedNo: Filter = Filter()
 
         // endregion
 
-        //region TODO: Motherboard Filters declaration
+        //region Motherboard Filters declaration
 
         var brandAsus: Filter = Filter()
         var brandMSI: Filter = Filter()

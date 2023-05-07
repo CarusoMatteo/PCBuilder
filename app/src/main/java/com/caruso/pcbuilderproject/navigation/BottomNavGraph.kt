@@ -19,7 +19,7 @@ fun BottomNavGraph(
         startDestination = BottomBarScreen.PartsListScreen.route
     ) {
         composable(route = BottomBarScreen.PartsListScreen.route) {
-            PartsListScreen(navController)
+            PartsListScreen(snackbarHostState, navController)
         }
         composable(route = BottomBarScreen.StoreScreen.route) {
             StoreScreen(snackbarHostState, navController)

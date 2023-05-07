@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.utilities.GlobalData
-import com.caruso.pcbuilderproject.utilities.ServerFunctions
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import com.caruso.pcbuilderproject.utilities.GlobalData
+import com.caruso.pcbuilderproject.utilities.ServerFunctions
 import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,8 +36,8 @@ import kotlinx.coroutines.CoroutineScope
 fun LoginScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(all = 0.dp),
-    snackbarHostState: SnackbarHostState? = null,
-    navController: NavHostController? = null,
+    snackbarHostState: SnackbarHostState?,
+    navController: NavHostController?,
     context: Context = LocalContext.current,
     scope: CoroutineScope = rememberCoroutineScope()
 ) {
@@ -252,7 +252,7 @@ fun LoginScreen(
                                 passwordErrorLogIn = passwordErrorLogIn
                             )
                         ) {
-                            if (snackbarHostState != null) {
+                            if (snackbarHostState != null && navController != null) {
                                 if (!creatingAccount.value) {
                                     ServerFunctions.checkCredentials(
                                         username = usernameTextLogIn.text,
@@ -361,7 +361,10 @@ private fun textFieldsAreEmpty(
 fun LoginScreenPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
         Surface(modifier = Modifier.fillMaxSize()) {
-            LoginScreen()
+            LoginScreen(
+                snackbarHostState = null,
+                navController = null
+            )
         }
     }
 }

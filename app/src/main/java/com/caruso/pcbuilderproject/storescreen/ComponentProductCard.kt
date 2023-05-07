@@ -1,5 +1,6 @@
 package com.caruso.pcbuilderproject.storescreen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
@@ -18,12 +19,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityList
-import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.specslist.componentspecslist.CPUSpecs
 import com.caruso.pcbuilderproject.specslist.componentspecslist.MotherboardSpecs
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
@@ -38,8 +37,8 @@ fun ComponentProductCard(
     modifier: Modifier = Modifier,
     component: Component,
     nameSize: TextStyle = MaterialTheme.typography.titleMedium,
-    navController: NavHostController? = null,
-    snackbarHostState: SnackbarHostState? = null
+    navController: NavHostController?,
+    snackbarHostState: SnackbarHostState?
 ) {
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
@@ -47,9 +46,11 @@ fun ComponentProductCard(
         if (expandedState) 180f
         else 0f
     )
-    var snackbarMessage by remember { mutableStateOf("") }
+    val snackbarMessage = remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+
+    val loadingIconVisible = remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
@@ -72,7 +73,7 @@ fun ComponentProductCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = painterResource( component.imagePainterId),
+                    painter = painterResource(component.imagePainterId),
                     contentDescription = null,
                     modifier = Modifier.size(100.dp)
                 )
@@ -132,6 +133,8 @@ fun ComponentProductCard(
                         ) {
                             Button(
                                 onClick = {
+                                    loadingIconVisible.value = true
+
                                     if (loggedInUser.username != null) {
 
                                         when (component) {
@@ -147,24 +150,48 @@ fun ComponentProductCard(
 
                                         IncompatibilityList.checkForIncompatibilities(context = context)
 
-                                        // TODO: Edit the database as well as the local user
-
-                                        navController?.navigate(BottomBarScreen.PartsListScreen.route) {
-                                            popUpTo(id = navController.graph.findStartDestination().id)
-                                            launchSingleTop = true
+                                        if (navController != null && snackbarHostState != null) {
+                                            ServerFunctions.addToCart(
+                                                username = loggedInUser.username!!,
+                                                componentId = component.id,
+                                                componentType = component.toInt(),
+                                                context = context,
+                                                loadingIconVisible = loadingIconVisible,
+                                                navController = navController,
+                                                scope = scope,
+                                                snackbarHostState = snackbarHostState,
+                                                snackbarMessage = snackbarMessage
+                                            )
                                         }
                                     } else {
-                                        snackbarMessage =
+                                        snackbarMessage.value =
                                             context.getString(R.string.please_login_first_Message)
 
                                         scope.launch {
                                             snackbarHostState?.showSnackbar(
-                                                snackbarMessage
+                                                snackbarMessage.value
                                             )
                                         }
+
+                                        loadingIconVisible.value = false
                                     }
                                 },
                             ) {
+                                AnimatedVisibility(
+                                    visible = loadingIconVisible.value
+                                ) {
+                                    Box(
+                                        modifier = Modifier.padding(end = 8.dp)
+                                    ) {
+                                        CircularProgressIndicator(
+                                            color = MaterialTheme.colorScheme.onPrimary,
+                                            strokeWidth = 2.dp,
+                                            modifier = Modifier
+                                                .size(MaterialTheme.typography.labelLarge.fontSize.value.dp)
+                                        )
+                                    }
+                                }
+
                                 Text(text = stringResource(R.string.add_Button))
                             }
                         }
@@ -207,7 +234,9 @@ fun ComponentProductCardPreview() {
                 integratedGraphics = true,
                 fanIncluded = false,
                 imagePainterId = R.drawable.cpu_placeholder
-            )
+            ),
+            snackbarHostState = null,
+            navController = null
         )
     }
 }

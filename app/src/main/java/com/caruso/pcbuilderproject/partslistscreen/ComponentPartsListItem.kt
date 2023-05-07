@@ -1,12 +1,13 @@
 package com.caruso.pcbuilderproject.partslistscreen
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -31,6 +32,7 @@ import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityList
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.GlobalData
+import com.caruso.pcbuilderproject.utilities.ServerFunctions
 
 @Composable
 fun ComponentPartsListItem(
@@ -38,9 +40,13 @@ fun ComponentPartsListItem(
     component: Component?,
     componentType: Int,
     nameSize: TextStyle = MaterialTheme.typography.titleMedium,
-    navController: NavHostController? = null
+    navController: NavHostController?,
+    snackbarHostState: SnackbarHostState?
 ) {
     val context = LocalContext.current
+    val loadingIconVisible = remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
+    val snackbarMessage = remember { mutableStateOf("") }
 
     Card(
         modifier = modifier,
@@ -135,6 +141,22 @@ fun ComponentPartsListItem(
                                 onClick = {
                                     if (component != null) {
 
+                                        if (navController != null) {
+                                            if (snackbarHostState != null) {
+                                                ServerFunctions.addToCart(
+                                                    username = GlobalData.loggedInUser.username!!,
+                                                    componentId = null,
+                                                    componentType = component.toInt(),
+                                                    context = context,
+                                                    loadingIconVisible = loadingIconVisible,
+                                                    navController = navController,
+                                                    scope = scope,
+                                                    snackbarHostState = snackbarHostState,
+                                                    snackbarMessage = snackbarMessage
+                                                )
+                                            }
+                                        }
+
                                         when (component) {
                                             is CPU -> GlobalData.loggedInUser.cpuSelected = null
                                             is Motherboard -> GlobalData.loggedInUser.motherboardSelected =
@@ -165,20 +187,38 @@ fun ComponentPartsListItem(
                                     }
                                 }
                             ) {
-                                if (component != null) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Delete,
-                                        contentDescription = null,
-                                        modifier = Modifier.padding(end = 8.dp)
-                                    )
-                                    Text(text = stringResource(remove_Button))
-                                } else {
-                                    Icon(
-                                        imageVector = Icons.Filled.Search,
-                                        contentDescription = null,
-                                        modifier = Modifier.padding(end = 8.dp)
-                                    )
-                                    Text(text = stringResource(search_Button))
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Crossfade(targetState = loadingIconVisible) { loadingIconVisible ->
+                                        if (!loadingIconVisible.value) {
+                                            if (component != null) {
+                                                Icon(
+                                                    imageVector = Icons.Filled.Delete,
+                                                    contentDescription = null,
+                                                    modifier = Modifier.padding(end = 8.dp)
+                                                )
+                                            } else {
+                                                Icon(
+                                                    imageVector = Icons.Filled.Search,
+                                                    contentDescription = null,
+                                                    modifier = Modifier.padding(end = 8.dp)
+                                                )
+                                            }
+                                        } else {
+                                            CircularProgressIndicator(
+                                                color = MaterialTheme.colorScheme.onPrimary,
+                                                strokeWidth = 2.dp,
+                                                modifier = Modifier.size(MaterialTheme.typography.labelLarge.fontSize.value.dp)
+                                            )
+                                        }
+                                    }
+
+                                    if (component != null) {
+                                        Text(text = stringResource(remove_Button))
+                                    } else {
+                                        Text(text = stringResource(search_Button))
+                                    }
                                 }
                             }
                         }
@@ -198,7 +238,9 @@ fun ComponentPartsListItemPreview() {
                 ComponentPartsListItem(
                     modifier = Modifier.fillMaxWidth(0.9f),
                     component = null,
-                    componentType = CPU
+                    componentType = CPU,
+                    snackbarHostState = null,
+                    navController = null
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -220,7 +262,9 @@ fun ComponentPartsListItemPreview() {
                         integratedGraphics = true,
                         fanIncluded = false,
                         imagePainterId = R.drawable.cpu_placeholder
-                    )
+                    ),
+                    snackbarHostState = null,
+                    navController = null
                 )
             }
         }

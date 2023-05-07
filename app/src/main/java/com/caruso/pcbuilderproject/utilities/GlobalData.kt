@@ -37,6 +37,9 @@ abstract class GlobalData {
 
         // List of all possible filters
         val filterList: MutableList<Filter> = mutableListOf(
+
+            // region CPU filters
+
             FilterList.brandAMD,
             FilterList.brandIntel,
             FilterList.seriesRyzen5,
@@ -55,6 +58,12 @@ abstract class GlobalData {
             FilterList.socketLGA1700_CPU,
             FilterList.integratedGraphicsYes,
             FilterList.integratedGraphicsNo,
+            FilterList.coolerIncludedYes,
+            FilterList.coolerIncludedNo,
+
+            // endregion
+
+            // region Motherboard filters
 
             FilterList.brandAsus,
             FilterList.brandMSI,
@@ -86,7 +95,24 @@ abstract class GlobalData {
             FilterList.anyM2_NVMe_5Yes,
             FilterList.anyM2_NVMe_5No,
 
-            )
+            // endregion
+
+            // region TODO: Add RAM filters here
+
+            // endregion
+
+            // region TODO: Add GPU filters here
+
+            // endregion
+
+            // region TODO: Add Storage filters here
+
+            // endregion
+
+            // region TODO: Add PSU filters here
+
+            // endregion
+        )
 
         fun getActiveFilters(): MutableList<Filter> {
             val activeFilters: MutableList<Filter> = mutableListOf()
@@ -130,6 +156,7 @@ abstract class GlobalData {
                 launchSingleTop = true
             }
         }
+
         fun floatToStringChecker(
             number: Float,
             currency: Char = '€',
@@ -165,12 +192,12 @@ abstract class GlobalData {
 
         fun login(
             username: String,
-            cpu: CPU? = null,
-            motherboard: Motherboard? = null,
-            ram: RAM? = null,
-            gpu: GPU? = null,
-            storage: Storage? = null,
-            psu: PSU? = null
+            cpu: CPU?,
+            motherboard: Motherboard?,
+            ram: RAM?,
+            gpu: GPU?,
+            storage: Storage?,
+            psu: PSU?
         ) {
             loggedInUser.username = username
             loggedInUser.cpuSelected = cpu

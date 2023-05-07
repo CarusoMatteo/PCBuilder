@@ -27,6 +27,7 @@ import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
 import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
+import com.caruso.pcbuilderproject.filters.componentfilter.MotherboardFilterDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.*
@@ -35,8 +36,8 @@ import com.caruso.pcbuilderproject.utilities.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StoreScreen(
-    snackbarHostState: SnackbarHostState? = null,
-    navController: NavHostController? = null,
+    snackbarHostState: SnackbarHostState?,
+    navController: NavHostController?,
     componentType: Int = GlobalData.getStoreProductTypeSelected()
 ) {
     Log.d("StoreScreen Loading", "Currently loading StoreScreen.")
@@ -163,11 +164,23 @@ fun StoreScreen(
                 filterDialogOpen = filterDialogOpen,
                 navController = navController
             )
-            // ComponentType.MOTHERBOARD -> TODO: MotherboardFilterDialog(filterDialogOpen = filterDialogOpen)
-            // ComponentType.RAM -> TODO: RAMFilterDialog(filterDialogOpen = filterDialogOpen)
-            // ComponentType.GPU -> TODO: GPUFilterDialog(filterDialogOpen = filterDialogOpen)
-            // ComponentType.STORAGE -> TODO: StorageFilterDialog(filterDialogOpen = filterDialogOpen)
-            // ComponentType.PSU -> TODO: PSUFilterDialog(filterDialogOpen = filterDialogOpen)
+
+            MOTHERBOARD -> MotherboardFilterDialog(
+                filterDialogOpen = filterDialogOpen,
+                navController = navController
+            )
+            // ComponentType.RAM -> TODO: RAMFilterDialog(
+            //  filterDialogOpen = filterDialogOpen,
+            //  navController = navController)
+            // ComponentType.GPU -> TODO: GPUFilterDialog(
+            //  filterDialogOpen = filterDialogOpen,
+            //  navController = navController)
+            // ComponentType.Storage -> TODO: StorageFilterDialog(
+            //  filterDialogOpen = filterDialogOpen,
+            //  navController = navController)
+            // ComponentType.PSU -> TODO: PSUFilterDialog(
+            //  filterDialogOpen = filterDialogOpen,
+            //  navController = navController)
         }
     }
 }
@@ -181,7 +194,10 @@ fun StoreScreenPreview() {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            StoreScreen()
+            StoreScreen(
+                snackbarHostState = null,
+                navController = null
+            )
         }
     }
 }

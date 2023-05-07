@@ -16,4 +16,8 @@ class CPU(
     val socket: String,                 // socket = "AM5"
     val integratedGraphics: Boolean,    // integratedGraphics = true
     val fanIncluded: Boolean,           // fanIncluded = false
-) : Component(id, brand, name, price, imagePainterId)
+) : Component(id, brand, name, price, imagePainterId) {
+    override fun toInt(): Int {
+        return ComponentType.CPU
+    }
+}

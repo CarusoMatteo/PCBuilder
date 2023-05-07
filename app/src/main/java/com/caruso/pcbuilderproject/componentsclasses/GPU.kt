@@ -17,8 +17,8 @@ data class GPU(
     val powerConsumption: Int,          // powerConsumption = 320 [W]
     val hdmiPortNumber: Int,            // hdmiPortNumber = 2
     val displayPortNumber: Int,         // displayPortNumber = 3
-
-    val _12VHPWR_headerNumber: Int,     // _12VoltHighPower_headerNumber = 1
-    val _8Pin_headerNumber: Int,        // _8Pin_headerNumber = 0
-    val _6Pin_headerNumber: Int         // _6Pin_headerNumber = 0
-) : Component(id, brand, name, price, imagePainterId)
+) : Component(id, brand, name, price, imagePainterId) {
+    override fun toInt(): Int {
+        return ComponentType.GPU
+    }
+}
