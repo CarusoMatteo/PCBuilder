@@ -19,7 +19,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
 import com.caruso.pcbuilderproject.filters.FilterFlowRow
 import com.caruso.pcbuilderproject.filters.FilterListHeader
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
@@ -29,7 +29,7 @@ import com.caruso.pcbuilderproject.utilities.GlobalData
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CPUFilterDialog(
+fun MotherboardFilterDialog(
     filterDialogOpen: MutableState<Boolean>,
     navController: NavHostController?
 ) {
@@ -75,7 +75,7 @@ fun CPUFilterDialog(
                             )
                         }
                     },
-                    title = { Text(text = stringResource(cpuFilters_Title)) },
+                    title = { Text(text = stringResource(motherboardFilters_Title)) },
                     scrollBehavior = scrollBehavior
                 )
             }
@@ -91,32 +91,8 @@ fun CPUFilterDialog(
                 )
 
                 FilterFlowRow(
-                    component = CPU,
+                    component = MOTHERBOARD,
                     name = stringResource(brand_Text),
-                    somethingWasChanged = somethingWasChanged
-                )
-
-                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
-
-                FilterListHeader(
-                    text = stringResource(series_Text)
-                )
-
-                FilterFlowRow(
-                    component = CPU,
-                    name = stringResource(series_Text),
-                    somethingWasChanged = somethingWasChanged
-                )
-
-                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
-
-                FilterListHeader(
-                    text = stringResource(architecture_Text)
-                )
-
-                FilterFlowRow(
-                    component = CPU,
-                    name = stringResource(architecture_Text),
                     somethingWasChanged = somethingWasChanged
                 )
 
@@ -127,7 +103,7 @@ fun CPUFilterDialog(
                 )
 
                 FilterFlowRow(
-                    component = CPU,
+                    component = MOTHERBOARD,
                     name = stringResource(socket_Text),
                     somethingWasChanged = somethingWasChanged
                 )
@@ -135,12 +111,108 @@ fun CPUFilterDialog(
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
 
                 FilterListHeader(
-                    text = stringResource(integratedGraphics_Text)
+                    text = stringResource(chipset_Text)
                 )
 
                 FilterFlowRow(
-                    component = CPU,
-                    name = stringResource(integratedGraphics_Text),
+                    component = MOTHERBOARD,
+                    name = stringResource(chipset_Text),
+                    somethingWasChanged = somethingWasChanged
+                )
+
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(formFactor_Text)
+                )
+
+                FilterFlowRow(
+                    component = MOTHERBOARD,
+                    name = stringResource(formFactor_Text),
+                    somethingWasChanged = somethingWasChanged
+                )
+
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(memoryType_Text)
+                )
+
+                FilterFlowRow(
+                    component = MOTHERBOARD,
+                    name = stringResource(memoryType_Text),
+                    somethingWasChanged = somethingWasChanged
+                )
+
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(memorySlotNumber_Text)
+                )
+
+                FilterFlowRow(
+                    component = MOTHERBOARD,
+                    name = stringResource(memorySlotNumber_Text),
+                    somethingWasChanged = somethingWasChanged
+                )
+
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(maxEthernetSpeed)
+                )
+
+                FilterFlowRow(
+                    component = MOTHERBOARD,
+                    name = stringResource(maxEthernetSpeed),
+                    somethingWasChanged = somethingWasChanged
+                )
+
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(wifiIncluded_Text)
+                )
+
+                FilterFlowRow(
+                    component = MOTHERBOARD,
+                    name = stringResource(wifiIncluded_Text),
+                    somethingWasChanged = somethingWasChanged
+                )
+
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(bluetoothIncluded_Text)
+                )
+
+                FilterFlowRow(
+                    component = MOTHERBOARD,
+                    name = stringResource(bluetoothIncluded_Text),
+                    somethingWasChanged = somethingWasChanged
+                )
+
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(pcie5ExpansionSlotPresent_Text)
+                )
+
+                FilterFlowRow(
+                    component = MOTHERBOARD,
+                    name = stringResource(pcie5ExpansionSlotPresent_Text),
+                    somethingWasChanged = somethingWasChanged
+                )
+
+                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
+
+                FilterListHeader(
+                    text = stringResource(nvmeM25SlotPresent_Text)
+                )
+
+                FilterFlowRow(
+                    component = MOTHERBOARD,
+                    name = stringResource(nvmeM25SlotPresent_Text),
                     somethingWasChanged = somethingWasChanged
                 )
 
@@ -152,9 +224,9 @@ fun CPUFilterDialog(
 
 @Preview
 @Composable
-fun CPUFilterDialogPreview() {
+fun MotherboardFilterDialogPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
-        CPUFilterDialog(
+        MotherboardFilterDialog(
             filterDialogOpen = remember { mutableStateOf(true) },
             navController = null
         )

@@ -21,7 +21,7 @@ abstract class GlobalData {
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "75b0-93-40-208-13"
+        var ngrokServerLink = "9148-93-40-210-29"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -51,12 +51,43 @@ abstract class GlobalData {
             FilterList.architectureZen4,
             FilterList.architectureAlderLake,
             FilterList.architectureRaptorLake,
-            FilterList.socketAM4,
-            FilterList.socketAM5,
-            FilterList.socketLGA1700,
+            FilterList.socketAM4_CPU,
+            FilterList.socketAM5_CPU,
+            FilterList.socketLGA1700_CPU,
             FilterList.integratedGraphicsYes,
-            FilterList.integratedGraphicsNo
-        )
+            FilterList.integratedGraphicsNo,
+
+            FilterList.brandAsus,
+            FilterList.brandMSI,
+            FilterList.socketAM4_Motherboard,
+            FilterList.socketAM5_Motherboard,
+            FilterList.socketLGA1700_Motherboard,
+            FilterList.chipsetB550,
+            FilterList.chipsetB650,
+            FilterList.chipsetX570,
+            FilterList.chipsetX670,
+            FilterList.chipsetX670E,
+            FilterList.chipsetZ690,
+            FilterList.chipsetZ790,
+            FilterList.formFactorATX,
+            FilterList.formFactorMicroATX,
+            FilterList.formFactorMiniITX,
+            FilterList.memoryTypeDDR4,
+            FilterList.memoryTypeDDR5,
+            FilterList.memorySlotNumber2,
+            FilterList.memorySlotNumber4,
+            FilterList.maxEthernetSpeed1,
+            FilterList.maxEthernetSpeed25,
+            FilterList.wifiIncludedYes,
+            FilterList.wifiIncludedNo,
+            FilterList.bluetoothIncludedYes,
+            FilterList.bluetoothIncludedNo,
+            FilterList.anyPCIe_5_x16Yes,
+            FilterList.anyPCIe_5_x16No,
+            FilterList.anyM2_NVMe_5_Yes,
+            FilterList.anyM2_NVMe_5_No,
+
+            )
 
         fun getActiveFilters(): MutableList<Filter> {
             val activeFilters: MutableList<Filter> = mutableListOf()

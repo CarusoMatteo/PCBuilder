@@ -292,7 +292,11 @@ abstract class ServerFunctions {
                 GlobalData.getActiveFilters().filter { it.component == componentType }
 
             activeFilters.forEach { item ->
-                url += "${item.nameNotLocalized}${item.valueNotLocalized.replace(" ", "")}=1&"
+                url += buildString {
+                    append(item.nameNotLocalized) //.replace(" ", "") The replace isn't needed
+                    append(item.valueNotLocalized.replace(" ", ""))
+                    append("=1&")
+                }
             }
 
             Log.d("CPUResponse", "Attempting to ask this link: $url")

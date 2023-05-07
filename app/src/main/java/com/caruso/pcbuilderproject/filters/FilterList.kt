@@ -22,15 +22,45 @@ abstract class FilterList {
         var architectureZen4: Filter = Filter()
         var architectureAlderLake: Filter = Filter()
         var architectureRaptorLake: Filter = Filter()
-        var socketAM4: Filter = Filter()
-        var socketAM5: Filter = Filter()
-        var socketLGA1700: Filter = Filter()
+        var socketAM4_CPU: Filter = Filter()
+        var socketAM5_CPU: Filter = Filter()
+        var socketLGA1700_CPU: Filter = Filter()
         var integratedGraphicsYes: Filter = Filter()
         var integratedGraphicsNo: Filter = Filter()
 
         // endregion
 
         //region TODO: Motherboard Filters declaration
+
+        var brandAsus: Filter = Filter()
+        var brandMSI: Filter = Filter()
+        var socketAM4_Motherboard: Filter = Filter()
+        var socketAM5_Motherboard: Filter = Filter()
+        var socketLGA1700_Motherboard: Filter = Filter()
+        var chipsetB550: Filter = Filter()
+        var chipsetB650: Filter = Filter()
+        var chipsetX570: Filter = Filter()
+        var chipsetX670: Filter = Filter()
+        var chipsetX670E: Filter = Filter()
+        var chipsetZ690: Filter = Filter()
+        var chipsetZ790: Filter = Filter()
+        var formFactorATX: Filter = Filter()
+        var formFactorMicroATX: Filter = Filter()
+        var formFactorMiniITX: Filter = Filter()
+        var memoryTypeDDR4: Filter = Filter()
+        var memoryTypeDDR5: Filter = Filter()
+        var memorySlotNumber2: Filter = Filter()
+        var memorySlotNumber4: Filter = Filter()
+        var maxEthernetSpeed1: Filter = Filter()
+        var maxEthernetSpeed25: Filter = Filter()
+        var wifiIncludedYes: Filter = Filter()
+        var wifiIncludedNo: Filter = Filter()
+        var bluetoothIncludedYes: Filter = Filter()
+        var bluetoothIncludedNo: Filter = Filter()
+        var anyPCIe_5_x16Yes: Filter = Filter()
+        var anyPCIe_5_x16No: Filter = Filter()
+        var anyM2_NVMe_5_Yes: Filter = Filter()
+        var anyM2_NVMe_5_No: Filter = Filter()
 
         //endregion
 
