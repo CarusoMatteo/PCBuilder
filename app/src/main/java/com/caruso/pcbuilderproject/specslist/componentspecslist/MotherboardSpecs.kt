@@ -64,49 +64,32 @@ fun MotherboardSpecs(
             unitOfMeasurement = "GB/s"
         )
 
-        if (motherboard.wifiVersion == null) {
-            Divider(
-                Modifier.padding(bottom = 10.dp, end = 16.dp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+        Divider(
+            Modifier.padding(bottom = 10.dp, end = 16.dp),
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
 
-            SpecListItem(
-                leftItem = stringResource(wifiIncluded_Text),
-                rightItem = stringResource(id = no_Text)
-            )
-        } else {
-            Divider(
-                Modifier.padding(bottom = 10.dp, end = 16.dp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+        SpecListItem(
+            leftItem = stringResource(wifiIncluded_Text),
+            rightItem = if (motherboard.wifiIncluded)
+                stringResource(yes_Text)
+            else
+                stringResource(no_Text)
+        )
 
-            SpecListItem(
-                leftItem = stringResource(wifiVersion_Text),
-                rightItem = motherboard.wifiVersion.toString()
-            )
-        }
+        Divider(
+            Modifier.padding(bottom = 10.dp, end = 16.dp),
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
 
-        if (motherboard.bluetoothVersion == null) {
-            Divider(
-                Modifier.padding(bottom = 10.dp, end = 16.dp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+        SpecListItem(
+            leftItem = stringResource(bluetoothIncluded_Text),
+            rightItem = if (motherboard.bluetoothIncluded)
+                stringResource(yes_Text)
+            else
+                stringResource(no_Text)
+        )
 
-            SpecListItem(
-                leftItem = stringResource(bluetoothIncluded_Text),
-                rightItem = stringResource(id = no_Text)
-            )
-        } else {
-            Divider(
-                Modifier.padding(bottom = 10.dp, end = 16.dp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            SpecListItem(
-                leftItem = stringResource(bluetoothVersion_Text),
-                rightItem = motherboard.bluetoothVersion.toString()
-            )
-        }
 
         if (motherboard.pcie_x16_5_slotNumber > 0) {
             Divider(
@@ -192,18 +175,6 @@ fun MotherboardSpecs(
             )
         }
 
-        if (motherboard.m2_sata_slotNumber > 0) {
-            Divider(
-                Modifier.padding(bottom = 10.dp, end = 16.dp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            SpecListItem(
-                leftItem = stringResource(m_2_sata_slots_Text),
-                rightItem = motherboard.m2_sata_slotNumber.toString()
-            )
-        }
-
         Divider(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -268,8 +239,8 @@ fun MotherboardSpecsPreview() {
                         memoryType = "DDR4",
                         memorySlotNumber = 4,
                         maxEthernetSpeed = 2.5f,
-                        wifiVersion = null,
-                        bluetoothVersion = null,
+                        wifiIncluded = false,
+                        bluetoothIncluded = false,
                         pcie_x16_5_slotNumber = 1,
                         pcie_x16_4_slotNumber = 1,
                         pcie_x8_4_slotNumber = 0,
@@ -277,7 +248,6 @@ fun MotherboardSpecsPreview() {
                         pcie_x1_4_slotNumber = 0,
                         m2_nvme_5_slotNumber = 1,
                         m2_nvme_4_slotNumber = 4,
-                        m2_sata_slotNumber = 0,
                         sata_portNumber = 6,
                         usb_a_2_headerNumber = 2,
                         usb_a_32_gen1_headerNumber = 1,

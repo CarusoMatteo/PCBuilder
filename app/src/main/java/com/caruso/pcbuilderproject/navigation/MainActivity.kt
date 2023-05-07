@@ -151,7 +151,7 @@ fun initializeFilters(context: Context) {
 
     // endregion
 
-    //region TODO: Motherboard Filters initialization
+    //region Motherboard Filters initialization
 
     FilterList.brandAsus = Filter(
         name = context.getString(brand_Text),
@@ -278,7 +278,7 @@ fun initializeFilters(context: Context) {
         value = "2${context.getString(decimalPoint)}5",
         component = MOTHERBOARD,
         nameNotLocalized = "maxEthernetSpeed",
-        valueNotLocalized = "2.5"
+        valueNotLocalized = "25"
     )
     FilterList.wifiIncludedYes = Filter(
         name = context.getString(wifiIncluded_Text),
@@ -298,42 +298,42 @@ fun initializeFilters(context: Context) {
         name = context.getString(bluetoothIncluded_Text),
         value = context.getString(yes_Text),
         component = MOTHERBOARD,
-        nameNotLocalized = "bluetoothText",
+        nameNotLocalized = "bluetoothIncluded",
         valueNotLocalized = "Yes"
     )
     FilterList.bluetoothIncludedNo = Filter(
         name = context.getString(bluetoothIncluded_Text),
         value = context.getString(no_Text),
         component = MOTHERBOARD,
-        nameNotLocalized = "bluetoothText",
+        nameNotLocalized = "bluetoothIncluded",
         valueNotLocalized = "No"
     )
     FilterList.anyPCIe_5_x16Yes = Filter(
-        name = context.getString(pcie5ExpansionSlotPresent_Text),
+        name = context.getString(anyPcie5ExpansionSlot_Text),
         value = context.getString(yes_Text),
         component = MOTHERBOARD,
-        nameNotLocalized = "pcie5ExpansionSlotPresent",
+        nameNotLocalized = "anyPCIe_5_x16",
         valueNotLocalized = "Yes"
     )
     FilterList.anyPCIe_5_x16No = Filter(
-        name = context.getString(pcie5ExpansionSlotPresent_Text),
+        name = context.getString(anyPcie5ExpansionSlot_Text),
         value = context.getString(no_Text),
         component = MOTHERBOARD,
-        nameNotLocalized = "pcie5ExpansionSlotPresent",
+        nameNotLocalized = "anyPCIe_5_x16",
         valueNotLocalized = "No"
     )
-    FilterList.anyM2_NVMe_5_Yes = Filter(
-        name = context.getString(nvmeM25SlotPresent_Text),
+    FilterList.anyM2_NVMe_5Yes = Filter(
+        name = context.getString(anyNvmeM25Slot_Text),
         value = context.getString(yes_Text),
         component = MOTHERBOARD,
-        nameNotLocalized = "nvmeM25SlotPresent",
+        nameNotLocalized = "anyM2_NVMe_5",
         valueNotLocalized = "Yes"
     )
-    FilterList.anyM2_NVMe_5_No = Filter(
-        name = context.getString(nvmeM25SlotPresent_Text),
+    FilterList.anyM2_NVMe_5No = Filter(
+        name = context.getString(anyNvmeM25Slot_Text),
         value = context.getString(no_Text),
         component = MOTHERBOARD,
-        nameNotLocalized = "nvmeM25SlotPresent",
+        nameNotLocalized = "anyM2_NVMe_5",
         valueNotLocalized = "No"
     )
 

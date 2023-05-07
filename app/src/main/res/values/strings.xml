@@ -92,7 +92,7 @@
     <string name="noItemsFound_Text">No items found.</string>
     <string name="clearFilters_Button">Clear filters</string>
     <string name="tryAgain_Button">Try Again</string>
-    <string name="pcie5ExpansionSlotPresent_Text">PCIe 5.0 expansion slot present</string>
-    <string name="nvmeM25SlotPresent_Text">NVMe M.2 5.0 storage slot present</string>
+    <string name="anyPcie5ExpansionSlot_Text">PCIe 5.0 expansion slot present</string>
+    <string name="anyNvmeM25Slot_Text">NVMe M.2 5.0 storage slot present</string>
     <string name="motherboardFilters_Title">Motherboard filters</string>
 </resources>

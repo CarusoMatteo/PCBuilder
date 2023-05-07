@@ -59,8 +59,8 @@ abstract class FilterList {
         var bluetoothIncludedNo: Filter = Filter()
         var anyPCIe_5_x16Yes: Filter = Filter()
         var anyPCIe_5_x16No: Filter = Filter()
-        var anyM2_NVMe_5_Yes: Filter = Filter()
-        var anyM2_NVMe_5_No: Filter = Filter()
+        var anyM2_NVMe_5Yes: Filter = Filter()
+        var anyM2_NVMe_5No: Filter = Filter()
 
         //endregion
 

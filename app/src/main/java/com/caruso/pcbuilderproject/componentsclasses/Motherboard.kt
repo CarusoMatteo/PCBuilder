@@ -18,8 +18,8 @@ data class Motherboard(
 
     // Internet and Bluetooth
     var maxEthernetSpeed: Float,        // maxEthernetSpeed = 2.5f
-    var wifiVersion: String?,           // wifiVersion = null
-    var bluetoothVersion: String?,      // bluetoothVersion = null,
+    var wifiIncluded: Boolean,           // wifiVersion = null
+    var bluetoothIncluded: Boolean,      // bluetoothVersion = null,
 
     // PCIE slot connectivity
     var pcie_x16_5_slotNumber: Int,     // pcie_x16_5_slotNumber = 1
@@ -31,7 +31,6 @@ data class Motherboard(
     // Storage connectivity
     var m2_nvme_5_slotNumber: Int,      // m2_nvme_5_slotNumber = 1
     var m2_nvme_4_slotNumber: Int,      // m2_nvme_4_slotNumber = 4
-    var m2_sata_slotNumber: Int,        // m2_sata_slotNumber = 0
     var sata_portNumber: Int,           // sata_portNumber = 6
 
     // USB internal headers

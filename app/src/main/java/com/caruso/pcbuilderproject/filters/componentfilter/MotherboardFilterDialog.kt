@@ -195,24 +195,24 @@ fun MotherboardFilterDialog(
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
 
                 FilterListHeader(
-                    text = stringResource(pcie5ExpansionSlotPresent_Text)
+                    text = stringResource(anyPcie5ExpansionSlot_Text)
                 )
 
                 FilterFlowRow(
                     component = MOTHERBOARD,
-                    name = stringResource(pcie5ExpansionSlotPresent_Text),
+                    name = stringResource(anyPcie5ExpansionSlot_Text),
                     somethingWasChanged = somethingWasChanged
                 )
 
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
 
                 FilterListHeader(
-                    text = stringResource(nvmeM25SlotPresent_Text)
+                    text = stringResource(anyNvmeM25Slot_Text)
                 )
 
                 FilterFlowRow(
                     component = MOTHERBOARD,
-                    name = stringResource(nvmeM25SlotPresent_Text),
+                    name = stringResource(anyNvmeM25Slot_Text),
                     somethingWasChanged = somethingWasChanged
                 )
 

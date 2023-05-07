@@ -21,7 +21,7 @@ abstract class GlobalData {
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "9148-93-40-210-29"
+        var ngrokServerLink = "5409-93-40-210-29"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -84,8 +84,8 @@ abstract class GlobalData {
             FilterList.bluetoothIncludedNo,
             FilterList.anyPCIe_5_x16Yes,
             FilterList.anyPCIe_5_x16No,
-            FilterList.anyM2_NVMe_5_Yes,
-            FilterList.anyM2_NVMe_5_No,
+            FilterList.anyM2_NVMe_5Yes,
+            FilterList.anyM2_NVMe_5No,
 
             )
 
@@ -183,8 +183,11 @@ abstract class GlobalData {
             loggedInUser.psuSelected = psu
         }
 
-        fun logout() {
+        fun logout(
+            context: Context
+        ) {
             loggedInUser.clear()
+            IncompatibilityList.checkForIncompatibilities(context = context)
         }
     }
 }

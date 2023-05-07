@@ -12,6 +12,13 @@ import com.android.volley.toolbox.Volley
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.*
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.PSU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.clearCPUs
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.cpus
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.gpus
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.motherboards
@@ -143,7 +150,7 @@ abstract class ServerFunctions {
                                 )
 
                                 snackbarMessage.value = context.getString(accountDoesntExists)
-                                GlobalData.logout()
+                                GlobalData.logout(context = context)
 
                                 scope.launch {
                                     snackbarHostState.showSnackbar(
@@ -279,12 +286,12 @@ abstract class ServerFunctions {
                     + ngrokServerLinkSuffix
         ) {
             var url = when (componentType) {
-                ComponentType.CPU -> "$ngrokLink/SelectFromCPU.php?"
-                ComponentType.MOTHERBOARD -> "$ngrokLink/SelectFromMotherboard.php?"
-                ComponentType.RAM -> "$ngrokLink/SelectFromRAM.php?"
-                ComponentType.GPU -> "$ngrokLink/SelectFromGPU.php?"
-                ComponentType.STORAGE -> "$ngrokLink/SelectFromStorage.php?"
-                ComponentType.PSU -> "$ngrokLink/SelectFromPSU.php?"
+                CPU -> "$ngrokLink/SelectFromCPU.php?"
+                MOTHERBOARD -> "$ngrokLink/SelectFromMotherboard.php?"
+                RAM -> "$ngrokLink/SelectFromRAM.php?"
+                GPU -> "$ngrokLink/SelectFromGPU.php?"
+                STORAGE -> "$ngrokLink/SelectFromStorage.php?"
+                PSU -> "$ngrokLink/SelectFromPSU.php?"
                 else -> ""
             }
 
@@ -315,6 +322,15 @@ abstract class ServerFunctions {
                                 "The length of the JsonObject is ${jsonObject.length()}, ${jsonObject.length() - 1} are components."
                             )
 
+                            when (componentType) {
+                                CPU -> clearCPUs()
+                                MOTHERBOARD -> ComponentsList.clearMotherboards()
+                                RAM -> ComponentsList.clearRAMs()
+                                GPU -> ComponentsList.clearGPUs()
+                                STORAGE -> ComponentsList.clearStorages()
+                                PSU -> ComponentsList.clearPSUs()
+                            }
+
                             if (jsonObject.getString("Empty") != "true") {
                                 noItemsFoundCardVisible = false
 
@@ -323,36 +339,96 @@ abstract class ServerFunctions {
                                     "noItemsFoundCardVisible is now $noItemsFoundCardVisible."
                                 )
 
-                                ComponentsList.clearCPUs()
-
                                 for (i in 1 until jsonObject.length()) {
 
                                     val currentObject: JSONObject = jsonObject["$i"] as JSONObject
 
-                                    Log.d("CPUResponse", currentObject.toString())
+                                    when (componentType) {
+                                        CPU -> {
+                                            Log.d("CPU Response", currentObject.toString())
 
-                                    cpus.add(
-                                        CPU(
-                                            id = currentObject.getString("IdCPU")
-                                                .toInt(),
-                                            brand = currentObject.getString("Brand"),
-                                            series = currentObject.getString("Series"),
-                                            name = currentObject.getString("Name"),
-                                            price = currentObject.getString("Price")
-                                                .toFloat(),
-                                            imagePainterId = R.drawable.cpu_placeholder /*currentObject.getString("ImageURL")*/,
-                                            coreNumber = currentObject.getString("NumberOfCores")
-                                                .toInt(),
-                                            baseClockSpeed = currentObject.getString("ClockSpeed")
-                                                .toFloat(),
-                                            powerConsumption = currentObject.getString("TDP")
-                                                .toInt(),
-                                            architecture = currentObject.getString("Architecture"),
-                                            socket = currentObject.getString("Socket"),
-                                            integratedGraphics = currentObject.getString("IntegratedGraphics") == "1",
-                                            fanIncluded = currentObject.getString("CoolerIncluded") == "1"
-                                        )
-                                    )
+                                            cpus.add(
+                                                CPU(
+                                                    id = currentObject.getString("IdCPU")
+                                                        .toInt(),
+                                                    brand = currentObject.getString("Brand"),
+                                                    series = currentObject.getString("Series"),
+                                                    name = currentObject.getString("Name"),
+                                                    price = currentObject.getString("Price")
+                                                        .toFloat(),
+                                                    imagePainterId = R.drawable.cpu_placeholder /*currentObject.getString("ImageURL")*/,
+                                                    coreNumber = currentObject.getString("NumberOfCores")
+                                                        .toInt(),
+                                                    baseClockSpeed = currentObject.getString("ClockSpeed")
+                                                        .toFloat(),
+                                                    powerConsumption = currentObject.getString("TDP")
+                                                        .toInt(),
+                                                    architecture = currentObject.getString("Architecture"),
+                                                    socket = currentObject.getString("Socket"),
+                                                    integratedGraphics = currentObject.getString("IntegratedGraphics") == "1",
+                                                    fanIncluded = currentObject.getString("CoolerIncluded") == "1"
+                                                )
+                                            )
+                                        }
+
+                                        MOTHERBOARD -> {
+                                            Log.d("Motherboard Response", currentObject.toString())
+
+                                            motherboards.add(
+                                                Motherboard(
+                                                    id = currentObject.getString("IdMotherboard")
+                                                        .toInt(),
+                                                    brand = currentObject.getString("Brand"),
+                                                    name = currentObject.getString("Name"),
+                                                    price = currentObject.getString("Price")
+                                                        .toFloat(),
+                                                    imagePainterId = R.drawable.motherboard_placeholder, /*currentObject.getString("ImageURL")*/
+                                                    socket = currentObject.getString("Socket"),
+                                                    chipset = currentObject.getString("Chipset"),
+                                                    formFactor = currentObject.getString("FormFactor"),
+                                                    memoryType = currentObject.getString("RAMType"),
+                                                    memorySlotNumber = currentObject.getString("NumberOfRAMSlots")
+                                                        .toInt(),
+                                                    maxEthernetSpeed = currentObject.getString("MaxEthernetSpeed")
+                                                        .toFloat(),
+                                                    wifiIncluded = currentObject.getString("WifiIncluded") == "1",
+                                                    bluetoothIncluded = currentObject.getString("BluetoothIncluded") == "1",
+                                                    pcie_x16_5_slotNumber = currentObject.getString(
+                                                        "PCIe_x16_5"
+                                                    ).toInt(),
+                                                    pcie_x16_4_slotNumber = currentObject.getString(
+                                                        "PCIe_x16_4"
+                                                    ).toInt(),
+                                                    pcie_x8_4_slotNumber = currentObject.getString("PCIe_x8")
+                                                        .toInt(),
+                                                    pcie_x4_4_slotNumber = currentObject.getString("PCIe_x4")
+                                                        .toInt(),
+                                                    pcie_x1_4_slotNumber = currentObject.getString("PCIe_x1")
+                                                        .toInt(),
+                                                    m2_nvme_5_slotNumber = currentObject.getString("M2_5")
+                                                        .toInt(),
+                                                    m2_nvme_4_slotNumber = currentObject.getString("M2_4")
+                                                        .toInt(),
+                                                    sata_portNumber = currentObject.getString("NumberOfSATA")
+                                                        .toInt(),
+                                                    usb_a_2_headerNumber = currentObject.getString("USB_2")
+                                                        .toInt(),
+                                                    usb_a_32_gen1_headerNumber = currentObject.getString(
+                                                        "USB_32_1"
+                                                    ).toInt(),
+                                                    usb_c_32_gen2_headerNumber = currentObject.getString(
+                                                        "USB_32_2"
+                                                    ).toInt()
+                                                )
+                                            )
+                                        }
+
+                                        // TODO: RAM->{}
+                                        // TODO: GPU->{}
+                                        // TODO: Storage->{}
+                                        // TODO: PSU->{}
+
+                                    }
                                 }
                             } else {
                                 Log.d("CPUResponse", "No components found")
@@ -363,7 +439,7 @@ abstract class ServerFunctions {
                                     "noItemsFoundCardVisible is now $noItemsFoundCardVisible."
                                 )
 
-                                ComponentsList.clearCPUs()
+                                clearCPUs()
                             }
 
                             navController.navigate(BottomBarScreen.StoreScreen.route) {
@@ -396,12 +472,12 @@ abstract class ServerFunctions {
                         )
 
                         when (componentType) {
-                            ComponentType.CPU -> cpus.clear()
-                            ComponentType.MOTHERBOARD -> motherboards.clear()
-                            ComponentType.RAM -> rams.clear()
-                            ComponentType.GPU -> gpus.clear()
-                            ComponentType.STORAGE -> storages.clear()
-                            ComponentType.PSU -> psus.clear()
+                            CPU -> cpus.clear()
+                            MOTHERBOARD -> motherboards.clear()
+                            RAM -> rams.clear()
+                            GPU -> gpus.clear()
+                            STORAGE -> storages.clear()
+                            PSU -> psus.clear()
                         }
 
                         navController.navigate(BottomBarScreen.StoreScreen.route) {

@@ -89,7 +89,7 @@
     <string name="noItemsFound_Text">Nessun componente trovato</string>
     <string name="clearFilters_Button">Svuota filtri</string>
     <string name="tryAgain_Button">Riprova</string>
-    <string name="pcie5ExpansionSlotPresent_Text">Slot di espansione PCIe 5.0 presente</string>
-    <string name="nvmeM25SlotPresent_Text">Slot di archiviazione NVMe M.2 5.0 presente</string>
+    <string name="anyPcie5ExpansionSlot_Text">Slot di espansione PCIe 5.0 presente</string>
+    <string name="anyNvmeM25Slot_Text">Slot di archiviazione NVMe M.2 5.0 presente</string>
     <string name="motherboardFilters_Title">Filtri Scheda madre</string>
 </resources>
