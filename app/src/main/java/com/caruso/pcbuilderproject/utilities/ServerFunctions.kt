@@ -9,7 +9,6 @@ import androidx.navigation.NavHostController
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
@@ -19,6 +18,11 @@ import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.PSU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.clearCPUs
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.clearGPUs
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.clearMotherboards
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.clearPSUs
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.clearRAMs
+import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.clearStorages
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.cpus
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.gpus
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.motherboards
@@ -26,6 +30,8 @@ import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.ps
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.rams
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.storages
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
+import com.caruso.pcbuilderproject.user.User
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.loggedInUser
 import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.ngrokServerLink
 import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.ngrokServerLinkPrefix
 import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.ngrokServerLinkSuffix
@@ -42,11 +48,13 @@ abstract class ServerFunctions {
         var askingToReloadStore = true
 
         fun isInternetReachable(): Boolean {
+            Log.d("Is Internet Reachable", "----------------------------")
+            val url = URL("https://www.google.com")
+
             try {
-                Log.d("Is Internet Reachable", "Trying to reach Google.com")
+                Log.d("Is Internet Reachable", "Trying to reach $url")
 
                 // URL to a known source
-                val url = URL("https://www.google.com")
 
                 // Open a connection to that source
                 val urlConnect: HttpURLConnection = url.openConnection() as HttpURLConnection
@@ -54,17 +62,20 @@ abstract class ServerFunctions {
                 // Trying to retrieve data from the source
                 // If there is no connection, this will trigger an exception
                 @Suppress("UNUSED_VARIABLE") val objData: Any = urlConnect.content
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-                Log.d("Is Internet Reachable", "Google.com is not reachable.")
+            } catch (error: java.lang.Exception) {
+                //Log.e("Is Internet Reachable", "Error is " + error.message)
+                Log.w("Is Internet Reachable", "$url is not reachable.")
+                Log.d("Is Internet Reachable", "----------------------------")
                 return false
             }
 
-            Log.d("Is Internet Reachable", "Google.com is reachable.")
+            Log.d("Is Internet Reachable", "$url is reachable.")
+            Log.d("Is Internet Reachable", "----------------------------")
             return true
         }
 
         fun isServerReachable(): Boolean {
+            Log.d("Is Server Reachable", "----------------------------")
             try {
                 Log.d(
                     "Is Server Reachable",
@@ -80,20 +91,15 @@ abstract class ServerFunctions {
                 // Trying to retrieve data from the source
                 // If there is no connection, this will trigger an exception
                 @Suppress("UNUSED_VARIABLE") val objData: Any = urlConnect.content
-            } catch (e: java.lang.Exception) {
-                e.printStackTrace()
-
-                Log.d(
-                    "Is Server Reachable",
-                    "${ngrokServerLinkPrefix + ngrokServerLink + ngrokServerLinkSuffix} is not reachable."
-                )
+            } catch (error: java.lang.Exception) {
+                //Log.e("Is Server Reachable", "Error is " + error.message)
+                Log.w("Is Server Reachable", "The server is not reachable.")
+                Log.d("Is Server Reachable", "----------------------------")
                 return false
             }
 
-            Log.d(
-                "Is Server Reachable",
-                "${ngrokServerLinkPrefix + ngrokServerLink + ngrokServerLinkSuffix} is reachable."
-            )
+            Log.d("Is Server Reachable", "The server is reachable.")
+            Log.d("Is Server Reachable", "----------------------------")
             return true
         }
 
@@ -122,6 +128,8 @@ abstract class ServerFunctions {
                     url,
                     Response.Listener { response ->
                         try {
+                            Log.d("Check Credentials", "----------------------------")
+
                             val jsonObject = JSONObject(response)
 
                             val accountExists = jsonObject.getString("ris") == "1"
@@ -136,6 +144,7 @@ abstract class ServerFunctions {
                                     "Check Credentials",
                                     "The account exists."
                                 )
+                                Log.d("Check Credentials", "----------------------------")
 
                                 selectUser(
                                     username = username,
@@ -152,6 +161,7 @@ abstract class ServerFunctions {
                                     "Check Credentials",
                                     "The account doesn't exist."
                                 )
+                                Log.d("Check Credentials", "----------------------------")
 
                                 snackbarMessage.value = context.getString(accountDoesntExists)
                                 GlobalData.logout(context = context)
@@ -171,7 +181,8 @@ abstract class ServerFunctions {
                         }
                     },
                     Response.ErrorListener { error ->
-                        Log.e("VolleyError", "Error is " + error!!.message)
+                        Log.e("Check credentials", "Error is " + error.message)
+                        Log.d("Check Credentials", "----------------------------")
 
                         // Check if the error was caused by the phone being offline or
                         // if the server is inactive.
@@ -211,8 +222,8 @@ abstract class ServerFunctions {
                 append(username)
             }
 
-            Log.d("FillUser", "----------------------------")
-            Log.d("FillUser", "Attempting to read the user $username at link: $url")
+            Log.d("Select User", "----------------------------")
+            Log.d("Select User", "Attempting to select the user $username at link: $url.")
 
 
             val queue = Volley.newRequestQueue(context)
@@ -223,206 +234,109 @@ abstract class ServerFunctions {
                     Response.Listener { response ->
                         try {
                             val jsonObject = JSONObject(response)
-                            Log.d("FillUser", "Returned $jsonObject")
+                            Log.d("Select User", "Returned $jsonObject.")
+
+                            loggedInUser = User(username = username)
 
                             try {
-                                val cpu: CPU? = if (jsonObject.getString("CPU") == "null") {
-                                    CPU(
-                                        id = jsonObject.getString("IdCPU")
-                                            .toInt(),
-                                        brand = jsonObject.getString("Brand"),
-                                        series = jsonObject.getString("Series"),
-                                        name = jsonObject.getString("Name"),
-                                        price = jsonObject.getString("Price")
-                                            .toFloat(),
-                                        imagePainterId = R.drawable.cpu_placeholder /*jsonObject.getString("ImageURL")*/,
-                                        coreNumber = jsonObject.getString("NumberOfCores")
-                                            .toInt(),
-                                        baseClockSpeed = jsonObject.getString("ClockSpeed")
-                                            .toFloat(),
-                                        powerConsumption = jsonObject.getString("TDP")
-                                            .toInt(),
-                                        architecture = jsonObject.getString("Architecture"),
-                                        socket = jsonObject.getString("Socket"),
-                                        integratedGraphics = jsonObject.getString("IntegratedGraphics") == "1",
-                                        fanIncluded = jsonObject.getString("CoolerIncluded") == "1"
+                                if (jsonObject.getString("CPU") != "null") {
+                                    selectComponentFromID(
+                                        componentType = CPU,
+                                        componentId = jsonObject.getString("CPU").toInt(),
+                                        context = context
                                     )
-                                } else {
-                                    null
                                 }
+                            } catch (error: Exception) {
+                                Log.e("Select User", "Error is " + error.message)
+                                Log.d("Select User", "----------------------------")
 
-                                val motherboard =
-                                    if (jsonObject.getString("Motherboard") != "null") {
-                                        Motherboard(
-                                            id = jsonObject.getString("IdMotherboard")
-                                                .toInt(),
-                                            brand = jsonObject.getString("Brand"),
-                                            name = jsonObject.getString("Name"),
-                                            price = jsonObject.getString("Price")
-                                                .toFloat(),
-                                            imagePainterId = R.drawable.motherboard_placeholder, /*jsonObject.getString("ImageURL")*/
-                                            socket = jsonObject.getString("Socket"),
-                                            chipset = jsonObject.getString("Chipset"),
-                                            formFactor = jsonObject.getString("FormFactor"),
-                                            memoryType = jsonObject.getString("RAMType"),
-                                            memorySlotNumber = jsonObject.getString("NumberOfRAMSlots")
-                                                .toInt(),
-                                            maxEthernetSpeed = jsonObject.getString("MaxEthernetSpeed")
-                                                .toFloat(),
-                                            wifiIncluded = jsonObject.getString("WifiIncluded") == "1",
-                                            bluetoothIncluded = jsonObject.getString("BluetoothIncluded") == "1",
-                                            pcie_x16_5_slotNumber = jsonObject.getString(
-                                                "PCIe_x16_5"
-                                            ).toInt(),
-                                            pcie_x16_4_slotNumber = jsonObject.getString(
-                                                "PCIe_x16_4"
-                                            ).toInt(),
-                                            pcie_x8_4_slotNumber = jsonObject.getString("PCIe_x8")
-                                                .toInt(),
-                                            pcie_x4_4_slotNumber = jsonObject.getString("PCIe_x4")
-                                                .toInt(),
-                                            pcie_x1_4_slotNumber = jsonObject.getString("PCIe_x1")
-                                                .toInt(),
-                                            m2_nvme_5_slotNumber = jsonObject.getString("M2_5")
-                                                .toInt(),
-                                            m2_nvme_4_slotNumber = jsonObject.getString("M2_4")
-                                                .toInt(),
-                                            sata_portNumber = jsonObject.getString("NumberOfSATA")
-                                                .toInt(),
-                                            usb_a_2_headerNumber = jsonObject.getString("USB_2")
-                                                .toInt(),
-                                            usb_a_32_gen1_headerNumber = jsonObject.getString(
-                                                "USB_32_1"
-                                            ).toInt(),
-                                            usb_c_32_gen2_headerNumber = jsonObject.getString(
-                                                "USB_32_2"
-                                            ).toInt()
-                                        )
-                                    } else {
-                                        null
-                                    }
-
-                                val ram: RAM? = if (jsonObject.getString("RAM") != "null") {
-                                    RAM(
-                                        id = jsonObject.getString("IdRAM").toInt(),
-                                        brand = jsonObject.getString("Brand"),
-                                        name = jsonObject.getString("Name"),
-                                        price = jsonObject.getString("Price")
-                                            .toFloat(),
-                                        imagePainterId = R.drawable.motherboard_placeholder, /*jsonObject.getString("ImageURL")*/
-                                        memoryType = jsonObject.getString("RAMType"),
-                                        memorySpeed = jsonObject.getString("Speed")
-                                            .toInt(),
-                                        totalSize = jsonObject.getString("TotalSize")
-                                            .toInt(),
-                                        numberOfSticks = jsonObject.getString("NumberOfSticks")
-                                            .toInt(),
-                                    )
-                                } else {
-                                    null
-                                }
-
-                                val gpu: GPU? = if (jsonObject.getString("GPU") != "null") {
-                                    GPU(
-                                        id = jsonObject.getString("IdGPU").toInt(),
-                                        brand = jsonObject.getString("Brand"),
-                                        name = jsonObject.getString("Name"),
-                                        price = jsonObject.getString("Price")
-                                            .toFloat(),
-                                        imagePainterId = R.drawable.motherboard_placeholder, /*jsonObject.getString("ImageURL")*/
-                                        chipsetBrand = jsonObject.getString("ChipsetBrand"),
-                                        chipset = jsonObject.getString("Chipset"),
-                                        vRamSize = jsonObject.getString("VRAMSize")
-                                            .toInt(),
-                                        clockSpeed = jsonObject.getString("ClockSpeed")
-                                            .toInt(),
-                                        length = jsonObject.getString("Length")
-                                            .toInt(),
-                                        size = jsonObject.getString("Size").toInt(),
-                                        powerConsumption = jsonObject.getString("TDP")
-                                            .toInt(),
-                                        hdmiPortNumber = jsonObject.getString("NumberOfHDMI")
-                                            .toInt(),
-                                        displayPortNumber = jsonObject.getString("NumberOfDisplayPort")
-                                            .toInt(),
-                                    )
-                                } else {
-                                    null
-                                }
-
-                                val storage: Storage? =
-                                    if (jsonObject.getString("Storage") != "null") {
-                                        Storage(
-                                            id = jsonObject.getString("IdStorage")
-                                                .toInt(),
-                                            brand = jsonObject.getString("Brand"),
-                                            name = jsonObject.getString("Name"),
-                                            price = jsonObject.getString("Price")
-                                                .toFloat(),
-                                            imagePainterId = R.drawable.motherboard_placeholder, /*jsonObject.getString("ImageURL")*/
-                                            storageType = jsonObject.getString("Type"),
-                                            storageSize = jsonObject.getString("Size")
-                                                .toInt(),
-                                        )
-                                    } else {
-                                        null
-                                    }
-
-                                val psu: PSU? = if (jsonObject.getString("PSU") != "null") {
-                                    PSU(
-                                        id = jsonObject.getString("IdPSU").toInt(),
-                                        brand = jsonObject.getString("Brand"),
-                                        name = jsonObject.getString("Name"),
-                                        price = jsonObject.getString("Price")
-                                            .toFloat(),
-                                        imagePainterId = R.drawable.motherboard_placeholder, /*jsonObject.getString("ImageURL")*/
-                                        wattage = jsonObject.getString("Wattage")
-                                            .toInt(),
-                                        formFactor = jsonObject.getString("FormFactor"),
-                                        length = jsonObject.getString("Length")
-                                            .toInt(),
-                                        ESPConnectorNumber = jsonObject.getString("ESPConnectors")
-                                            .toInt(),
-                                        PCIeConnectorNumber = jsonObject.getString("PCIeConnectors")
-                                            .toInt(),
-                                        SATAConnectorNumber = jsonObject.getString("SATAConnectors")
-                                            .toInt(),
-                                    )
-                                } else {
-                                    null
-                                }
-
-                                GlobalData.login(
-                                    username = username,
-                                    cpu = cpu,
-                                    motherboard = motherboard,
-                                    ram = ram,
-                                    gpu = gpu,
-                                    storage = storage,
-                                    psu = psu
-                                )
-                            } catch (e: Exception) {
-                                Log.e("FillUser", e.message!!)
-                                GlobalData.login(
-                                    username = username,
-                                    cpu = null,
-                                    motherboard = null,
-                                    ram = null,
-                                    gpu = null,
-                                    storage = null,
-                                    psu = null
-                                )
+                                loggedInUser = User(username = username)
                             }
 
-                            Log.d("FillUser", "----------------------------")
-                        } catch (e: JSONException) {
-                            e.message?.let { Log.e("AddToCart", it) }
-                            Log.d("FillUser", "----------------------------")
+                            try {
+                                if (jsonObject.getString("Motherboard") != "null") {
+                                    selectComponentFromID(
+                                        componentType = MOTHERBOARD,
+                                        componentId = jsonObject.getString("Motherboard").toInt(),
+                                        context = context
+                                    )
+                                }
+                            } catch (error: Exception) {
+                                Log.e("Select User", "Error is " + error.message)
+                                Log.d("Select User", "----------------------------")
 
+                                loggedInUser = User(username = username)
+                            }
+
+                            try {
+
+                                if (jsonObject.getString("RAM") != "null") {
+                                    selectComponentFromID(
+                                        componentType = RAM,
+                                        componentId = jsonObject.getString("RAM").toInt(),
+                                        context = context
+                                    )
+                                }
+                            } catch (error: Exception) {
+                                Log.e("Select User", "Error is " + error.message)
+                                Log.d("Select User", "----------------------------")
+
+                                loggedInUser = User(username = username)
+                            }
+
+                            try {
+                                if (jsonObject.getString("GPU") != "null") {
+                                    selectComponentFromID(
+                                        componentType = GPU,
+                                        componentId = jsonObject.getString("GPU").toInt(),
+                                        context = context
+                                    )
+                                }
+                            } catch (error: Exception) {
+                                Log.e("Select User", "Error is " + error.message)
+                                Log.d("Select User", "----------------------------")
+
+                                loggedInUser = User(username = username)
+                            }
+
+                            try {
+                                if (jsonObject.getString("Storage") != "null") {
+                                    selectComponentFromID(
+                                        componentType = STORAGE,
+                                        componentId = jsonObject.getString("Storage").toInt(),
+                                        context = context
+                                    )
+                                }
+                            } catch (error: Exception) {
+                                Log.e("Select User", "Error is " + error.message)
+                                Log.d("Select User", "----------------------------")
+
+                                loggedInUser = User(username = username)
+                            }
+
+                            try {
+                                if (jsonObject.getString("PSU") != "null") {
+                                    selectComponentFromID(
+                                        componentType = PSU,
+                                        componentId = jsonObject.getString("PSU").toInt(),
+                                        context = context
+                                    )
+                                }
+                            } catch (error: Exception) {
+                                Log.e("Select User", "Error is " + error.message)
+                                Log.d("Select User", "----------------------------")
+
+                                loggedInUser = User(username = username)
+                            }
+
+                        } catch (error: JSONException) {
+                            Log.e("Select User", "Error is: " + error.message)
+                            Log.d("Select User", "----------------------------")
                         }
                     },
                     Response.ErrorListener { error ->
-                        Log.e("FillUser", "Error is " + error!!.message)
+                        Log.e("Select User", "Error is: " + error.message)
+                        Log.d("Select User", "----------------------------")
 
                         // Check if the error was caused by the phone being offline or
                         // if the server is inactive.
@@ -434,8 +348,6 @@ abstract class ServerFunctions {
                                 snackbarMessage.value = context.getString(serverError_Message)
                             }
                         }.start()
-
-                        Log.d("FillUser", "----------------------------")
                     }) {}
 
             queue.add(request)
@@ -454,10 +366,22 @@ abstract class ServerFunctions {
                     + ngrokServerLink
                     + ngrokServerLinkSuffix
         ) {
+
+            Log.d("Create Account", "----------------------------")
+            Log.d(
+                "Create Account",
+                "Attempting to create a user with username: \"$username\" and password: \"$password\""
+            )
+
             val url = ngrokLink +
                     "/CreateAccount.php?" +
                     "Username=" + username +
                     "&Password=" + password
+
+            Log.d(
+                "Create Account",
+                "At URL: $url"
+            )
 
             val queue = Volley.newRequestQueue(context)
 
@@ -468,9 +392,17 @@ abstract class ServerFunctions {
                         try {
                             val jsonObject = JSONObject(response)
 
+                            Log.d("Create Account", "Returned $jsonObject.")
+
                             val result = jsonObject.getString("UsernameAlreadyUsed")
 
                             if (result == "false") {
+                                Log.d(
+                                    "Create Account",
+                                    "The account was created correctly, since no users already have that username."
+                                )
+                                Log.d("Create Account", "----------------------------")
+
                                 snackbarMessage.value =
                                     context.getString(accountCreatedCorrectly_Message)
 
@@ -483,6 +415,12 @@ abstract class ServerFunctions {
                                 loadingIconVisible.value = false
                                 creatingAccount.value = !creatingAccount.value
                             } else {
+                                Log.d(
+                                    "Create Account",
+                                    "The account wasn't created, since there already exists a user with that username."
+                                )
+                                Log.d("Create Account", "----------------------------")
+
                                 snackbarMessage.value =
                                     context.getString(usernameAlreadyExists_Message)
 
@@ -494,14 +432,16 @@ abstract class ServerFunctions {
 
                                 loadingIconVisible.value = false
                             }
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
+                        } catch (error: JSONException) {
+                            Log.e("Create Account", "Error is: " + error.message)
+                            Log.d("Create Account", "----------------------------")
 
                             loadingIconVisible.value = false
                         }
                     },
                     Response.ErrorListener { error ->
-                        Log.e("VolleyError", "Error is " + error!!.message)
+                        Log.e("Create Account", "Error is: " + error.message)
+                        Log.d("Create Account", "----------------------------")
 
                         // Check if the error was caused by the phone being offline or
                         // if the server is inactive.
@@ -555,7 +495,11 @@ abstract class ServerFunctions {
                 }
             }
 
-            Log.d("GetComponents", "Attempting to ask this link: $url")
+            Log.d("Get Components", "----------------------------")
+            Log.d(
+                "Get Components",
+                "Attempting to fetch " + ComponentType.toString(componentType, null) + " at $url"
+            )
 
             val queue = Volley.newRequestQueue(context)
 
@@ -567,26 +511,24 @@ abstract class ServerFunctions {
                             val jsonObject = JSONObject(response)
 
                             Log.d(
-                                "GetComponents",
-                                "The length of the JsonObject is ${jsonObject.length()}, ${jsonObject.length() - 1} are components."
+                                "Get Components",
+                                "${jsonObject.length() - 1} " + ComponentType.toStringPlural(
+                                    componentType,
+                                    null
+                                ) + " were found."
                             )
 
                             when (componentType) {
                                 CPU -> clearCPUs()
-                                MOTHERBOARD -> ComponentsList.clearMotherboards()
-                                RAM -> ComponentsList.clearRAMs()
-                                GPU -> ComponentsList.clearGPUs()
-                                STORAGE -> ComponentsList.clearStorages()
-                                PSU -> ComponentsList.clearPSUs()
+                                MOTHERBOARD -> clearMotherboards()
+                                RAM -> clearRAMs()
+                                GPU -> clearGPUs()
+                                STORAGE -> clearStorages()
+                                PSU -> clearPSUs()
                             }
 
                             if (jsonObject.getString("Empty") != "true") {
                                 noItemsFoundCardVisible = false
-
-                                Log.d(
-                                    "Change to noItemsFoundCardVisible",
-                                    "noItemsFoundCardVisible is now $noItemsFoundCardVisible."
-                                )
 
                                 for (i in 1 until jsonObject.length()) {
 
@@ -596,195 +538,57 @@ abstract class ServerFunctions {
                                     when (componentType) {
                                         CPU -> {
                                             cpus.add(
-                                                CPU(
-                                                    id = currentObject.getString("IdCPU")
-                                                        .toInt(),
-                                                    brand = currentObject.getString("Brand"),
-                                                    series = currentObject.getString("Series"),
-                                                    name = currentObject.getString("Name"),
-                                                    price = currentObject.getString("Price")
-                                                        .toFloat(),
-                                                    imagePainterId = R.drawable.cpu_placeholder /*currentObject.getString("ImageURL")*/,
-                                                    coreNumber = currentObject.getString("NumberOfCores")
-                                                        .toInt(),
-                                                    baseClockSpeed = currentObject.getString("ClockSpeed")
-                                                        .toFloat(),
-                                                    powerConsumption = currentObject.getString("TDP")
-                                                        .toInt(),
-                                                    architecture = currentObject.getString("Architecture"),
-                                                    socket = currentObject.getString("Socket"),
-                                                    integratedGraphics = currentObject.getString("IntegratedGraphics") == "1",
-                                                    fanIncluded = currentObject.getString("CoolerIncluded") == "1"
-                                                )
+                                                Cpu.toCPU(currentObject)
                                             )
                                         }
 
                                         MOTHERBOARD -> {
                                             motherboards.add(
-                                                Motherboard(
-                                                    id = currentObject.getString("IdMotherboard")
-                                                        .toInt(),
-                                                    brand = currentObject.getString("Brand"),
-                                                    name = currentObject.getString("Name"),
-                                                    price = currentObject.getString("Price")
-                                                        .toFloat(),
-                                                    imagePainterId = R.drawable.motherboard_placeholder, /*currentObject.getString("ImageURL")*/
-                                                    socket = currentObject.getString("Socket"),
-                                                    chipset = currentObject.getString("Chipset"),
-                                                    formFactor = currentObject.getString("FormFactor"),
-                                                    memoryType = currentObject.getString("RAMType"),
-                                                    memorySlotNumber = currentObject.getString("NumberOfRAMSlots")
-                                                        .toInt(),
-                                                    maxEthernetSpeed = currentObject.getString("MaxEthernetSpeed")
-                                                        .toFloat(),
-                                                    wifiIncluded = currentObject.getString("WifiIncluded") == "1",
-                                                    bluetoothIncluded = currentObject.getString("BluetoothIncluded") == "1",
-                                                    pcie_x16_5_slotNumber = currentObject.getString(
-                                                        "PCIe_x16_5"
-                                                    ).toInt(),
-                                                    pcie_x16_4_slotNumber = currentObject.getString(
-                                                        "PCIe_x16_4"
-                                                    ).toInt(),
-                                                    pcie_x8_4_slotNumber = currentObject.getString("PCIe_x8")
-                                                        .toInt(),
-                                                    pcie_x4_4_slotNumber = currentObject.getString("PCIe_x4")
-                                                        .toInt(),
-                                                    pcie_x1_4_slotNumber = currentObject.getString("PCIe_x1")
-                                                        .toInt(),
-                                                    m2_nvme_5_slotNumber = currentObject.getString("M2_5")
-                                                        .toInt(),
-                                                    m2_nvme_4_slotNumber = currentObject.getString("M2_4")
-                                                        .toInt(),
-                                                    sata_portNumber = currentObject.getString("NumberOfSATA")
-                                                        .toInt(),
-                                                    usb_a_2_headerNumber = currentObject.getString("USB_2")
-                                                        .toInt(),
-                                                    usb_a_32_gen1_headerNumber = currentObject.getString(
-                                                        "USB_32_1"
-                                                    ).toInt(),
-                                                    usb_c_32_gen2_headerNumber = currentObject.getString(
-                                                        "USB_32_2"
-                                                    ).toInt()
-                                                )
+                                                Motherboard.toMotherboard(currentObject)
                                             )
                                         }
 
                                         RAM -> {
                                             rams.add(
-                                                RAM(
-                                                    id = currentObject.getString("IdRAM").toInt(),
-                                                    brand = currentObject.getString("Brand"),
-                                                    name = currentObject.getString("Name"),
-                                                    price = currentObject.getString("Price")
-                                                        .toFloat(),
-                                                    imagePainterId = R.drawable.motherboard_placeholder, /*currentObject.getString("ImageURL")*/
-                                                    memoryType = currentObject.getString("RAMType"),
-                                                    memorySpeed = currentObject.getString("Speed")
-                                                        .toInt(),
-                                                    totalSize = currentObject.getString("TotalSize")
-                                                        .toInt(),
-                                                    numberOfSticks = currentObject.getString("NumberOfSticks")
-                                                        .toInt(),
-                                                )
+                                                Ram.toRAM(currentObject)
                                             )
                                         }
 
                                         GPU -> {
                                             gpus.add(
-                                                GPU(
-                                                    id = currentObject.getString("IdGPU").toInt(),
-                                                    brand = currentObject.getString("Brand"),
-                                                    name = currentObject.getString("Name"),
-                                                    price = currentObject.getString("Price")
-                                                        .toFloat(),
-                                                    imagePainterId = R.drawable.motherboard_placeholder, /*currentObject.getString("ImageURL")*/
-                                                    chipsetBrand = currentObject.getString("ChipsetBrand"),
-                                                    chipset = currentObject.getString("Chipset"),
-                                                    vRamSize = currentObject.getString("VRAMSize")
-                                                        .toInt(),
-                                                    clockSpeed = currentObject.getString("ClockSpeed")
-                                                        .toInt(),
-                                                    length = currentObject.getString("Length")
-                                                        .toInt(),
-                                                    size = currentObject.getString("Size").toInt(),
-                                                    powerConsumption = currentObject.getString("TDP")
-                                                        .toInt(),
-                                                    hdmiPortNumber = currentObject.getString("NumberOfHDMI")
-                                                        .toInt(),
-                                                    displayPortNumber = currentObject.getString("NumberOfDisplayPort")
-                                                        .toInt(),
-                                                )
+                                                Gpu.toGPU(currentObject)
                                             )
                                         }
 
                                         STORAGE -> {
                                             storages.add(
-                                                Storage(
-                                                    id = currentObject.getString("IdStorage")
-                                                        .toInt(),
-                                                    brand = currentObject.getString("Brand"),
-                                                    name = currentObject.getString("Name"),
-                                                    price = currentObject.getString("Price")
-                                                        .toFloat(),
-                                                    imagePainterId = R.drawable.motherboard_placeholder, /*currentObject.getString("ImageURL")*/
-                                                    storageType = currentObject.getString("Type"),
-                                                    storageSize = currentObject.getString("Size")
-                                                        .toInt(),
-                                                )
+                                                Storage.toStorage(currentObject)
                                             )
                                         }
 
                                         PSU -> {
                                             psus.add(
-                                                PSU(
-                                                    id = currentObject.getString("IdPSU").toInt(),
-                                                    brand = currentObject.getString("Brand"),
-                                                    name = currentObject.getString("Name"),
-                                                    price = currentObject.getString("Price")
-                                                        .toFloat(),
-                                                    imagePainterId = R.drawable.motherboard_placeholder, /*currentObject.getString("ImageURL")*/
-                                                    wattage = currentObject.getString("Wattage")
-                                                        .toInt(),
-                                                    formFactor = currentObject.getString("FormFactor"),
-                                                    length = currentObject.getString("Length")
-                                                        .toInt(),
-                                                    ESPConnectorNumber = currentObject.getString("ESPConnectors")
-                                                        .toInt(),
-                                                    PCIeConnectorNumber = currentObject.getString("PCIeConnectors")
-                                                        .toInt(),
-                                                    SATAConnectorNumber = currentObject.getString("SATAConnectors")
-                                                        .toInt(),
-                                                )
+                                                Psu.toPSU(currentObject)
                                             )
                                         }
 
                                     }
                                 }
                             } else {
-                                Log.d("GetComponents", "No components found")
                                 noItemsFoundCardVisible = true
-
-                                Log.d(
-                                    "Change to noItemsFoundCardVisible",
-                                    "noItemsFoundCardVisible is now $noItemsFoundCardVisible."
-                                )
-
-                                clearCPUs()
                             }
+
+                            Log.d("Get Components", "----------------------------")
 
                             navController.navigate(BottomBarScreen.StoreScreen.route) {
                                 popUpTo(id = navController.graph.findStartDestination().id)
                                 launchSingleTop = true
                             }
-                        } catch (e: JSONException) {
+                        } catch (error: JSONException) {
+                            Log.e("Get Components", "Error is " + error.message)
+                            Log.d("Get Components", "----------------------------")
+
                             noItemsFoundCardVisible = true
-
-                            Log.d(
-                                "Change to noItemsFoundCardVisible",
-                                "noItemsFoundCardVisible is now $noItemsFoundCardVisible."
-                            )
-
-                            e.printStackTrace()
 
                             navController.navigate(BottomBarScreen.StoreScreen.route) {
                                 popUpTo(id = navController.graph.findStartDestination().id)
@@ -793,13 +597,10 @@ abstract class ServerFunctions {
                         }
                     },
                     Response.ErrorListener { error ->
-                        Log.e("GetComponents", "Error is " + error!!.message)
-                        noItemsFoundCardVisible = true
+                        Log.e("Get Components", "Error is " + error.message)
+                        Log.d("Get Components", "----------------------------")
 
-                        Log.d(
-                            "Change to noItemsFoundCardVisible",
-                            "noItemsFoundCardVisible is now $noItemsFoundCardVisible."
-                        )
+                        noItemsFoundCardVisible = true
 
                         when (componentType) {
                             CPU -> cpus.clear()
@@ -844,8 +645,11 @@ abstract class ServerFunctions {
                 append(componentId ?: "null")
             }
 
-            Log.d("AddToCart", "----------------------------")
-            Log.d("AddToCart", "Attempting to update the database at link: $url")
+            Log.d("Add To Cart", "----------------------------")
+            Log.d(
+                "Add To Cart",
+                "Attempting to update the user with username \"$username\" at link: $url"
+            )
 
 
             val queue = Volley.newRequestQueue(context)
@@ -856,32 +660,38 @@ abstract class ServerFunctions {
                     Response.Listener { response ->
                         try {
                             val jsonObject = JSONObject(response)
-                            Log.d("AddToCart", "Returned $jsonObject")
+
+                            Log.d("Add To Cart", "Returned $jsonObject")
 
                             val result = jsonObject.getString("UpdateSuccessful")
-                            Log.d("AddToCart", "Result is: $result")
-
-                            // "true" or "false"
 
                             if (result == "true") {
+                                Log.d("Add To Cart", "The update was successful.")
+                                Log.d("Add To Cart", "----------------------------")
+
+                                loadingIconVisible.value = false
+
                                 navController.navigate(BottomBarScreen.PartsListScreen.route) {
                                     popUpTo(id = navController.graph.findStartDestination().id)
                                     launchSingleTop = true
                                 }
+                            } else {
+                                Log.d("Add To Cart", "The update wasn't successful.")
+                                Log.d("Add To Cart", "----------------------------")
+
+                                loadingIconVisible.value = false
                             }
 
-                            loadingIconVisible.value = false
-
-                            Log.d("AddToCart", "----------------------------")
-                        } catch (e: JSONException) {
-                            e.message?.let { Log.e("AddToCart", it) }
-                            Log.d("AddToCart", "----------------------------")
+                        } catch (error: JSONException) {
+                            Log.e("Add To Cart", "Error is " + error.message)
+                            Log.d("Add To Cart", "----------------------------")
 
                             loadingIconVisible.value = false
                         }
                     },
                     Response.ErrorListener { error ->
-                        Log.e("VolleyError", "Error is " + error!!.message)
+                        Log.e("Add To Cart", "Error is " + error.message)
+                        Log.d("Add To Cart", "----------------------------")
 
                         // Check if the error was caused by the phone being offline or
                         // if the server is inactive.
@@ -901,11 +711,82 @@ abstract class ServerFunctions {
 
                             loadingIconVisible.value = false
                         }.start()
-
-                        Log.d("AddToCart", "----------------------------")
                     }) {}
 
             queue.add(request)
         }
     }
+}
+
+fun selectComponentFromID(
+    componentType: Int,
+    componentId: Int,
+    context: Context,
+    ngrokLink: String = ngrokServerLinkPrefix
+            + ngrokServerLink
+            + ngrokServerLinkSuffix
+) {
+    val url = buildString {
+        append(ngrokLink)
+        when (componentType) {
+            CPU -> append("/SelectCPU.php?")
+            MOTHERBOARD -> append("/SelectMotherboard.php?")
+            RAM -> append("/SelectRAM.php?")
+            GPU -> append("/SelectGPU.php?")
+            STORAGE -> append("/SelectStorage.php?")
+            PSU -> append("/SelectPSU.php?")
+            else -> append("/404.php")
+        }
+        append("Id=$componentId")
+    }
+
+    Log.d(
+        "Select ${ComponentType.toString(componentType, null)} From ID",
+        "Attempting to fetch the component with Id=$componentId at link:\"$url\""
+    )
+
+    val queue = Volley.newRequestQueue(context)
+
+    val request: StringRequest =
+        object : StringRequest(
+            url,
+            Response.Listener { response ->
+                try {
+                    val jsonObject = JSONObject(response)
+                    Log.d(
+                        "Select ${ComponentType.toString(componentType, null)} From ID",
+                        "Returned $jsonObject"
+                    )
+
+                    when (componentType) {
+                        CPU -> loggedInUser?.cpuSelected = Cpu.toCPU(jsonObject)
+                        MOTHERBOARD -> loggedInUser?.motherboardSelected =
+                            Motherboard.toMotherboard(jsonObject)
+
+                        RAM -> loggedInUser?.ramSelected = Ram.toRAM(jsonObject)
+                        GPU -> loggedInUser?.gpuSelected = Gpu.toGPU(jsonObject)
+                        STORAGE -> loggedInUser?.storageSelected =
+                            Storage.toStorage(jsonObject)
+
+                        PSU -> loggedInUser?.psuSelected = Psu.toPSU(jsonObject)
+                    }
+                    Log.d(
+                        "Select ${ComponentType.toString(componentType, null)} From ID",
+                        "The LoggedInUser was updated. Now it's: ${loggedInUser?.toStringComplete()}"
+                    )
+                } catch (error: JSONException) {
+                    Log.e(
+                        "Select ${ComponentType.toString(componentType, null)} From ID",
+                        "Error is " + error.message
+                    )
+                }
+            },
+            Response.ErrorListener { error ->
+                Log.e(
+                    "Select ${ComponentType.toString(componentType, null)} From ID",
+                    "Error is " + error.message
+                )
+            }) {}
+
+    queue.add(request)
 }

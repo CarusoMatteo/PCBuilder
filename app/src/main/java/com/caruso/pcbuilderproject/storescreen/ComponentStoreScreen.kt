@@ -1,6 +1,5 @@
 package com.caruso.pcbuilderproject.storescreen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -97,6 +96,11 @@ fun ComponentStoreScreen(
                                             item.active = false
 
                                             ServerFunctions.askingToReloadStore = true
+
+                                            navController?.navigate(BottomBarScreen.StoreScreen.route) {
+                                                popUpTo(id = navController.graph.findStartDestination().id)
+                                                launchSingleTop = true
+                                            }
                                         },
                                         modifier = Modifier.padding(end = 5.dp)
                                     )
@@ -124,13 +128,7 @@ fun ComponentStoreScreen(
             }
 
             item {
-                Log.d(
-                    "Change to noItemsFoundCardVisible",
-                    "Checking noItemsFoundCardVisible. It's: $noItemsFoundCardVisible."
-                )
-
                 val serverIsReachable: MutableState<Boolean> = remember { mutableStateOf(true) }
-
                 if (noItemsFoundCardVisible) {
                     Thread {
                         serverIsReachable.value = ServerFunctions.isServerReachable()

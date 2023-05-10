@@ -1,4 +1,4 @@
-@file:Suppress("SpellCheckingInspection", "SpellCheckingInspection")
+@file:Suppress("SpellCheckingInspection")
 
 package com.caruso.pcbuilderproject.ui.theme
 

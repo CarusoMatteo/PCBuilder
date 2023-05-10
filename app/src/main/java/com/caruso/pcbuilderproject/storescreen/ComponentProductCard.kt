@@ -3,7 +3,6 @@ package com.caruso.pcbuilderproject.storescreen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandMore
@@ -13,13 +12,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.caruso.pcbuilderproject.ComponentImage
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityList
@@ -72,10 +71,10 @@ fun ComponentProductCard(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(component.imagePainterId),
-                    contentDescription = null,
-                    modifier = Modifier.size(100.dp)
+                ComponentImage(
+                    modifier = Modifier.size(100.dp),
+                    component = component,
+                    componentType = component.toInt()
                 )
 
                 Column(
@@ -88,7 +87,7 @@ fun ComponentProductCard(
                     ) {
                         Box(modifier = Modifier.fillMaxWidth(0.8f)) {
                             Text(
-                                text = if (component is CPU)
+                                text = if (component is Cpu)
                                     component.brand + " " + component.series + " " + component.name
                                 else
                                     component.brand + " " + component.name,
@@ -135,24 +134,23 @@ fun ComponentProductCard(
                                 onClick = {
                                     loadingIconVisible.value = true
 
-                                    if (loggedInUser.username != null) {
-
+                                    if (loggedInUser != null) {
                                         when (component) {
-                                            is CPU -> loggedInUser.cpuSelected = component
-                                            is Motherboard -> loggedInUser.motherboardSelected =
+                                            is Cpu -> loggedInUser!!.cpuSelected = component
+                                            is Motherboard -> loggedInUser!!.motherboardSelected =
                                                 component
 
-                                            is RAM -> loggedInUser.ramSelected = component
-                                            is GPU -> loggedInUser.gpuSelected = component
-                                            is Storage -> loggedInUser.storageSelected = component
-                                            is PSU -> loggedInUser.psuSelected = component
+                                            is Ram -> loggedInUser!!.ramSelected = component
+                                            is Gpu -> loggedInUser!!.gpuSelected = component
+                                            is Storage -> loggedInUser!!.storageSelected = component
+                                            is Psu -> loggedInUser!!.psuSelected = component
                                         }
 
                                         IncompatibilityList.checkForIncompatibilities(context = context)
 
                                         if (navController != null && snackbarHostState != null) {
                                             ServerFunctions.addToCart(
-                                                username = loggedInUser.username!!,
+                                                username = loggedInUser!!.username!!,
                                                 componentId = component.id,
                                                 componentType = component.toInt(),
                                                 context = context,
@@ -201,7 +199,7 @@ fun ComponentProductCard(
 
             if (expandedState) {
                 when (component) {
-                    is CPU -> CPUSpecs(cpu = component)
+                    is Cpu -> CPUSpecs(cpu = component)
                     is Motherboard -> MotherboardSpecs(motherboard = component)
                     // is RAM -> TODO: RAMSpecs(ram = component)
                     // is GPU -> TODO: GPUSpecs(gpu = component)
@@ -220,7 +218,7 @@ fun ComponentProductCardPreview() {
         ComponentProductCard(
             modifier = Modifier.fillMaxWidth(0.9f),
             nameSize = MaterialTheme.typography.titleMedium,
-            component = CPU(
+            component = Cpu(
                 id = 1,
                 brand = "AMD",
                 series = "Ryzen 7",
@@ -233,7 +231,8 @@ fun ComponentProductCardPreview() {
                 socket = "AM5",
                 integratedGraphics = true,
                 fanIncluded = false,
-                imagePainterId = R.drawable.cpu_placeholder
+                defaultImagePainterId = R.drawable.cpu_placeholder,
+                imagePainterLink = null
             ),
             snackbarHostState = null,
             navController = null

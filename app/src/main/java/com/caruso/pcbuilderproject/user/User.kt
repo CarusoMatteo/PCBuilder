@@ -4,24 +4,24 @@ import com.caruso.pcbuilderproject.componentsclasses.*
 
 data class User(
     var username: String? = null,
-    var cpuSelected: CPU? = null,
+    var cpuSelected: Cpu? = null,
     var motherboardSelected: Motherboard? = null,
-    var ramSelected: RAM? = null,
-    var gpuSelected: GPU? = null,
+    var ramSelected: Ram? = null,
+    var gpuSelected: Gpu? = null,
     var storageSelected: Storage? = null,
-    var psuSelected: PSU? = null,
+    var psuSelected: Psu? = null,
 ) {
-    fun clear() {
-        username = null
-        cpuSelected = null
-        motherboardSelected = null
-        ramSelected = null
-        gpuSelected = null
-        storageSelected = null
-        psuSelected = null
+    override fun toString(): String {
+        return "$username"
     }
 
-    override fun toString(): String {
-        return username.toString()
+    fun toStringComplete(): String {
+        return "$username:\n" +
+                "$cpuSelected;\n" +
+                "$motherboardSelected;\n" +
+                "$ramSelected;\n" +
+                "$gpuSelected;\n" +
+                "$storageSelected;\n" +
+                "$psuSelected"
     }
 }

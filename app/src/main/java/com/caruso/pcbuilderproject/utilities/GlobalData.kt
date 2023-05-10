@@ -3,7 +3,7 @@ package com.caruso.pcbuilderproject.utilities
 import android.content.*
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import com.caruso.pcbuilderproject.componentsclasses.*
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType
 import com.caruso.pcbuilderproject.filters.Filter
 import com.caruso.pcbuilderproject.filters.FilterList
 import com.caruso.pcbuilderproject.incompatibilities.Incompatibility
@@ -17,11 +17,11 @@ abstract class GlobalData {
         const val dynamicColorActive = false
 
         // Contains the Username of the user currently logged-in, otherwise is null
-        var loggedInUser: User = User("Admin")
+        var loggedInUser: User? = null
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "5409-93-40-210-29"
+        var ngrokServerLink = "285c-93-40-210-60"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -190,28 +190,10 @@ abstract class GlobalData {
             clipboardManager.setPrimaryClip(clip)
         }
 
-        fun login(
-            username: String,
-            cpu: CPU?,
-            motherboard: Motherboard?,
-            ram: RAM?,
-            gpu: GPU?,
-            storage: Storage?,
-            psu: PSU?
-        ) {
-            loggedInUser.username = username
-            loggedInUser.cpuSelected = cpu
-            loggedInUser.motherboardSelected = motherboard
-            loggedInUser.ramSelected = ram
-            loggedInUser.gpuSelected = gpu
-            loggedInUser.storageSelected = storage
-            loggedInUser.psuSelected = psu
-        }
-
         fun logout(
             context: Context
         ) {
-            loggedInUser.clear()
+            loggedInUser = null
             IncompatibilityList.checkForIncompatibilities(context = context)
         }
     }

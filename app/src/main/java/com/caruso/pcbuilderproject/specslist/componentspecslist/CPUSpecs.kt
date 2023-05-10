@@ -9,13 +9,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.componentsclasses.CPU
+import com.caruso.pcbuilderproject.componentsclasses.Cpu
 import com.caruso.pcbuilderproject.specslist.SpecListItem
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @Composable
 fun CPUSpecs(
-    cpu: CPU
+    cpu: Cpu
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         SpecListItem(
@@ -84,7 +84,7 @@ fun CPUSpecsPreview() {
         ) {
             Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
                 CPUSpecs(
-                    cpu = CPU(
+                    cpu = Cpu(
                         id = 1,
                         brand = "AMD",
                         series = "Ryzen 7",
@@ -97,7 +97,8 @@ fun CPUSpecsPreview() {
                         socket = "AM5",
                         integratedGraphics = true,
                         fanIncluded = false,
-                        imagePainterId = R.drawable.cpu_placeholder
+                        defaultImagePainterId = R.drawable.cpu_placeholder,
+                        imagePainterLink = null
                     )
                 )
             }

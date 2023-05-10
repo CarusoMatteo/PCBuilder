@@ -76,4 +76,7 @@ dependencies {
 
     // Communicate with the server
     implementation 'com.android.volley:volley:1.2.1'
+
+    // Load images from the Server
+    implementation "io.coil-kt:coil-compose:2.2.2"
 }

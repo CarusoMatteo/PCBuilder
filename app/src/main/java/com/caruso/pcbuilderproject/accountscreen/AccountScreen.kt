@@ -42,7 +42,7 @@ fun AccountScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    if (GlobalData.loggedInUser.username == null)
+                    if (GlobalData.loggedInUser == null)
                         Text(text = stringResource(account_NavBarItem))
                     else
                         Text(text = stringResource(welcomeUser_Text) + GlobalData.loggedInUser + "!")
@@ -68,7 +68,7 @@ fun AccountScreen(
             )
         }
     ) { paddingValues ->
-        if (GlobalData.loggedInUser.username == null) {
+        if (GlobalData.loggedInUser == null) {
             LoginScreen(
                 paddingValues = paddingValues,
                 navController = navController,

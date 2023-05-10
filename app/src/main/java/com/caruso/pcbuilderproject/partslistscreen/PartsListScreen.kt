@@ -33,7 +33,9 @@ fun PartsListScreen(
     snackbarHostState: SnackbarHostState?,
     navController: NavHostController?
 ) {
+    Log.d("PartsList Loading", "----------------------------")
     Log.d("PartsList Loading", "Currently loading PartsListScreen.")
+    Log.d("PartsList Loading", "----------------------------")
 
     val serverSettingDialogOpen = remember { mutableStateOf(false) }
     val filterCardHidden = remember { mutableStateOf(false) }
@@ -152,7 +154,7 @@ fun PartsListScreen(
             ComponentPartsListItem(
                 modifier = Modifier.fillMaxWidth(0.9f),
                 navController = navController,
-                component = GlobalData.loggedInUser.cpuSelected,
+                component = GlobalData.loggedInUser?.cpuSelected,
                 componentType = ComponentType.CPU,
                 snackbarHostState = snackbarHostState
             )
@@ -162,8 +164,48 @@ fun PartsListScreen(
             ComponentPartsListItem(
                 modifier = Modifier.fillMaxWidth(0.9f),
                 navController = navController,
-                component = GlobalData.loggedInUser.motherboardSelected,
+                component = GlobalData.loggedInUser?.motherboardSelected,
                 componentType = ComponentType.MOTHERBOARD,
+                snackbarHostState = snackbarHostState
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            ComponentPartsListItem(
+                modifier = Modifier.fillMaxWidth(0.9f),
+                navController = navController,
+                component = GlobalData.loggedInUser?.ramSelected,
+                componentType = ComponentType.RAM,
+                snackbarHostState = snackbarHostState
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            ComponentPartsListItem(
+                modifier = Modifier.fillMaxWidth(0.9f),
+                navController = navController,
+                component = GlobalData.loggedInUser?.gpuSelected,
+                componentType = ComponentType.GPU,
+                snackbarHostState = snackbarHostState
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            ComponentPartsListItem(
+                modifier = Modifier.fillMaxWidth(0.9f),
+                navController = navController,
+                component = GlobalData.loggedInUser?.storageSelected,
+                componentType = ComponentType.STORAGE,
+                snackbarHostState = snackbarHostState
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            ComponentPartsListItem(
+                modifier = Modifier.fillMaxWidth(0.9f),
+                navController = navController,
+                component = GlobalData.loggedInUser?.psuSelected,
+                componentType = ComponentType.PSU,
                 snackbarHostState = snackbarHostState
             )
 

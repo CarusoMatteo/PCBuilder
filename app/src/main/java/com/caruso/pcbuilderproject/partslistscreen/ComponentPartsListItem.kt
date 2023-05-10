@@ -1,7 +1,6 @@
 package com.caruso.pcbuilderproject.partslistscreen
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -11,7 +10,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import com.caruso.pcbuilderproject.ComponentImage
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.*
@@ -32,6 +31,7 @@ import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityList
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.GlobalData
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.loggedInUser
 import com.caruso.pcbuilderproject.utilities.ServerFunctions
 
 @Composable
@@ -57,30 +57,11 @@ fun ComponentPartsListItem(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (component != null) {
-                    Image(
-                        painter = painterResource(component.imagePainterId),
-                        contentDescription = null,
-                        modifier = Modifier.size(100.dp)
-                    )
-                } else {
-                    Image(
-                        painter = when (componentType) {
-                            CPU -> painterResource(id = R.drawable.cpu_placeholder)
-                            MOTHERBOARD -> painterResource(id = R.drawable.motherboard_placeholder)
-                            // RAM -> painterResource(id = R.drawable.ram_placeholder)
-                            // ComponentType.GPU -> painterResource(id = R.drawable.gpu_placeholder)
-                            // ComponentType.STORAGE -> painterResource(id = R.drawable.storage_placeholder)
-                            // ComponentType.PSU -> painterResource(id = R.drawable.psu_placeholder)
-                            else -> {
-                                painterResource(id = R.drawable.cpu_placeholder)
-                            }
-                        },
-                        contentDescription = null,
-                        modifier = Modifier.size(100.dp)
-                    )
-                }
-
+                ComponentImage(
+                    modifier = Modifier.size(100.dp),
+                    component = component,
+                    componentType = componentType
+                )
                 Column(
                     modifier = Modifier
                         .padding(all = 20.dp),
@@ -92,7 +73,7 @@ fun ComponentPartsListItem(
                         Box(modifier = Modifier.fillMaxWidth(0.8f)) {
                             Text(
                                 text = if (component != null) {
-                                    if (component is CPU)
+                                    if (component is Cpu)
                                         component.brand + " " + component.series + " " + component.name
                                     else
                                         component.brand + " " + component.name
@@ -141,33 +122,29 @@ fun ComponentPartsListItem(
                                 onClick = {
                                     if (component != null) {
 
-                                        if (navController != null) {
-                                            if (snackbarHostState != null) {
-                                                ServerFunctions.addToCart(
-                                                    username = GlobalData.loggedInUser.username!!,
-                                                    componentId = null,
-                                                    componentType = component.toInt(),
-                                                    context = context,
-                                                    loadingIconVisible = loadingIconVisible,
-                                                    navController = navController,
-                                                    scope = scope,
-                                                    snackbarHostState = snackbarHostState,
-                                                    snackbarMessage = snackbarMessage
-                                                )
-                                            }
+                                        if (navController != null && snackbarHostState != null) {
+                                            ServerFunctions.addToCart(
+                                                username = loggedInUser?.username!!,
+                                                componentId = null,
+                                                componentType = component.toInt(),
+                                                context = context,
+                                                loadingIconVisible = loadingIconVisible,
+                                                navController = navController,
+                                                scope = scope,
+                                                snackbarHostState = snackbarHostState,
+                                                snackbarMessage = snackbarMessage
+                                            )
                                         }
 
                                         when (component) {
-                                            is CPU -> GlobalData.loggedInUser.cpuSelected = null
-                                            is Motherboard -> GlobalData.loggedInUser.motherboardSelected =
-                                                null
+                                            is Cpu -> loggedInUser?.cpuSelected = null
+                                            is Motherboard ->
+                                                loggedInUser?.motherboardSelected = null
 
-                                            is RAM -> GlobalData.loggedInUser.ramSelected = null
-                                            is GPU -> GlobalData.loggedInUser.gpuSelected = null
-                                            is Storage -> GlobalData.loggedInUser.storageSelected =
-                                                null
-
-                                            is PSU -> GlobalData.loggedInUser.psuSelected = null
+                                            is Ram -> loggedInUser?.ramSelected = null
+                                            is Gpu -> loggedInUser?.gpuSelected = null
+                                            is Storage -> loggedInUser?.storageSelected = null
+                                            is Psu -> loggedInUser?.psuSelected = null
                                         }
 
                                         IncompatibilityList.checkForIncompatibilities(context = context)
@@ -248,7 +225,7 @@ fun ComponentPartsListItemPreview() {
                 ComponentPartsListItem(
                     modifier = Modifier.fillMaxWidth(0.9f),
                     componentType = CPU,
-                    component = CPU(
+                    component = Cpu(
                         id = 1,
                         brand = "AMD",
                         series = "Ryzen 7",
@@ -261,7 +238,8 @@ fun ComponentPartsListItemPreview() {
                         socket = "AM5",
                         integratedGraphics = true,
                         fanIncluded = false,
-                        imagePainterId = R.drawable.cpu_placeholder
+                        defaultImagePainterId = R.drawable.cpu_placeholder,
+                        imagePainterLink = null
                     ),
                     snackbarHostState = null,
                     navController = null

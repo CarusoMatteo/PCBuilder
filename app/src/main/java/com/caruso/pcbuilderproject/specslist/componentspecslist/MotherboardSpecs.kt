@@ -232,7 +232,7 @@ fun MotherboardSpecsPreview() {
                         brand = "MSI",
                         name = "MPG Z790 CARBON",
                         price = 350.72f,
-                        imagePainterId = R.drawable.cpu_placeholder,
+                        defaultImagePainterId = R.drawable.cpu_placeholder,
                         socket = "LGA1700",
                         chipset = "Z790",
                         formFactor = "ATX",
@@ -251,7 +251,8 @@ fun MotherboardSpecsPreview() {
                         sata_portNumber = 6,
                         usb_a_2_headerNumber = 2,
                         usb_a_32_gen1_headerNumber = 1,
-                        usb_c_32_gen2_headerNumber = 1
+                        usb_c_32_gen2_headerNumber = 1,
+                        imagePainterLink = null
                     )
                 )
             }

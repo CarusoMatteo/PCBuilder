@@ -40,7 +40,9 @@ fun StoreScreen(
     navController: NavHostController?,
     componentType: Int = GlobalData.getStoreProductTypeSelected()
 ) {
+    Log.d("StoreScreen Loading", "----------------------------")
     Log.d("StoreScreen Loading", "Currently loading StoreScreen.")
+    Log.d("StoreScreen Loading", "----------------------------")
 
     val context = LocalContext.current
 

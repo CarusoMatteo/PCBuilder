@@ -17,35 +17,42 @@ abstract class IncompatibilityList {
         //  the relative condition for activation
         //  and the localized (String Resource) name and description must be put here
         fun checkForIncompatibilities(context: Context) {
-            // region Test for Wrong socket
 
-            // If both a CPU and a Motherboard have been selected
-            if (loggedInUser.cpuSelected != null && loggedInUser.motherboardSelected != null) {
+            Log.d("Check Incompatibilities", "----------------------------")
 
-                if (loggedInUser.cpuSelected?.socket != loggedInUser.motherboardSelected?.socket) {
-                    wrongSocket.name = context.getString(incompatible_cpu)
-                    wrongSocket.description =
-                        context.getString(incompatible_cpu_description1) +
-                                loggedInUser.cpuSelected?.socket +
-                                context.getString(
-                                    incompatible_cpu_description2
-                                ) +
-                                loggedInUser.motherboardSelected?.socket + (context.getString(
-                            incompatible_cpu_description3
-                        ))
+            if (loggedInUser != null) {
 
-                    wrongSocket.active = true
+                // region Test for Wrong socket
+
+                // If both a CPU and a Motherboard have been selected
+                if (loggedInUser?.cpuSelected != null && loggedInUser?.motherboardSelected != null) {
+
+                    if (loggedInUser?.cpuSelected?.socket != loggedInUser?.motherboardSelected?.socket) {
+                        wrongSocket.name = context.getString(incompatible_cpu)
+                        wrongSocket.description =
+                            context.getString(incompatible_cpu_description1) +
+                                    loggedInUser?.cpuSelected?.socket +
+                                    context.getString(
+                                        incompatible_cpu_description2
+                                    ) +
+                                    loggedInUser?.motherboardSelected?.socket + (context.getString(
+                                incompatible_cpu_description3
+                            ))
+
+                        wrongSocket.active = true
+                    } else {
+                        Log.d("Wrong Socket Check", "The sockets are the same.")
+                        wrongSocket.active = false
+                    }
                 } else {
-                    Log.d("WrongSocketCheck", "The sockets are the same.")
                     wrongSocket.active = false
                 }
-            } else {
-                wrongSocket.active = false
+
+                // endregion
+
             }
 
-            // endregion
-
-
+            Log.d("Check Incompatibilities", "----------------------------")
         }
     }
 }

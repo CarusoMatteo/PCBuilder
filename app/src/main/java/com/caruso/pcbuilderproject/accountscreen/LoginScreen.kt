@@ -278,7 +278,7 @@ fun LoginScreen(
                                 }
                             }
 
-                            if (GlobalData.loggedInUser.username != null)
+                            if (GlobalData.loggedInUser != null)
                                 navController?.navigate(BottomBarScreen.AccountScreen.route) {
                                     popUpTo(id = navController.graph.findStartDestination().id)
                                     launchSingleTop = true
