@@ -9,8 +9,8 @@ abstract class FilterList {
 
         // region CPU Filters declaration
 
-        var brandAMD: Filter = Filter()
-        var brandIntel: Filter = Filter()
+        var brandAMD_CPU: Filter = Filter()
+        var brandIntel_CPU: Filter = Filter()
         var seriesRyzen5: Filter = Filter()
         var seriesRyzen7: Filter = Filter()
         var seriesRyzen9: Filter = Filter()
@@ -46,11 +46,11 @@ abstract class FilterList {
         var chipsetX670E: Filter = Filter()
         var chipsetZ690: Filter = Filter()
         var chipsetZ790: Filter = Filter()
-        var formFactorATX: Filter = Filter()
+        var formFactorATX_Motherboard: Filter = Filter()
         var formFactorMicroATX: Filter = Filter()
         var formFactorMiniITX: Filter = Filter()
-        var memoryTypeDDR4: Filter = Filter()
-        var memoryTypeDDR5: Filter = Filter()
+        var memoryTypeDDR4_Motherboard: Filter = Filter()
+        var memoryTypeDDR5_Motherboard: Filter = Filter()
         var memorySlotNumber2: Filter = Filter()
         var memorySlotNumber4: Filter = Filter()
         var maxEthernetSpeed1: Filter = Filter()
@@ -66,7 +66,25 @@ abstract class FilterList {
 
         //endregion
 
-        //region TODO: RAM Filters declaration
+        //region RAM Filters declaration
+
+        var brandCorsair_RAM: Filter = Filter()
+        var brandGSkill: Filter = Filter()
+        var brandKingston: Filter = Filter()
+        var memoryTypeDDR4_RAM: Filter = Filter()
+        var memoryTypeDDR5_RAM: Filter = Filter()
+        var totalSize8: Filter = Filter()
+        var totalSize16: Filter = Filter()
+        var totalSize32: Filter = Filter()
+        var totalSize64: Filter = Filter()
+        var numberOfSticks1: Filter = Filter()
+        var numberOfSticks2: Filter = Filter()
+        var numberOfSticks4: Filter = Filter()
+        var memorySpeed3200: Filter = Filter()
+        var memorySpeed3600: Filter = Filter()
+        var memorySpeed5600: Filter = Filter()
+        var memorySpeed6000: Filter = Filter()
+        var memorySpeed6600: Filter = Filter()
 
         //endregion
 

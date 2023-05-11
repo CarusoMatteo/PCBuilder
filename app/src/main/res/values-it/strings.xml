@@ -98,4 +98,16 @@
     <string name="gpus_Text">Schede video</string>
     <string name="storages_Text">Archiviazioni</string>
     <string name="psus_Text">Alimentatori</string>
+    <string name="incompatible_ram">RAM incompatibile</string>
+    <string name="incompatible_ram_description1">"Questa scheda madre accetta solo RAM "</string>
+    <string name="incompatible_ram_description2">".\nLa RAM selezionata è "</string>
+    <string name="incompatible_ram_description3">.</string>
+    <string name="too_many_ram_sticks">Troppi banchi di RAM</string>
+    <string name="too_many_ram_sticks_description1">"La scheda madre accetta solo "</string>
+    <string name="too_many_ram_sticks_description2">" banchi di RAM.\n Il pacchetto di RAM selezionato contiene "</string>
+    <string name="too_many_ram_sticks_description3">" banchi."</string>
+    <string name="totalSize_Text">Dimensione totale</string>
+    <string name="numberOfSticks_Text">Numero di banchi</string>
+    <string name="memorySpeed_Text">Velocità memoria</string>
+    <string name="ramFilters_Text">Filtri RAM</string>
 </resources>

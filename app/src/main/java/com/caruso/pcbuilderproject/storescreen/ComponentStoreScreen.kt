@@ -20,8 +20,8 @@ import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
-import com.caruso.pcbuilderproject.filters.componentfilter.CPUFilterDialog
-import com.caruso.pcbuilderproject.filters.componentfilter.MotherboardFilterDialog
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
+import com.caruso.pcbuilderproject.filters.componentfilter.*
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.*
@@ -106,6 +106,10 @@ fun ComponentStoreScreen(
                                     )
                                 }
                             })
+
+                            item {
+                                Spacer(modifier = Modifier.width(5.dp))
+                            }
                         }
                     }
                 }
@@ -221,9 +225,11 @@ fun ComponentStoreScreen(
                 filterDialogOpen = filterDialogOpen,
                 navController = navController
             )
-            // ComponentType.RAM -> TODO: RAMFilterDialog(
-            //  filterDialogOpen = filterDialogOpen,
-            //  navController = navController)
+
+            RAM -> RAMFilterDialog(
+                filterDialogOpen = filterDialogOpen,
+                navController = navController
+            )
             // ComponentType.GPU -> TODO: GPUFilterDialog(
             //  filterDialogOpen = filterDialogOpen,
             //  navController = navController)

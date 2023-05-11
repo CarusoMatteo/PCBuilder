@@ -113,11 +113,12 @@ fun PartsListScreen(
                 }
             ) {
                 LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp, end = 10.dp)
-
+                    modifier = Modifier.fillMaxWidth()
                 ) {
+                    item {
+                        Spacer(modifier = Modifier.width(10.dp))
+                    }
+
                     items(items = GlobalData.incompatibilityList, itemContent = { item ->
                         if (item.active) {
                             FilterChip(
@@ -146,6 +147,10 @@ fun PartsListScreen(
                             )
                         }
                     })
+
+                    item {
+                        Spacer(modifier = Modifier.width(5.dp))
+                    }
                 }
             }
 

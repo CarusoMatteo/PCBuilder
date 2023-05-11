@@ -101,4 +101,16 @@
     <string name="gpus_Text">GPUs</string>
     <string name="storages_Text">Storages</string>
     <string name="psus_Text">PSUs</string>
+    <string name="incompatible_ram">Incompatible RAM</string>
+    <string name="incompatible_ram_description1">"The motherboard only accepts "</string>
+    <string name="incompatible_ram_description2">".\nThe selected RAM is "</string>
+    <string name="incompatible_ram_description3">.</string>
+    <string name="too_many_ram_sticks">Too many RAM sticks</string>
+    <string name="too_many_ram_sticks_description1">"The motherboard only accepts "</string>
+    <string name="too_many_ram_sticks_description2">" RAM sticks.\nThe selected RAM package contains "</string>
+    <string name="too_many_ram_sticks_description3">" sticks."</string>
+    <string name="totalSize_Text">Total size</string>
+    <string name="numberOfSticks_Text">Number of sticks</string>
+    <string name="memorySpeed_Text">Memory speed</string>
+    <string name="ramFilters_Text">RAM filters</string>
 </resources>

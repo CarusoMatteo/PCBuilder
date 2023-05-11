@@ -17,11 +17,12 @@ abstract class GlobalData {
         const val dynamicColorActive = false
 
         // Contains the Username of the user currently logged-in, otherwise is null
-        var loggedInUser: User? = null
+        // var loggedInUser: User? = null
+        var loggedInUser: User? = User("Admin")
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "3524-93-40-209-161"
+        var ngrokServerLink = "70f8-93-40-209-161"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -40,8 +41,8 @@ abstract class GlobalData {
 
             // region CPU filters
 
-            FilterList.brandAMD,
-            FilterList.brandIntel,
+            FilterList.brandAMD_CPU,
+            FilterList.brandIntel_CPU,
             FilterList.seriesRyzen5,
             FilterList.seriesRyzen7,
             FilterList.seriesRyzen9,
@@ -77,11 +78,11 @@ abstract class GlobalData {
             FilterList.chipsetX670E,
             FilterList.chipsetZ690,
             FilterList.chipsetZ790,
-            FilterList.formFactorATX,
+            FilterList.formFactorATX_Motherboard,
             FilterList.formFactorMicroATX,
             FilterList.formFactorMiniITX,
-            FilterList.memoryTypeDDR4,
-            FilterList.memoryTypeDDR5,
+            FilterList.memoryTypeDDR4_Motherboard,
+            FilterList.memoryTypeDDR5_Motherboard,
             FilterList.memorySlotNumber2,
             FilterList.memorySlotNumber4,
             FilterList.maxEthernetSpeed1,
@@ -97,7 +98,25 @@ abstract class GlobalData {
 
             // endregion
 
-            // region TODO: Add RAM filters here
+            // region RAM filters
+
+            FilterList.brandCorsair_RAM,
+            FilterList.brandGSkill,
+            FilterList.brandKingston,
+            FilterList.memoryTypeDDR4_RAM,
+            FilterList.memoryTypeDDR5_RAM,
+            FilterList.totalSize8,
+            FilterList.totalSize16,
+            FilterList.totalSize32,
+            FilterList.totalSize64,
+            FilterList.numberOfSticks1,
+            FilterList.numberOfSticks2,
+            FilterList.numberOfSticks4,
+            FilterList.memorySpeed3200,
+            FilterList.memorySpeed3600,
+            FilterList.memorySpeed5600,
+            FilterList.memorySpeed6000,
+            FilterList.memorySpeed6600,
 
             // endregion
 
@@ -126,7 +145,9 @@ abstract class GlobalData {
         }
 
         val incompatibilityList: MutableList<Incompatibility> = mutableListOf(
-            IncompatibilityList.wrongSocket
+            IncompatibilityList.wrongSocket,
+            IncompatibilityList.wrongMemoryType,
+            IncompatibilityList.tooManyMemorySticks
         )
 
         fun getActiveIncompatibilities(): MutableList<Incompatibility> {

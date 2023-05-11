@@ -10,6 +10,8 @@ abstract class IncompatibilityList {
 
         // region Incompatibilities declaration
         var wrongSocket = Incompatibility()
+        var wrongMemoryType = Incompatibility()
+        var tooManyMemorySticks = Incompatibility()
 
         // endregion
 
@@ -30,22 +32,71 @@ abstract class IncompatibilityList {
                     if (loggedInUser?.cpuSelected?.socket != loggedInUser?.motherboardSelected?.socket) {
                         wrongSocket.name = context.getString(incompatible_cpu)
                         wrongSocket.description =
-                            context.getString(incompatible_cpu_description1) +
-                                    loggedInUser?.cpuSelected?.socket +
-                                    context.getString(
-                                        incompatible_cpu_description2
-                                    ) +
-                                    loggedInUser?.motherboardSelected?.socket + (context.getString(
-                                incompatible_cpu_description3
-                            ))
+                            buildString {
+                                append(context.getString(incompatible_cpu_description1))
+                                append(loggedInUser?.cpuSelected?.socket)
+                                append(context.getString(incompatible_cpu_description2))
+                                append(loggedInUser?.motherboardSelected?.socket)
+                                append((context.getString(incompatible_cpu_description3)))
+                            }
 
                         wrongSocket.active = true
                     } else {
-                        Log.d("Wrong Socket Check", "The sockets are the same.")
+                        // Log.d("Wrong Socket Check", "The sockets are the same.")
                         wrongSocket.active = false
                     }
                 } else {
                     wrongSocket.active = false
+                }
+
+                // endregion
+
+                // region Test for Wrong memory type
+
+                if (loggedInUser?.motherboardSelected != null && loggedInUser?.ramSelected != null) {
+                    if (loggedInUser?.ramSelected?.memoryType != loggedInUser?.motherboardSelected?.memoryType) {
+                        wrongMemoryType.name = context.getString(incompatible_ram)
+                        wrongMemoryType.description =
+                            buildString {
+                                append(context.getString(incompatible_ram_description1))
+                                append(loggedInUser?.motherboardSelected?.memoryType)
+                                append(context.getString(incompatible_ram_description2))
+                                append(loggedInUser?.ramSelected?.memoryType)
+                                append(context.getString(incompatible_ram_description3))
+                            }
+
+                        wrongMemoryType.active = true
+                    } else {
+                        Log.d("Wrong Memory Type Check", "The memory types are the same.")
+                        wrongMemoryType.active = false
+                    }
+                } else {
+                    wrongMemoryType.active = false
+                }
+
+                // endregion
+
+                // region Test for Too many memory sticks
+
+                if (loggedInUser?.motherboardSelected != null && loggedInUser?.ramSelected != null) {
+                    if (loggedInUser?.motherboardSelected?.memorySlotNumber!! < loggedInUser?.ramSelected?.numberOfSticks!!) {
+                        tooManyMemorySticks.name = context.getString(too_many_ram_sticks)
+                        tooManyMemorySticks.description =
+                            buildString {
+                                append(context.getString(too_many_ram_sticks_description1))
+                                append(loggedInUser?.motherboardSelected?.memorySlotNumber)
+                                append(context.getString(too_many_ram_sticks_description2))
+                                append(loggedInUser?.ramSelected?.numberOfSticks)
+                                append(context.getString(too_many_ram_sticks_description3))
+                            }
+
+                        tooManyMemorySticks.active = true
+                    } else {
+                        Log.d("Too Many Memory Sticks Check", "There are enough memory slots.")
+                        tooManyMemorySticks.active = false
+                    }
+                } else {
+                    tooManyMemorySticks.active = false
                 }
 
                 // endregion

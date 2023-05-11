@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
 import com.caruso.pcbuilderproject.filters.Filter
 import com.caruso.pcbuilderproject.filters.FilterList
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
@@ -38,13 +39,13 @@ fun initializeFilters(context: Context) {
 
     //region CPU Filters initialization
 
-    FilterList.brandAMD = Filter(
+    FilterList.brandAMD_CPU = Filter(
         name = context.getString(brand_Text),
         value = "AMD",
         component = CPU,
         nameNotLocalized = "brand"
     )
-    FilterList.brandIntel = Filter(
+    FilterList.brandIntel_CPU = Filter(
         name = context.getString(brand_Text),
         value = "Intel",
         component = CPU,
@@ -239,7 +240,7 @@ fun initializeFilters(context: Context) {
         component = MOTHERBOARD,
         nameNotLocalized = "chipset"
     )
-    FilterList.formFactorATX = Filter(
+    FilterList.formFactorATX_Motherboard = Filter(
         name = context.getString(formFactor_Text),
         value = "ATX",
         component = MOTHERBOARD,
@@ -257,13 +258,13 @@ fun initializeFilters(context: Context) {
         component = MOTHERBOARD,
         nameNotLocalized = "formFactor"
     )
-    FilterList.memoryTypeDDR4 = Filter(
+    FilterList.memoryTypeDDR4_Motherboard = Filter(
         name = context.getString(memoryType_Text),
         value = "DDR4",
         component = MOTHERBOARD,
         nameNotLocalized = "memoryType"
     )
-    FilterList.memoryTypeDDR5 = Filter(
+    FilterList.memoryTypeDDR5_Motherboard = Filter(
         name = context.getString(memoryType_Text),
         value = "DDR5",
         component = MOTHERBOARD,
@@ -353,7 +354,111 @@ fun initializeFilters(context: Context) {
 
     //endregion
 
-    //region TODO: RAM Filters initialization
+    //region RAM Filters initialization
+
+    FilterList.brandCorsair_RAM = Filter(
+        name = context.getString(brand_Text),
+        value = "Corsair",
+        component = RAM,
+        nameNotLocalized = "brand",
+    )
+    FilterList.brandGSkill = Filter(
+        name = context.getString(brand_Text),
+        value = "G.Skill",
+        component = RAM,
+        nameNotLocalized = "brand",
+        valueNotLocalized = "GSkill"
+    )
+    FilterList.brandKingston = Filter(
+        name = context.getString(brand_Text),
+        value = "Kingston",
+        component = RAM,
+        nameNotLocalized = "brand",
+    )
+    FilterList.memoryTypeDDR4_RAM = Filter(
+        name = context.getString(memoryType_Text),
+        value = "DDR4",
+        component = RAM,
+        nameNotLocalized = "memoryType",
+    )
+    FilterList.memoryTypeDDR5_RAM = Filter(
+        name = context.getString(memoryType_Text),
+        value = "DDR5",
+        component = RAM,
+        nameNotLocalized = "memoryType",
+    )
+    FilterList.totalSize8 = Filter(
+        name = context.getString(totalSize_Text),
+        value = "8",
+        component = RAM,
+        nameNotLocalized = "totalSize",
+    )
+    FilterList.totalSize16 = Filter(
+        name = context.getString(totalSize_Text),
+        value = "16",
+        component = RAM,
+        nameNotLocalized = "totalSize",
+    )
+    FilterList.totalSize32 = Filter(
+        name = context.getString(totalSize_Text),
+        value = "32",
+        component = RAM,
+        nameNotLocalized = "totalSize",
+    )
+    FilterList.totalSize64 = Filter(
+        name = context.getString(totalSize_Text),
+        value = "64",
+        component = RAM,
+        nameNotLocalized = "totalSize",
+    )
+    FilterList.numberOfSticks1 = Filter(
+        name = context.getString(numberOfSticks_Text),
+        value = "1",
+        component = RAM,
+        nameNotLocalized = "numberOfSticks",
+    )
+    FilterList.numberOfSticks2 = Filter(
+        name = context.getString(numberOfSticks_Text),
+        value = "2",
+        component = RAM,
+        nameNotLocalized = "numberOfSticks",
+    )
+    FilterList.numberOfSticks4 = Filter(
+        name = context.getString(numberOfSticks_Text),
+        value = "4",
+        component = RAM,
+        nameNotLocalized = "numberOfSticks",
+    )
+    FilterList.memorySpeed3200 = Filter(
+        name = context.getString(memorySpeed_Text),
+        value = "3200",
+        component = RAM,
+        nameNotLocalized = "memorySpeed",
+    )
+    FilterList.memorySpeed3600 = Filter(
+        name = context.getString(memorySpeed_Text),
+        value = "3600",
+        component = RAM,
+        nameNotLocalized = "memorySpeed",
+    )
+    FilterList.memorySpeed5600 = Filter(
+        name = context.getString(memorySpeed_Text),
+        value = "5600",
+        component = RAM,
+        nameNotLocalized = "memorySpeed",
+    )
+    FilterList.memorySpeed6000 = Filter(
+        name = context.getString(memorySpeed_Text),
+        value = "6000",
+        component = RAM,
+        nameNotLocalized = "memorySpeed",
+    )
+    FilterList.memorySpeed6600 = Filter(
+        name = context.getString(memorySpeed_Text),
+        value = "6600",
+        component = RAM,
+        nameNotLocalized = "memorySpeed",
+    )
 
     //endregion
 

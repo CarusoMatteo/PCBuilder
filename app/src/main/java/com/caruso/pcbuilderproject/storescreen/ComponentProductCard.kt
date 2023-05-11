@@ -22,8 +22,7 @@ import com.caruso.pcbuilderproject.ComponentImage
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityList
-import com.caruso.pcbuilderproject.specslist.componentspecslist.CPUSpecs
-import com.caruso.pcbuilderproject.specslist.componentspecslist.MotherboardSpecs
+import com.caruso.pcbuilderproject.specslist.componentspecslist.*
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.*
 import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.floatToStringChecker
@@ -201,10 +200,10 @@ fun ComponentProductCard(
                 when (component) {
                     is Cpu -> CPUSpecs(cpu = component)
                     is Motherboard -> MotherboardSpecs(motherboard = component)
-                    // is RAM -> TODO: RAMSpecs(ram = component)
-                    // is GPU -> TODO: GPUSpecs(gpu = component)
+                    is Ram -> RAMSpecs(ram = component)
+                    // is Gpu -> TODO: GPUSpecs(gpu = component)
                     // is Storage -> TODO: StorageSpecs(storage = component)
-                    // is PSU -> TODO: PSUSpecs(psu = component)
+                    // is Psu -> TODO: PSUSpecs(psu = component)
                 }
             }
         }
