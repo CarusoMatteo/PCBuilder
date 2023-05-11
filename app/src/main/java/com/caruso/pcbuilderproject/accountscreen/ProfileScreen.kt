@@ -6,7 +6,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,7 +26,7 @@ fun ProfileScreen(
         mutableStateOf(false)
     }
 
-    val context = LocalContext.current
+    // val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -44,7 +43,7 @@ fun ProfileScreen(
             color = MaterialTheme.colorScheme.onBackground
         )
         Button(onClick = {
-            GlobalData.logout(context = context)
+            GlobalData.logout(/*context = context*/)
 
             navController?.navigate(BottomBarScreen.AccountScreen.route) {
                 popUpTo(id = navController.graph.findStartDestination().id)

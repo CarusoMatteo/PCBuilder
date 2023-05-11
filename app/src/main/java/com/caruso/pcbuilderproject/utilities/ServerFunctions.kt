@@ -116,10 +116,13 @@ abstract class ServerFunctions {
                     + ngrokServerLink
                     + ngrokServerLinkSuffix
         ) {
-            val url = ngrokLink +
-                    "/CheckCredentials.php?" +
-                    "Username=" + username +
-                    "&Password=" + password
+            val url = buildString {
+                append(ngrokLink)
+                append("/User/CheckCredentials.php?Username=")
+                append(username)
+                append("&Password=")
+                append(password)
+            }
 
             val queue = Volley.newRequestQueue(context)
 
@@ -164,7 +167,7 @@ abstract class ServerFunctions {
                                 Log.d("Check Credentials", "----------------------------")
 
                                 snackbarMessage.value = context.getString(accountDoesntExists)
-                                GlobalData.logout(context = context)
+                                GlobalData.logout(/*context = context*/)
 
                                 scope.launch {
                                     snackbarHostState.showSnackbar(
@@ -217,7 +220,7 @@ abstract class ServerFunctions {
         ) {
             val url = buildString {
                 append(ngrokLink)
-                append("/SelectUser.php?")
+                append("/User/SelectUser.php?")
                 append("Username=")
                 append(username)
             }
@@ -373,15 +376,16 @@ abstract class ServerFunctions {
                 "Attempting to create a user with username: \"$username\" and password: \"$password\""
             )
 
-            val url = ngrokLink +
-                    "/CreateAccount.php?" +
-                    "Username=" + username +
-                    "&Password=" + password
+            val url = buildString {
+                append(ngrokLink)
+                append("/User/CreateAccount.php?")
+                append("Username=")
+                append(username)
+                append("&Password=")
+                append(password)
+            }
 
-            Log.d(
-                "Create Account",
-                "At URL: $url"
-            )
+            Log.d("Create Account", "At URL: $url")
 
             val queue = Volley.newRequestQueue(context)
 
@@ -475,12 +479,12 @@ abstract class ServerFunctions {
                     + ngrokServerLinkSuffix
         ) {
             var url = when (componentType) {
-                CPU -> "$ngrokLink/SelectFromCPU.php?"
-                MOTHERBOARD -> "$ngrokLink/SelectFromMotherboard.php?"
-                RAM -> "$ngrokLink/SelectFromRAM.php?"
-                GPU -> "$ngrokLink/SelectFromGPU.php?"
-                STORAGE -> "$ngrokLink/SelectFromStorage.php?"
-                PSU -> "$ngrokLink/SelectFromPSU.php?"
+                CPU -> "$ngrokLink/SelectAllComponents/SelectFromCPU.php?"
+                MOTHERBOARD -> "$ngrokLink/SelectAllComponents/SelectFromMotherboard.php?"
+                RAM -> "$ngrokLink/SelectAllComponents/SelectFromRAM.php?"
+                GPU -> "$ngrokLink/SelectAllComponents/SelectFromGPU.php?"
+                STORAGE -> "$ngrokLink/SelectAllComponents/SelectFromStorage.php?"
+                PSU -> "$ngrokLink/SelectAllComponents/SelectFromPSU.php?"
                 else -> ""
             }
 
@@ -636,7 +640,7 @@ abstract class ServerFunctions {
         ) {
             val url = buildString {
                 append(ngrokLink)
-                append("/AddToCart.php?")
+                append("/User/AddToCart.php?")
                 append("Username=")
                 append(username)
                 append("&ComponentType=")
@@ -729,12 +733,12 @@ fun selectComponentFromID(
     val url = buildString {
         append(ngrokLink)
         when (componentType) {
-            CPU -> append("/SelectCPU.php?")
-            MOTHERBOARD -> append("/SelectMotherboard.php?")
-            RAM -> append("/SelectRAM.php?")
-            GPU -> append("/SelectGPU.php?")
-            STORAGE -> append("/SelectStorage.php?")
-            PSU -> append("/SelectPSU.php?")
+            CPU -> append("/SelectComponentBasedOnId/SelectCPU.php?")
+            MOTHERBOARD -> append("/SelectComponentBasedOnId/SelectMotherboard.php?")
+            RAM -> append("/SelectComponentBasedOnId/SelectRAM.php?")
+            GPU -> append("/SelectComponentBasedOnId/SelectGPU.php?")
+            STORAGE -> append("/SelectComponentBasedOnId/SelectStorage.php?")
+            PSU -> append("/SelectComponentBasedOnId/SelectPSU.php?")
             else -> append("/404.php")
         }
         append("Id=$componentId")

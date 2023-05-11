@@ -21,7 +21,7 @@ abstract class GlobalData {
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "285c-93-40-210-60"
+        var ngrokServerLink = "3524-93-40-209-161"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -190,11 +190,9 @@ abstract class GlobalData {
             clipboardManager.setPrimaryClip(clip)
         }
 
-        fun logout(
-            context: Context
-        ) {
+        fun logout(/*context: Context*/) {
             loggedInUser = null
-            IncompatibilityList.checkForIncompatibilities(context = context)
+            incompatibilityList.clear()
         }
     }
 }
