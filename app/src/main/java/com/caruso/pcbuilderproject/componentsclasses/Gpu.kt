@@ -16,7 +16,7 @@ data class Gpu(
     val chipsetBrand: String,           // chipsetBrand = "NVIDIA"
     val chipset: String,                // chipset = "GeForce RTX 4080"
     val vRamSize: Int,                  // vRamSize = 16 [GB]
-    val clockSpeed: Int,                // clockSpeed = 2205 [GHz]
+    val clockSpeed: Float,              // clockSpeed = 2.205 [GHz]
     val length: Int,                    // length = 348 [mm]
     val size: Int,                      // size = 4 [slots]
     val powerConsumption: Int,          // powerConsumption = 320 [W]
@@ -53,7 +53,7 @@ data class Gpu(
                 vRamSize = jsonObject.getString("VRAMSize")
                     .toInt(),
                 clockSpeed = jsonObject.getString("ClockSpeed")
-                    .toInt(),
+                    .toFloat(),
                 length = jsonObject.getString("Length")
                     .toInt(),
                 size = jsonObject.getString("Size").toInt(),

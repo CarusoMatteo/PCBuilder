@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
 import com.caruso.pcbuilderproject.filters.Filter
@@ -168,13 +169,13 @@ fun initializeFilters(context: Context) {
 
     //region Motherboard Filters initialization
 
-    FilterList.brandAsus = Filter(
+    FilterList.brandAsus_Motherboard = Filter(
         name = context.getString(brand_Text),
         value = "Asus",
         component = MOTHERBOARD,
         nameNotLocalized = "brand"
     )
-    FilterList.brandMSI = Filter(
+    FilterList.brandMSI_Motherboard = Filter(
         name = context.getString(brand_Text),
         value = "MSI",
         component = MOTHERBOARD,
@@ -462,7 +463,110 @@ fun initializeFilters(context: Context) {
 
     //endregion
 
-    //region TODO: GPU Filters initialization
+    //region GPU Filters initialization
+
+    FilterList.brandMSI_GPU = Filter(
+        name = context.getString(brand_Text),
+        value = "MSI",
+        component = GPU,
+        nameNotLocalized = "brand",
+    )
+    FilterList.brandAsus_GPU = Filter(
+        name = context.getString(brand_Text),
+        value = "Asus",
+        component = GPU,
+        nameNotLocalized = "brand"
+    )
+    FilterList.brandGigabyte = Filter(
+        name = context.getString(brand_Text),
+        value = "Gigabyte",
+        component = GPU,
+        nameNotLocalized = "brand",
+    )
+    FilterList.chipsetBrandNVIDIA = Filter(
+        name = context.getString(chipsetBrand_Text),
+        value = "NVIDIA GeForce",
+        component = GPU,
+        nameNotLocalized = "chipsetBrand",
+    )
+    FilterList.chipsetBrandAMD = Filter(
+        name = context.getString(chipsetBrand_Text),
+        value = "AMD Radeon",
+        component = GPU,
+        nameNotLocalized = "chipsetBrand",
+    )
+    FilterList.VRAMSize4 = Filter(
+        name = context.getString(vramSize_Text),
+        value = "4",
+        component = GPU,
+        nameNotLocalized = "VRAMSize",
+    )
+    FilterList.VRAMSize8 = Filter(
+        name = context.getString(vramSize_Text),
+        value = "8",
+        component = GPU,
+        nameNotLocalized = "VRAMSize",
+    )
+    FilterList.VRAMSize10 = Filter(
+        name = context.getString(vramSize_Text),
+        value = "10",
+        component = GPU,
+        nameNotLocalized = "VRAMSize",
+    )
+    FilterList.VRAMSize16 = Filter(
+        name = context.getString(vramSize_Text),
+        value = "16",
+        component = GPU,
+        nameNotLocalized = "VRAMSize",
+    )
+    FilterList.VRAMSize20 = Filter(
+        name = context.getString(vramSize_Text),
+        value = "20",
+        component = GPU,
+        nameNotLocalized = "VRAMSize",
+    )
+    FilterList.VRAMSize24 = Filter(
+        name = context.getString(vramSize_Text),
+        value = "24",
+        component = GPU,
+        nameNotLocalized = "VRAMSize",
+    )
+    FilterList.numberOfHDMI1 = Filter(
+        name = context.getString(numberOfHdmiPorts_Text),
+        value = "1",
+        component = GPU,
+        nameNotLocalized = "numberOfHDMI",
+    )
+    FilterList.numberOfHDMI2 = Filter(
+        name = context.getString(numberOfHdmiPorts_Text),
+        value = "2",
+        component = GPU,
+        nameNotLocalized = "numberOfHDMI",
+    )
+    FilterList.numberOfHDMI3 = Filter(
+        name = context.getString(numberOfHdmiPorts_Text),
+        value = "3",
+        component = GPU,
+        nameNotLocalized = "numberOfHDMI",
+    )
+    FilterList.numberOfDP1 = Filter(
+        name = context.getString(numberOfDisplayPorts_Text),
+        value = "1",
+        component = GPU,
+        nameNotLocalized = "numberOfDP",
+    )
+    FilterList.numberOfDP2 = Filter(
+        name = context.getString(numberOfDisplayPorts_Text),
+        value = "2",
+        component = GPU,
+        nameNotLocalized = "numberOfDP",
+    )
+    FilterList.numberOfDP3 = Filter(
+        name = context.getString(numberOfDisplayPorts_Text),
+        value = "3",
+        component = GPU,
+        nameNotLocalized = "numberOfDP",
+    )
 
     //endregion
 

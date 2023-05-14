@@ -110,4 +110,9 @@
     <string name="numberOfSticks_Text">Numero di banchi</string>
     <string name="memorySpeed_Text">Velocità memoria</string>
     <string name="ramFilters_Text">Filtri RAM</string>
+    <string name="chipsetBrand_Text">Marca chipset</string>
+    <string name="vramSize_Text">Dimensione VRAM</string>
+    <string name="numberOfHdmiPorts_Text">Numero di porte HDMI</string>
+    <string name="numberOfDisplayPorts_Text">Numero di porte Display Port</string>
+    <string name="gpuFilters_Text">Filtri GPU</string>
 </resources>

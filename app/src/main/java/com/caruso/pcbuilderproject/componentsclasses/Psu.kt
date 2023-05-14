@@ -16,10 +16,6 @@ data class Psu(
     val wattage: Int,                   // wattage = 850 [W]
     val formFactor: String,             // formFactor = "ATX"
     val length: Int,                    // length = 160 [mm]
-
-    val ESPConnectorNumber: Int,        // ESPConnectorNumber = 3
-    val PCIeConnectorNumber: Int,       // PCIeConnectorNumber = 4
-    val SATAConnectorNumber: Int,       // SATAConnectorNumber = 14
 ) : Component(id, brand, name, price, defaultImagePainterId, imagePainterLink) {
     override fun toInt(): Int {
         return ComponentType.PSU
@@ -50,13 +46,7 @@ data class Psu(
                     .toInt(),
                 formFactor = jsonObject.getString("FormFactor"),
                 length = jsonObject.getString("Length")
-                    .toInt(),
-                ESPConnectorNumber = jsonObject.getString("ESPConnectors")
-                    .toInt(),
-                PCIeConnectorNumber = jsonObject.getString("PCIeConnectors")
-                    .toInt(),
-                SATAConnectorNumber = jsonObject.getString("SATAConnectors")
-                    .toInt(),
+                    .toInt()
             )
         }
     }

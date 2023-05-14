@@ -34,8 +34,8 @@ abstract class FilterList {
 
         //region Motherboard Filters declaration
 
-        var brandAsus: Filter = Filter()
-        var brandMSI: Filter = Filter()
+        var brandAsus_Motherboard: Filter = Filter()
+        var brandMSI_Motherboard: Filter = Filter()
         var socketAM4_Motherboard: Filter = Filter()
         var socketAM5_Motherboard: Filter = Filter()
         var socketLGA1700_Motherboard: Filter = Filter()
@@ -88,7 +88,25 @@ abstract class FilterList {
 
         //endregion
 
-        //region TODO: GPU Filters declaration
+        //region GPU Filters declaration
+
+        var brandMSI_GPU: Filter = Filter()
+        var brandAsus_GPU: Filter = Filter()
+        var brandGigabyte: Filter = Filter()
+        var chipsetBrandNVIDIA: Filter = Filter()
+        var chipsetBrandAMD: Filter = Filter()
+        var VRAMSize4: Filter = Filter()
+        var VRAMSize8: Filter = Filter()
+        var VRAMSize10: Filter = Filter()
+        var VRAMSize16: Filter = Filter()
+        var VRAMSize20: Filter = Filter()
+        var VRAMSize24: Filter = Filter()
+        var numberOfHDMI1: Filter = Filter()
+        var numberOfHDMI2: Filter = Filter()
+        var numberOfHDMI3: Filter = Filter()
+        var numberOfDP1: Filter = Filter()
+        var numberOfDP2: Filter = Filter()
+        var numberOfDP3: Filter = Filter()
 
         //endregion
 

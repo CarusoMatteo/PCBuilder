@@ -22,7 +22,7 @@ abstract class GlobalData {
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "70f8-93-40-209-161"
+        var ngrokServerLink = "bb41-93-40-208-136"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -66,8 +66,8 @@ abstract class GlobalData {
 
             // region Motherboard filters
 
-            FilterList.brandAsus,
-            FilterList.brandMSI,
+            FilterList.brandAsus_Motherboard,
+            FilterList.brandMSI_Motherboard,
             FilterList.socketAM4_Motherboard,
             FilterList.socketAM5_Motherboard,
             FilterList.socketLGA1700_Motherboard,
@@ -120,7 +120,25 @@ abstract class GlobalData {
 
             // endregion
 
-            // region TODO: Add GPU filters here
+            // region GPU filters
+
+            FilterList.brandMSI_GPU,
+            FilterList.brandAsus_GPU,
+            FilterList.brandGigabyte,
+            FilterList.chipsetBrandNVIDIA,
+            FilterList.chipsetBrandAMD,
+            FilterList.VRAMSize4,
+            FilterList.VRAMSize8,
+            FilterList.VRAMSize10,
+            FilterList.VRAMSize16,
+            FilterList.VRAMSize20,
+            FilterList.VRAMSize24,
+            FilterList.numberOfHDMI1,
+            FilterList.numberOfHDMI2,
+            FilterList.numberOfHDMI3,
+            FilterList.numberOfDP1,
+            FilterList.numberOfDP2,
+            FilterList.numberOfDP3,
 
             // endregion
 

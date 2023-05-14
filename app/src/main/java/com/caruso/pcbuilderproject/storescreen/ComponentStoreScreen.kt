@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
 import com.caruso.pcbuilderproject.filters.componentfilter.*
@@ -230,9 +231,11 @@ fun ComponentStoreScreen(
                 filterDialogOpen = filterDialogOpen,
                 navController = navController
             )
-            // ComponentType.GPU -> TODO: GPUFilterDialog(
-            //  filterDialogOpen = filterDialogOpen,
-            //  navController = navController)
+
+            GPU -> GPUFilterDialog(
+                filterDialogOpen = filterDialogOpen,
+                navController = navController
+            )
             // ComponentType.Storage -> TODO: StorageFilterDialog(
             //  filterDialogOpen = filterDialogOpen,
             //  navController = navController)

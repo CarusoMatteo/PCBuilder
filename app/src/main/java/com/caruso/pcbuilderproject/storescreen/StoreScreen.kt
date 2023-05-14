@@ -175,9 +175,11 @@ fun StoreScreen(
                 filterDialogOpen = filterDialogOpen,
                 navController = navController
             )
-            // ComponentType.GPU -> TODO: GPUFilterDialog(
-            //  filterDialogOpen = filterDialogOpen,
-            //  navController = navController)
+
+            GPU -> GPUFilterDialog(
+                filterDialogOpen = filterDialogOpen,
+                navController = navController
+            )
             // ComponentType.Storage -> TODO: StorageFilterDialog(
             //  filterDialogOpen = filterDialogOpen,
             //  navController = navController)

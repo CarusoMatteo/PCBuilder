@@ -113,4 +113,9 @@
     <string name="numberOfSticks_Text">Number of sticks</string>
     <string name="memorySpeed_Text">Memory speed</string>
     <string name="ramFilters_Text">RAM filters</string>
+    <string name="chipsetBrand_Text">Chipset brand</string>
+    <string name="vramSize_Text">VRAM size</string>
+    <string name="numberOfHdmiPorts_Text">Number of HDMI ports</string>
+    <string name="numberOfDisplayPorts_Text">Number of Display ports</string>
+    <string name="gpuFilters_Text">GPU Filters</string>
 </resources>
