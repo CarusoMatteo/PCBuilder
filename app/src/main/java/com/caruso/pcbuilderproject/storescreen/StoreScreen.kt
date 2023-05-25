@@ -180,12 +180,16 @@ fun StoreScreen(
                 filterDialogOpen = filterDialogOpen,
                 navController = navController
             )
-            // ComponentType.Storage -> TODO: StorageFilterDialog(
-            //  filterDialogOpen = filterDialogOpen,
-            //  navController = navController)
-            // ComponentType.PSU -> TODO: PSUFilterDialog(
-            //  filterDialogOpen = filterDialogOpen,
-            //  navController = navController)
+
+            STORAGE -> StorageFilterDialog(
+                filterDialogOpen = filterDialogOpen,
+                navController = navController
+            )
+
+            PSU -> PSUFilterDialog(
+                filterDialogOpen = filterDialogOpen,
+                navController = navController
+            )
         }
     }
 }

@@ -167,7 +167,7 @@ abstract class ServerFunctions {
                                 Log.d("Check Credentials", "----------------------------")
 
                                 snackbarMessage.value = context.getString(accountDoesntExists)
-                                GlobalData.logout(/*context = context*/)
+                                GlobalData.logout(context = context)
 
                                 scope.launch {
                                     snackbarHostState.showSnackbar(
@@ -719,78 +719,201 @@ abstract class ServerFunctions {
 
             queue.add(request)
         }
-    }
-}
 
-fun selectComponentFromID(
-    componentType: Int,
-    componentId: Int,
-    context: Context,
-    ngrokLink: String = ngrokServerLinkPrefix
-            + ngrokServerLink
-            + ngrokServerLinkSuffix
-) {
-    val url = buildString {
-        append(ngrokLink)
-        when (componentType) {
-            CPU -> append("/SelectComponentBasedOnId/SelectCPU.php?")
-            MOTHERBOARD -> append("/SelectComponentBasedOnId/SelectMotherboard.php?")
-            RAM -> append("/SelectComponentBasedOnId/SelectRAM.php?")
-            GPU -> append("/SelectComponentBasedOnId/SelectGPU.php?")
-            STORAGE -> append("/SelectComponentBasedOnId/SelectStorage.php?")
-            PSU -> append("/SelectComponentBasedOnId/SelectPSU.php?")
-            else -> append("/404.php")
-        }
-        append("Id=$componentId")
-    }
-
-    Log.d(
-        "Select ${ComponentType.toString(componentType, null)} From ID",
-        "Attempting to fetch the component with Id=$componentId at link:\"$url\""
-    )
-
-    val queue = Volley.newRequestQueue(context)
-
-    val request: StringRequest =
-        object : StringRequest(
-            url,
-            Response.Listener { response ->
-                try {
-                    val jsonObject = JSONObject(response)
-                    Log.d(
-                        "Select ${ComponentType.toString(componentType, null)} From ID",
-                        "Returned $jsonObject"
-                    )
-
-                    when (componentType) {
-                        CPU -> loggedInUser?.cpuSelected = Cpu.toCPU(jsonObject)
-                        MOTHERBOARD -> loggedInUser?.motherboardSelected =
-                            Motherboard.toMotherboard(jsonObject)
-
-                        RAM -> loggedInUser?.ramSelected = Ram.toRAM(jsonObject)
-                        GPU -> loggedInUser?.gpuSelected = Gpu.toGPU(jsonObject)
-                        STORAGE -> loggedInUser?.storageSelected =
-                            Storage.toStorage(jsonObject)
-
-                        PSU -> loggedInUser?.psuSelected = Psu.toPSU(jsonObject)
-                    }
-                    Log.d(
-                        "Select ${ComponentType.toString(componentType, null)} From ID",
-                        "The LoggedInUser was updated. Now it's: ${loggedInUser?.toStringComplete()}"
-                    )
-                } catch (error: JSONException) {
-                    Log.e(
-                        "Select ${ComponentType.toString(componentType, null)} From ID",
-                        "Error is " + error.message
-                    )
+        fun selectComponentFromID(
+            componentType: Int,
+            componentId: Int,
+            context: Context,
+            ngrokLink: String = ngrokServerLinkPrefix
+                    + ngrokServerLink
+                    + ngrokServerLinkSuffix
+        ) {
+            val url = buildString {
+                append(ngrokLink)
+                when (componentType) {
+                    CPU -> append("/SelectComponentBasedOnId/SelectCPU.php?")
+                    MOTHERBOARD -> append("/SelectComponentBasedOnId/SelectMotherboard.php?")
+                    RAM -> append("/SelectComponentBasedOnId/SelectRAM.php?")
+                    GPU -> append("/SelectComponentBasedOnId/SelectGPU.php?")
+                    STORAGE -> append("/SelectComponentBasedOnId/SelectStorage.php?")
+                    PSU -> append("/SelectComponentBasedOnId/SelectPSU.php?")
+                    else -> append("/404.php")
                 }
-            },
-            Response.ErrorListener { error ->
-                Log.e(
-                    "Select ${ComponentType.toString(componentType, null)} From ID",
-                    "Error is " + error.message
-                )
-            }) {}
+                append("Id=$componentId")
+            }
 
-    queue.add(request)
+            Log.d(
+                "Select ${ComponentType.toString(componentType, null)} From ID",
+                "Attempting to fetch the component with Id=$componentId at link:\"$url\""
+            )
+
+            val queue = Volley.newRequestQueue(context)
+
+            val request: StringRequest =
+                object : StringRequest(
+                    url,
+                    Response.Listener { response ->
+                        try {
+                            val jsonObject = JSONObject(response)
+                            Log.d(
+                                "Select ${ComponentType.toString(componentType, null)} From ID",
+                                "Returned $jsonObject"
+                            )
+
+                            when (componentType) {
+                                CPU -> loggedInUser?.cpuSelected = Cpu.toCPU(jsonObject)
+                                MOTHERBOARD -> loggedInUser?.motherboardSelected =
+                                    Motherboard.toMotherboard(jsonObject)
+
+                                RAM -> loggedInUser?.ramSelected = Ram.toRAM(jsonObject)
+                                GPU -> loggedInUser?.gpuSelected = Gpu.toGPU(jsonObject)
+                                STORAGE -> loggedInUser?.storageSelected =
+                                    Storage.toStorage(jsonObject)
+
+                                PSU -> loggedInUser?.psuSelected = Psu.toPSU(jsonObject)
+                            }
+                            Log.d(
+                                "Select ${ComponentType.toString(componentType, null)} From ID",
+                                "The LoggedInUser was updated. Now it's: ${loggedInUser?.toStringComplete()}"
+                            )
+                        } catch (error: JSONException) {
+                            Log.e(
+                                "Select ${ComponentType.toString(componentType, null)} From ID",
+                                "Error is " + error.message
+                            )
+                        }
+                    },
+                    Response.ErrorListener { error ->
+                        Log.e(
+                            "Select ${ComponentType.toString(componentType, null)} From ID",
+                            "Error is " + error.message
+                        )
+                    }) {}
+
+            queue.add(request)
+        }
+
+        fun createOrder(
+            username: String,
+            totalPrice: Float,
+            loadingIconVisible: MutableState<Boolean>,
+            context: Context,
+            navController: NavHostController,
+            scope: CoroutineScope,
+            snackbarHostState: SnackbarHostState,
+            snackbarMessage: MutableState<String>,
+            ngrokLink: String = ngrokServerLinkPrefix
+                    + ngrokServerLink
+                    + ngrokServerLinkSuffix
+        ) {
+            val url = buildString {
+                append(ngrokLink)
+                append("/User/CreateOrder.php?")
+                append("Username=")
+                append(username)
+                append("&TotalPrice=")
+                append(totalPrice)
+
+                if (loggedInUser?.cpuSelected != null) {
+                    append("&IdCPU=")
+                    append(loggedInUser?.cpuSelected!!.id)
+                }
+                if (loggedInUser?.motherboardSelected != null) {
+                    append("&IdMotherboard=")
+                    append(loggedInUser?.motherboardSelected!!.id)
+                }
+                if (loggedInUser?.ramSelected != null) {
+                    append("&IdRAM=")
+                    append(loggedInUser?.ramSelected!!.id)
+                }
+                if (loggedInUser?.gpuSelected != null) {
+                    append("&IdGPU=")
+                    append(loggedInUser?.gpuSelected!!.id)
+                }
+                if (loggedInUser?.storageSelected != null) {
+                    append("&IdStorage=")
+                    append(loggedInUser?.storageSelected!!.id)
+                }
+                if (loggedInUser?.psuSelected != null) {
+                    append("&IdPSU=")
+                    append(loggedInUser?.psuSelected!!.id)
+                }
+            }
+
+            Log.d("Create Order", "----------------------------")
+            Log.d(
+                "Create Order",
+                "Attempting to create the order for user \"$username\" at link: $url"
+            )
+
+            val queue = Volley.newRequestQueue(context)
+
+            val request: StringRequest =
+                object : StringRequest(
+                    url,
+                    Response.Listener { response ->
+                        try {
+                            val jsonObject = JSONObject(response)
+
+                            Log.d("Create Order", "Returned $jsonObject")
+
+                            val createOrderSuccessful =
+                                jsonObject.getString("CreateOrderSuccessful")
+                            val updateUserSuccessful =
+                                jsonObject.getString("UpdateUserSuccessful")
+
+                            if (createOrderSuccessful == "true" && updateUserSuccessful == "true") {
+                                Log.d("Create Order", "The order was created successfully.")
+                                Log.d("Create Order", "----------------------------")
+
+                                loadingIconVisible.value = false
+
+                                navController.navigate(BottomBarScreen.AccountScreen.route) {
+                                    popUpTo(id = navController.graph.findStartDestination().id)
+                                    launchSingleTop = true
+                                }
+
+                                selectUser(username, context, snackbarMessage)
+                            } else {
+                                Log.d("Create Order", "The order wasn't created successfully.")
+                                Log.d("Create Order", "----------------------------")
+
+                                loadingIconVisible.value = false
+                            }
+
+                        } catch (error: JSONException) {
+                            Log.e("Create Order", "Error is " + error.message)
+                            Log.d("Create Order", "----------------------------")
+
+                            loadingIconVisible.value = false
+                        }
+                    },
+                    Response.ErrorListener { error ->
+                        Log.e("Create Order", "Error is " + error.message)
+                        Log.d("Create Order", "----------------------------")
+
+                        // Check if the error was caused by the phone being offline or
+                        // if the server is inactive.
+                        Thread {
+                            if (!isInternetReachable()) {
+                                snackbarMessage.value =
+                                    context.getString(offlineWarning_Message)
+                            } else {
+                                snackbarMessage.value = context.getString(serverError_Message)
+                            }
+
+                            scope.launch {
+                                snackbarHostState.showSnackbar(
+                                    snackbarMessage.value
+                                )
+                            }
+
+                            loadingIconVisible.value = false
+                        }.start()
+                    }) {}
+
+            queue.add(request)
+        }
+    }
 }
+

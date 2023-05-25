@@ -95,6 +95,18 @@ abstract class FilterList {
         var brandGigabyte: Filter = Filter()
         var chipsetBrandNVIDIA: Filter = Filter()
         var chipsetBrandAMD: Filter = Filter()
+        var chipsetRTX3050: Filter = Filter()
+        var chipsetRTX3060: Filter = Filter()
+        var chipsetRTX3080: Filter = Filter()
+        var chipsetRTX3090: Filter = Filter()
+        var chipsetRTX4080: Filter = Filter()
+        var chipsetRTX4090: Filter = Filter()
+        var chipsetRX6500XT: Filter = Filter()
+        var chipsetRX6600XT: Filter = Filter()
+        var chipsetRX6800XT: Filter = Filter()
+        var chipsetRX6900XT: Filter = Filter()
+        var chipsetRX7900XT: Filter = Filter()
+        var chipsetRX7900XTX: Filter = Filter()
         var VRAMSize4: Filter = Filter()
         var VRAMSize8: Filter = Filter()
         var VRAMSize10: Filter = Filter()
@@ -110,11 +122,35 @@ abstract class FilterList {
 
         //endregion
 
-        //region TODO: Storage Filters declaration
+        //region Storage Filters declaration
+
+        var brandSamsung_Storage: Filter = Filter()
+        var brandGigabyte_Storage: Filter = Filter()
+        var brandCorsair_Storage: Filter = Filter()
+        var typeNVME4: Filter = Filter()
+        var typeNVME5: Filter = Filter()
+        var typeSATA: Filter = Filter()
+        var size250: Filter = Filter()
+        var size500: Filter = Filter()
+        var size1000: Filter = Filter()
+        var size2000: Filter = Filter()
 
         //endregion
 
-        //region TODO: PSU Filters declaration
+        //region PSU Filters declaration
+
+        var brandCorsair_PSU: Filter = Filter()
+        var brandSeaSonic_PSU: Filter = Filter()
+        var wattage550: Filter = Filter()
+        var wattage650: Filter = Filter()
+        var wattage750: Filter = Filter()
+        var wattage850: Filter = Filter()
+        var wattage1000: Filter = Filter()
+        var formFactorATX_PSU: Filter = Filter()
+        var formFactorSFF_PSU: Filter = Filter()
+        var length160: Filter = Filter()
+        var length170: Filter = Filter()
+        var length180: Filter = Filter()
 
         //endregion
     }

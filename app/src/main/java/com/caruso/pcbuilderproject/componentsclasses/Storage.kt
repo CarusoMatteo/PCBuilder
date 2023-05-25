@@ -14,7 +14,7 @@ data class Storage(
 
     // Specific
     val storageType: String,            // storageType = "NVMe M.2 5.0"
-    val storageSize: Int,               // storageSize = 2000
+    val storageSize: Int,               // storageSize = 2000 [GB]
 ) : Component(id, brand, name, price, defaultImagePainterId, imagePainterLink) {
     override fun toInt(): Int {
         return ComponentType.STORAGE

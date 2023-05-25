@@ -42,7 +42,6 @@
     <string name="usb_a_2_0_headers_Text">USB-A 2.0 headers</string>
     <string name="usb_a_3_2_gen_1_headers_Text">USB-A 3.2 Gen. 1 headers</string>
     <string name="usb_c_3_2_gen_2_headers_Text">USB-C 3.2 Gen. 2 headers</string>
-
     <string name="enterUsername_textFieldLabel">Enter Username</string>
     <string name="enterPassword_textFieldLabel">Enter Password</string>
     <string name="login_cardHeader">Login</string>
@@ -118,4 +117,21 @@
     <string name="numberOfHdmiPorts_Text">Number of HDMI ports</string>
     <string name="numberOfDisplayPorts_Text">Number of Display ports</string>
     <string name="gpuFilters_Text">GPU Filters</string>
+    <string name="type_text">Type</string>
+    <string name="storageSize_Text">Storage size</string>
+    <string name="wattage_Text">Wattage</string>
+    <string name="length_Text">Length</string>
+    <string name="too_little_powerful_PSU">Too little powerful PSU</string>
+    <string name="too_little_powerful_PSU_description1">The selected PSU can\'t supply enough current to the selected components.\nA PSU with wattage equal or greater than </string>
+    <string name="too_little_powerful_PSU_description2"> W is required.</string>
+    <string name="storage_not_compatible">Storage not compatible</string>
+    <string name="storage_not_compatible_description1">The selected motherboard doesn\'t support </string>
+    <string name="storage_not_compatible_description2"> storages.</string>
+    <string name="size_Text">Size</string>
+    <string name="slots_Text">slots</string>
+    <string name="storageType_Text">Storage type</string>
+    <string name="storageFilters_Text">Storage filters</string>
+    <string name="psuFilters_Text">PSU filters</string>
+    <string name="total_Text">Total</string>
+    <string name="proceedToPurchase_Button">Proceed to purchase</string>
 </resources>

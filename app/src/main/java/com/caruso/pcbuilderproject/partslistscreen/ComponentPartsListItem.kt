@@ -73,10 +73,14 @@ fun ComponentPartsListItem(
                         Box(modifier = Modifier.fillMaxWidth(0.8f)) {
                             Text(
                                 text = if (component != null) {
-                                    if (component is Cpu)
-                                        component.brand + " " + component.series + " " + component.name
-                                    else
-                                        component.brand + " " + component.name
+                                    when (component) {
+                                        is Cpu -> component.brand + " " + component.series + " " + component.name
+                                        is Ram -> component.brand + " " + component.name + " " + component.totalSize + " GB"
+                                        is Gpu -> component.brand + " " + component.name + " " + component.chipset
+                                        is Storage -> component.brand + " " + component.name + " " + component.storageSize + " GB"
+                                        is Psu -> component.brand + " " + component.name + " " + component.wattage + " W"
+                                        else -> component.brand + " " + component.name
+                                    }
                                 } else {
                                     when (componentType) {
                                         CPU -> context.getString(cpu_Text)
@@ -105,7 +109,8 @@ fun ComponentPartsListItem(
                             if (component != null)
                                 GlobalData.floatToStringChecker(
                                     number = component.price,
-                                    currency = stringResource(currency).toCharArray()[0],
+                                    currency = stringResource(currency),
+                                    decimalPoint = stringResource(decimalPoint)
                                 )
                             else
                                 stringResource(empty_Text),

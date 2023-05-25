@@ -86,10 +86,14 @@ fun ComponentProductCard(
                     ) {
                         Box(modifier = Modifier.fillMaxWidth(0.8f)) {
                             Text(
-                                text = if (component is Cpu)
-                                    component.brand + " " + component.series + " " + component.name
-                                else
-                                    component.brand + " " + component.name,
+                                text = when (component) {
+                                    is Cpu -> component.brand + " " + component.series + " " + component.name
+                                    is Ram -> component.brand + " " + component.name + " " + component.totalSize + " GB"
+                                    is Gpu -> component.brand + " " + component.name + " " + component.chipset
+                                    is Storage -> component.brand + " " + component.name + " " + component.storageSize + " GB"
+                                    is Psu -> component.brand + " " + component.name + " " + component.wattage + " W"
+                                    else -> component.brand + " " + component.name
+                                },
                                 style = nameSize,
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 2,
@@ -119,8 +123,8 @@ fun ComponentProductCard(
                         Text(
                             text = floatToStringChecker(
                                 number = component.price,
-                                currency = stringResource(R.string.currency).toCharArray()[0],
-                                decimalPoint = stringResource(id = R.string.decimalPoint).toCharArray()[0]
+                                currency = stringResource(R.string.currency),
+                                decimalPoint = stringResource(id = R.string.decimalPoint)
                             ),
                             style = MaterialTheme.typography.bodyMedium
                         )
@@ -149,7 +153,7 @@ fun ComponentProductCard(
 
                                         if (navController != null && snackbarHostState != null) {
                                             ServerFunctions.addToCart(
-                                                username = loggedInUser!!.username!!,
+                                                username = loggedInUser!!.username,
                                                 componentId = component.id,
                                                 componentType = component.toInt(),
                                                 context = context,
@@ -201,9 +205,9 @@ fun ComponentProductCard(
                     is Cpu -> CPUSpecs(cpu = component)
                     is Motherboard -> MotherboardSpecs(motherboard = component)
                     is Ram -> RAMSpecs(ram = component)
-                    // is Gpu -> TODO: GPUSpecs(gpu = component)
-                    // is Storage -> TODO: StorageSpecs(storage = component)
-                    // is Psu -> TODO: PSUSpecs(psu = component)
+                    is Gpu -> GPUSpecs(gpu = component)
+                    is Storage -> StorageSpecs(storage = component)
+                    is Psu -> PSUSpecs(psu = component)
                 }
             }
         }

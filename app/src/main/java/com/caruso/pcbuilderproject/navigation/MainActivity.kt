@@ -6,23 +6,39 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.PSU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
 import com.caruso.pcbuilderproject.filters.Filter
 import com.caruso.pcbuilderproject.filters.FilterList
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
+import com.caruso.pcbuilderproject.utilities.GlobalData
+import com.caruso.pcbuilderproject.utilities.ServerFunctions
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val context = LocalContext.current
 
-            initializeFilters(context = LocalContext.current)
+            initializeFilters(context = context)
+
+            if (GlobalData.loggedInUser != null) {
+                ServerFunctions.selectUser(
+                    GlobalData.loggedInUser!!.username,
+                    context = context,
+                    snackbarMessage = remember { mutableStateOf("") }
+                )
+            }
+
 
             PCBuilderProjectTheme {
                 Surface(
@@ -488,12 +504,86 @@ fun initializeFilters(context: Context) {
         value = "NVIDIA GeForce",
         component = GPU,
         nameNotLocalized = "chipsetBrand",
+        valueNotLocalized = "NVIDIA"
     )
     FilterList.chipsetBrandAMD = Filter(
         name = context.getString(chipsetBrand_Text),
         value = "AMD Radeon",
         component = GPU,
         nameNotLocalized = "chipsetBrand",
+        valueNotLocalized = "AMD"
+    )
+    FilterList.chipsetRTX3050 = Filter(
+        name = context.getString(chipset_Text),
+        value = "RTX 3050",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRTX3060 = Filter(
+        name = context.getString(chipset_Text),
+        value = "RTX 3060",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRTX3080 = Filter(
+        name = context.getString(chipset_Text),
+        value = "RTX 3080",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRTX3090 = Filter(
+        name = context.getString(chipset_Text),
+        value = "RTX 3090",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRTX4080 = Filter(
+        name = context.getString(chipset_Text),
+        value = "RTX 4080",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRTX4090 = Filter(
+        name = context.getString(chipset_Text),
+        value = "RTX 4090",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRX6500XT = Filter(
+        name = context.getString(chipset_Text),
+        value = "RX 6500 XT",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRX6600XT = Filter(
+        name = context.getString(chipset_Text),
+        value = "RX 6600 XT",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRX6800XT = Filter(
+        name = context.getString(chipset_Text),
+        value = "RX 6800 XT",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRX6900XT = Filter(
+        name = context.getString(chipset_Text),
+        value = "RX 6900 XT",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRX7900XT = Filter(
+        name = context.getString(chipset_Text),
+        value = "RX 7900 XT",
+        component = GPU,
+        nameNotLocalized = "chipset",
+    )
+    FilterList.chipsetRX7900XTX = Filter(
+        name = context.getString(chipset_Text),
+        value = "RX 7900 XT",
+        component = GPU,
+        nameNotLocalized = "chipset",
     )
     FilterList.VRAMSize4 = Filter(
         name = context.getString(vramSize_Text),
@@ -570,13 +660,147 @@ fun initializeFilters(context: Context) {
 
     //endregion
 
-    //region TODO: Storage Filters initialization
+    //region Storage Filters initialization
+
+    FilterList.brandSamsung_Storage = Filter(
+        name = context.getString(brand_Text),
+        value = "Samsung",
+        component = STORAGE,
+        nameNotLocalized = "brand",
+    )
+    FilterList.brandGigabyte_Storage = Filter(
+        name = context.getString(brand_Text),
+        value = "Gigabyte",
+        component = STORAGE,
+        nameNotLocalized = "brand"
+    )
+    FilterList.brandCorsair_Storage = Filter(
+        name = context.getString(brand_Text),
+        value = "Corsair",
+        component = STORAGE,
+        nameNotLocalized = "brand",
+    )
+    FilterList.typeNVME4 = Filter(
+        name = context.getString(type_text),
+        value = "NVMe M.2 4.0",
+        component = STORAGE,
+        nameNotLocalized = "type",
+        valueNotLocalized = "NVME4"
+    )
+    FilterList.typeNVME5 = Filter(
+        name = context.getString(type_text),
+        value = "NVMe M.2 5.0",
+        component = STORAGE,
+        nameNotLocalized = "type",
+        valueNotLocalized = "NVME5"
+    )
+    FilterList.typeSATA = Filter(
+        name = context.getString(type_text),
+        value = "SATA",
+        component = STORAGE,
+        nameNotLocalized = "type",
+    )
+    FilterList.size250 = Filter(
+        name = context.getString(storageSize_Text),
+        value = "250",
+        component = STORAGE,
+        nameNotLocalized = "size",
+    )
+    FilterList.size500 = Filter(
+        name = context.getString(storageSize_Text),
+        value = "500",
+        component = STORAGE,
+        nameNotLocalized = "size",
+    )
+    FilterList.size1000 = Filter(
+        name = context.getString(storageSize_Text),
+        value = "1000",
+        component = STORAGE,
+        nameNotLocalized = "size",
+    )
+    FilterList.size2000 = Filter(
+        name = context.getString(storageSize_Text),
+        value = "2000",
+        component = STORAGE,
+        nameNotLocalized = "size",
+    )
 
     //endregion
 
-    //region TODO: PSU Filters initialization
+    //region PSU Filters initialization
+
+    FilterList.brandCorsair_PSU = Filter(
+        name = context.getString(brand_Text),
+        value = "Corsair",
+        component = PSU,
+        nameNotLocalized = "brand",
+    )
+    FilterList.brandSeaSonic_PSU = Filter(
+        name = context.getString(brand_Text),
+        value = "SeaSonic",
+        component = PSU,
+        nameNotLocalized = "brand",
+    )
+    FilterList.wattage550 = Filter(
+        name = context.getString(wattage_Text),
+        value = "550",
+        component = PSU,
+        nameNotLocalized = "wattage",
+    )
+    FilterList.wattage650 = Filter(
+        name = context.getString(wattage_Text),
+        value = "650",
+        component = PSU,
+        nameNotLocalized = "wattage",
+    )
+    FilterList.wattage750 = Filter(
+        name = context.getString(wattage_Text),
+        value = "750",
+        component = PSU,
+        nameNotLocalized = "wattage",
+    )
+    FilterList.wattage850 = Filter(
+        name = context.getString(wattage_Text),
+        value = "850",
+        component = PSU,
+        nameNotLocalized = "wattage",
+    )
+    FilterList.wattage1000 = Filter(
+        name = context.getString(wattage_Text),
+        value = "1000",
+        component = PSU,
+        nameNotLocalized = "wattage",
+    )
+    FilterList.formFactorATX_PSU = Filter(
+        name = context.getString(formFactor_Text),
+        value = "ATX",
+        component = PSU,
+        nameNotLocalized = "formFactor",
+    )
+    FilterList.formFactorSFF_PSU = Filter(
+        name = context.getString(formFactor_Text),
+        value = "SFF",
+        component = PSU,
+        nameNotLocalized = "formFactor",
+    )
+    FilterList.length160 = Filter(
+        name = context.getString(length_Text),
+        value = "160",
+        component = PSU,
+        nameNotLocalized = "length",
+    )
+    FilterList.length170 = Filter(
+        name = context.getString(length_Text),
+        value = "170",
+        component = PSU,
+        nameNotLocalized = "length",
+    )
+    FilterList.length180 = Filter(
+        name = context.getString(length_Text),
+        value = "180",
+        component = PSU,
+        nameNotLocalized = "length",
+    )
 
     //endregion
-
-
 }

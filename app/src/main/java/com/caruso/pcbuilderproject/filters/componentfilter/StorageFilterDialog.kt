@@ -19,7 +19,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.caruso.pcbuilderproject.R.string.*
-import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
 import com.caruso.pcbuilderproject.filters.FilterFlowRow
 import com.caruso.pcbuilderproject.filters.FilterListHeader
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
@@ -29,7 +29,7 @@ import com.caruso.pcbuilderproject.utilities.ServerFunctions
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun GPUFilterDialog(
+fun StorageFilterDialog(
     filterDialogOpen: MutableState<Boolean>,
     navController: NavHostController?
 ) {
@@ -75,7 +75,7 @@ fun GPUFilterDialog(
                             )
                         }
                     },
-                    title = { Text(text = stringResource(gpuFilters_Text)) },
+                    title = { Text(text = stringResource(storageFilters_Text)) },
                     scrollBehavior = scrollBehavior
                 )
             }
@@ -91,7 +91,7 @@ fun GPUFilterDialog(
                 )
 
                 FilterFlowRow(
-                    component = GPU,
+                    component = STORAGE,
                     name = stringResource(brand_Text),
                     somethingWasChanged = somethingWasChanged
                 )
@@ -99,60 +99,24 @@ fun GPUFilterDialog(
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
 
                 FilterListHeader(
-                    text = stringResource(chipsetBrand_Text)
+                    text = stringResource(type_text)
                 )
 
                 FilterFlowRow(
-                    component = GPU,
-                    name = stringResource(chipsetBrand_Text),
+                    component = STORAGE,
+                    name = stringResource(type_text),
                     somethingWasChanged = somethingWasChanged
                 )
 
                 Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
 
                 FilterListHeader(
-                    text = stringResource(chipset_Text)
+                    text = stringResource(storageSize_Text)
                 )
 
                 FilterFlowRow(
-                    component = GPU,
-                    name = stringResource(chipset_Text),
-                    somethingWasChanged = somethingWasChanged
-                )
-
-                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
-
-                FilterListHeader(
-                    text = stringResource(vramSize_Text)
-                )
-
-                FilterFlowRow(
-                    component = GPU,
-                    name = stringResource(vramSize_Text),
-                    somethingWasChanged = somethingWasChanged
-                )
-
-                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
-
-                FilterListHeader(
-                    text = stringResource(numberOfHdmiPorts_Text)
-                )
-
-                FilterFlowRow(
-                    component = GPU,
-                    name = stringResource(numberOfHdmiPorts_Text),
-                    somethingWasChanged = somethingWasChanged
-                )
-
-                Divider(modifier = Modifier.padding(top = 15.dp, bottom = 15.dp))
-
-                FilterListHeader(
-                    text = stringResource(numberOfDisplayPorts_Text)
-                )
-
-                FilterFlowRow(
-                    component = GPU,
-                    name = stringResource(numberOfDisplayPorts_Text),
+                    component = STORAGE,
+                    name = stringResource(storageSize_Text),
                     somethingWasChanged = somethingWasChanged
                 )
 
@@ -164,9 +128,9 @@ fun GPUFilterDialog(
 
 @Preview
 @Composable
-fun GPUFilterDialogPreview() {
+fun StorageFilterDialogPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
-        GPUFilterDialog(
+        StorageFilterDialog(
             filterDialogOpen = remember { mutableStateOf(true) },
             navController = null
         )

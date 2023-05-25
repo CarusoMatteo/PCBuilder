@@ -115,4 +115,21 @@
     <string name="numberOfHdmiPorts_Text">Numero di porte HDMI</string>
     <string name="numberOfDisplayPorts_Text">Numero di porte Display Port</string>
     <string name="gpuFilters_Text">Filtri GPU</string>
+    <string name="type_text">Tipo</string>
+    <string name="storageSize_Text">Dimensione archiviazione</string>
+    <string name="wattage_Text">Wattaggio</string>
+    <string name="length_Text">Lunghezza</string>
+    <string name="too_little_powerful_PSU">PSU troppo poco potente</string>
+    <string name="too_little_powerful_PSU_description1">"L'alimentatore selezionato non può fornire abbastanza corrente per i componenti selezionati.\nÈ necessario un alimentatore con wattaggio ugaule o superiore a "</string>
+    <string name="too_little_powerful_PSU_description2">" W."</string>
+    <string name="storage_not_compatible">Archiviazione non compatibile</string>
+    <string name="storage_not_compatible_description1">"La scheda madre selezionata non supporta un'archiviazione di tipo "</string>
+    <string name="storage_not_compatible_description2">.</string>
+    <string name="size_Text">Dimensione</string>
+    <string name="slots_Text">slot</string>
+    <string name="storageType_Text">Tipo archiviazione</string>
+    <string name="storageFilters_Text">Filtri archiviazione</string>
+    <string name="psuFilters_Text">Filtri PSU</string>
+    <string name="total_Text">Totale</string>
+    <string name="proceedToPurchase_Button">Procedi all\'acquisto</string>
 </resources>

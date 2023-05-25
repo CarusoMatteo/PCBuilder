@@ -21,7 +21,9 @@ import com.caruso.pcbuilderproject.componentsclasses.*
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.CPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.GPU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.MOTHERBOARD
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.PSU
 import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.RAM
+import com.caruso.pcbuilderproject.componentsclasses.ComponentType.Companion.STORAGE
 import com.caruso.pcbuilderproject.filters.componentfilter.*
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
@@ -236,12 +238,16 @@ fun ComponentStoreScreen(
                 filterDialogOpen = filterDialogOpen,
                 navController = navController
             )
-            // ComponentType.Storage -> TODO: StorageFilterDialog(
-            //  filterDialogOpen = filterDialogOpen,
-            //  navController = navController)
-            // ComponentType.PSU -> TODO: PSUFilterDialog(
-            //  filterDialogOpen = filterDialogOpen,
-            //  navController = navController)
+
+            STORAGE -> StorageFilterDialog(
+                filterDialogOpen = filterDialogOpen,
+                navController = navController
+            )
+
+            PSU -> PSUFilterDialog(
+                filterDialogOpen = filterDialogOpen,
+                navController = navController
+            )
         }
     }
 }

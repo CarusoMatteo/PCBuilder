@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,7 @@ import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.incompatibilities.Incompatibility
 import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
+import com.caruso.pcbuilderproject.specslist.SpecListItem
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.*
 
@@ -43,6 +45,10 @@ fun PartsListScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val incompatibilityDialogVisible = remember { mutableStateOf(false) }
     val currentIncompatibilityClicked = remember { mutableStateOf(Incompatibility("", "")) }
+
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val snackbarMessage = remember { mutableStateOf("") }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -214,7 +220,73 @@ fun PartsListScreen(
                 snackbarHostState = snackbarHostState
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Column(Modifier.fillMaxWidth(0.9f)) {
+                Divider(modifier = Modifier.padding(top = 20.dp, bottom = 15.dp))
+
+                SpecListItem(
+                    leftItem = stringResource(total_Text),
+                    rightItem = buildString {
+                        append(
+                            GlobalData.floatToStringChecker(
+                                number = if (GlobalData.loggedInUser != null)
+                                    GlobalData.loggedInUser!!.getTotalPrice()
+                                else
+                                    0f,
+                                currency = stringResource(currency),
+                                decimalPoint = stringResource(decimalPoint)
+                            )
+                        )
+                    }
+                )
+
+                val loadingIconVisible = remember { mutableStateOf(false) }
+
+                FilledTonalButton(
+                    onClick = {
+                        if (GlobalData.loggedInUser != null && navController != null && snackbarHostState != null) {
+                            ServerFunctions.createOrder(
+                                username = GlobalData.loggedInUser!!.username,
+                                totalPrice = GlobalData.loggedInUser!!.getTotalPrice(),
+                                loadingIconVisible = loadingIconVisible,
+                                context = context,
+                                navController = navController,
+                                scope = scope,
+                                snackbarHostState = snackbarHostState,
+                                snackbarMessage = snackbarMessage
+                            )
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = if (GlobalData.loggedInUser != null) {
+                        GlobalData.loggedInUser!!.getTotalPrice() != 0f
+                    } else
+                        false
+                ) {
+                    Crossfade(targetState = loadingIconVisible) { loadingIconVisible ->
+                        if (!loadingIconVisible.value) {
+                            Icon(
+                                imageVector = Icons.Filled.ShoppingCart,
+                                contentDescription = "",
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier.padding(end = 8.dp)
+                            ) {
+                                CircularProgressIndicator(
+                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    strokeWidth = 2.dp,
+                                    modifier = Modifier
+                                        .size(MaterialTheme.typography.labelLarge.fontSize.value.dp)
+                                )
+                            }
+                        }
+                    }
+                    Text(text = stringResource(proceedToPurchase_Button))
+                }
+            }
+
+            Spacer(modifier = Modifier.height(15.dp))
         }
     }
 
