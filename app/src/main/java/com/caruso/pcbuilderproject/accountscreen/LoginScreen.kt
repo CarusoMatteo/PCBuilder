@@ -35,6 +35,7 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
+    exitButtonVisible: MutableState<Boolean>,
     paddingValues: PaddingValues = PaddingValues(all = 0.dp),
     snackbarHostState: SnackbarHostState?,
     navController: NavHostController?,
@@ -262,7 +263,8 @@ fun LoginScreen(
                                         snackbarHostState = snackbarHostState,
                                         snackbarMessage = snackbarMessage,
                                         navController = navController,
-                                        loadingIconVisible = loadingIconOnButtonVisible
+                                        loadingIconVisible = loadingIconOnButtonVisible,
+                                        exitButtonVisible = exitButtonVisible
                                     )
                                 } else {
                                     ServerFunctions.createAccount(
@@ -362,6 +364,7 @@ fun LoginScreenPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
         Surface(modifier = Modifier.fillMaxSize()) {
             LoginScreen(
+                exitButtonVisible = remember { mutableStateOf(false) },
                 snackbarHostState = null,
                 navController = null
             )

@@ -21,7 +21,11 @@ data class Storage(
     }
 
     override fun toString(): String {
-        return "Storage: $brand $name"
+        return "Storage: " + toStringDropType()
+    }
+
+    override fun toStringDropType(): String {
+        return "$brand $name $storageSize GB"
     }
 
     companion object {

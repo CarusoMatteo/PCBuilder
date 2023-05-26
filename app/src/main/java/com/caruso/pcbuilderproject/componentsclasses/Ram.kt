@@ -23,7 +23,11 @@ data class Ram(
     }
 
     override fun toString(): String {
-        return "RAM: $brand $name"
+        return "RAM: " + toStringDropType()
+    }
+
+    override fun toStringDropType(): String {
+        return "$brand $name $totalSize GB"
     }
 
     companion object {

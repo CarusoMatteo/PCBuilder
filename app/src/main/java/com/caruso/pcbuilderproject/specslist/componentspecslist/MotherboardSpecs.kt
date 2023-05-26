@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.Motherboard
-import com.caruso.pcbuilderproject.specslist.SpecListItem
+import com.caruso.pcbuilderproject.specslist.SpecsListItem
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @Composable
@@ -18,7 +18,7 @@ fun MotherboardSpecs(
     motherboard: Motherboard
 ) {
     Column {
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(socket_Text),
             rightItem = motherboard.socket
         )
@@ -26,7 +26,7 @@ fun MotherboardSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(chipset_Text),
             rightItem = motherboard.chipset
         )
@@ -34,7 +34,7 @@ fun MotherboardSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(formFactor_Text),
             rightItem = motherboard.formFactor
         )
@@ -42,7 +42,7 @@ fun MotherboardSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(memoryType_Text),
             rightItem = motherboard.memoryType
         )
@@ -50,7 +50,7 @@ fun MotherboardSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(memorySlotNumber_Text),
             rightItem = motherboard.memorySlotNumber.toString()
         )
@@ -58,7 +58,7 @@ fun MotherboardSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(maxEthernetSpeed),
             rightItem = motherboard.maxEthernetSpeed.toString(),
             unitOfMeasurement = "GB/s"
@@ -69,7 +69,7 @@ fun MotherboardSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(wifiIncluded_Text),
             rightItem = if (motherboard.wifiIncluded)
                 stringResource(yes_Text)
@@ -82,7 +82,7 @@ fun MotherboardSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(bluetoothIncluded_Text),
             rightItem = if (motherboard.bluetoothIncluded)
                 stringResource(yes_Text)
@@ -97,7 +97,7 @@ fun MotherboardSpecs(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            SpecListItem(
+            SpecsListItem(
                 leftItem = stringResource(pcie_x16_5_0_slots_Text),
                 rightItem = motherboard.pcie_x16_5_slotNumber.toString()
             )
@@ -109,7 +109,7 @@ fun MotherboardSpecs(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            SpecListItem(
+            SpecsListItem(
                 leftItem = stringResource(pcie_x16_4_0_slots_Text),
                 rightItem = motherboard.pcie_x16_4_slotNumber.toString()
             )
@@ -121,7 +121,7 @@ fun MotherboardSpecs(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            SpecListItem(
+            SpecsListItem(
                 leftItem = stringResource(pcie_x8_4_0_slots_Text),
                 rightItem = motherboard.pcie_x8_4_slotNumber.toString()
             )
@@ -133,7 +133,7 @@ fun MotherboardSpecs(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            SpecListItem(
+            SpecsListItem(
                 leftItem = stringResource(pcie_x4_4_0_slots_Text),
                 rightItem = motherboard.pcie_x4_4_slotNumber.toString()
             )
@@ -145,7 +145,7 @@ fun MotherboardSpecs(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            SpecListItem(
+            SpecsListItem(
                 leftItem = stringResource(pcie_x1_4_0_slots_Text),
                 rightItem = motherboard.pcie_x1_4_slotNumber.toString()
             )
@@ -157,7 +157,7 @@ fun MotherboardSpecs(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            SpecListItem(
+            SpecsListItem(
                 leftItem = stringResource(m_2_nvme_5_0_slots_Text),
                 rightItem = motherboard.m2_nvme_5_slotNumber.toString()
             )
@@ -169,7 +169,7 @@ fun MotherboardSpecs(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            SpecListItem(
+            SpecsListItem(
                 leftItem = stringResource(m_2_nvme_4_0_slots_Text),
                 rightItem = motherboard.m2_nvme_4_slotNumber.toString()
             )
@@ -180,7 +180,7 @@ fun MotherboardSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(sata_ports_Text),
             rightItem = motherboard.sata_portNumber.toString()
         )
@@ -190,7 +190,7 @@ fun MotherboardSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(usb_a_2_0_headers_Text),
             rightItem = motherboard.usb_a_2_headerNumber.toString()
         )
@@ -200,7 +200,7 @@ fun MotherboardSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(usb_a_3_2_gen_1_headers_Text),
             rightItem = motherboard.usb_a_32_gen1_headerNumber.toString()
         )
@@ -210,7 +210,7 @@ fun MotherboardSpecs(
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(usb_c_3_2_gen_2_headers_Text),
             rightItem = motherboard.usb_c_32_gen2_headerNumber.toString()
         )

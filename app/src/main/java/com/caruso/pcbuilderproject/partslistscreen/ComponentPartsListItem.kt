@@ -72,17 +72,8 @@ fun ComponentPartsListItem(
                     ) {
                         Box(modifier = Modifier.fillMaxWidth(0.8f)) {
                             Text(
-                                text = if (component != null) {
-                                    when (component) {
-                                        is Cpu -> component.brand + " " + component.series + " " + component.name
-                                        is Ram -> component.brand + " " + component.name + " " + component.totalSize + " GB"
-                                        is Gpu -> component.brand + " " + component.name + " " + component.chipset
-                                        is Storage -> component.brand + " " + component.name + " " + component.storageSize + " GB"
-                                        is Psu -> component.brand + " " + component.name + " " + component.wattage + " W"
-                                        else -> component.brand + " " + component.name
-                                    }
-                                } else {
-                                    when (componentType) {
+                                text = component?.toStringDropType()
+                                    ?: when (componentType) {
                                         CPU -> context.getString(cpu_Text)
                                         MOTHERBOARD -> context.getString(motherboard_Text)
                                         RAM -> context.getString(ram_Text)
@@ -90,8 +81,7 @@ fun ComponentPartsListItem(
                                         STORAGE -> context.getString(storage_Text)
                                         PSU -> context.getString(psu_Text)
                                         else -> context.getString(psu_Text)
-                                    }
-                                },
+                                    },
                                 style = nameSize,
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 2,
@@ -107,7 +97,7 @@ fun ComponentPartsListItem(
                         Text(
                             text =
                             if (component != null)
-                                GlobalData.floatToStringChecker(
+                                GlobalData.priceInFloatToString(
                                     number = component.price,
                                     currency = stringResource(currency),
                                     decimalPoint = stringResource(decimalPoint)

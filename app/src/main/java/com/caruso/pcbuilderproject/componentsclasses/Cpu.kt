@@ -27,7 +27,11 @@ class Cpu(
     }
 
     override fun toString(): String {
-        return "CPU: $brand $series $name"
+        return "CPU: " + toStringDropType()
+    }
+
+    override fun toStringDropType(): String {
+        return "$brand $series $name"
     }
 
     companion object {

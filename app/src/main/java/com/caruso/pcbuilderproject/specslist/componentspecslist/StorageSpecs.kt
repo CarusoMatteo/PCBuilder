@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.caruso.pcbuilderproject.R.drawable.storage_placeholder
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.Storage
-import com.caruso.pcbuilderproject.specslist.SpecListItem
+import com.caruso.pcbuilderproject.specslist.SpecsListItem
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @Composable
@@ -18,7 +18,7 @@ fun StorageSpecs(
     storage: Storage
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(brand_Text),
             rightItem = storage.brand
         )
@@ -26,7 +26,7 @@ fun StorageSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(storageType_Text),
             rightItem = storage.storageType,
         )
@@ -34,7 +34,7 @@ fun StorageSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(storageSize_Text),
             rightItem = storage.storageSize.toString(),
             unitOfMeasurement = "GB"

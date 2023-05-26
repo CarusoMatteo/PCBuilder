@@ -58,7 +58,7 @@
     <string name="anErrorOccurred_Message">Si è verificato un errore.</string>
     <string name="offlineWarning_Message">Sei offline. Controlla la connessione.</string>
     <string name="serverError_Message">Impossibile raggiungere il server.</string>
-    <string name="welcomeUser_Text">"Benvenuto "</string>
+    <string name="welcomeUser_Text">"Benvenuto"</string>
     <string name="dontHaveAnAccount_Text">Non hai un account?</string>
     <string name="createOne_AccountTextButton">CREANE UNO</string>
     <string name="createAnAccount_Text">Crea un account</string>
@@ -132,4 +132,6 @@
     <string name="psuFilters_Text">Filtri PSU</string>
     <string name="total_Text">Totale</string>
     <string name="proceedToPurchase_Button">Procedi all\'acquisto</string>
+    <string name="yourCurrentBalance_Text">Il tuo Saldo attuale</string>
+    <string name="addFunds_Button">Aggiungi fondi</string>
 </resources>

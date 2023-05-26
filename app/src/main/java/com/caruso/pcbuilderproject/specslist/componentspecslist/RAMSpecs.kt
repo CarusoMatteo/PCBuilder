@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.caruso.pcbuilderproject.R.drawable.ram_placeholder
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.Ram
-import com.caruso.pcbuilderproject.specslist.SpecListItem
+import com.caruso.pcbuilderproject.specslist.SpecsListItem
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @Composable
@@ -18,7 +18,7 @@ fun RAMSpecs(
     ram: Ram
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(memoryType_Text),
             rightItem = ram.memoryType
         )
@@ -26,7 +26,7 @@ fun RAMSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(memorySpeed_Text),
             rightItem = ram.memorySpeed.toString(),
             unitOfMeasurement = "MT/s"
@@ -35,7 +35,7 @@ fun RAMSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(totalSize_Text),
             rightItem = ram.totalSize.toString(),
             unitOfMeasurement = "GB"
@@ -44,7 +44,7 @@ fun RAMSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(numberOfSticks_Text),
             rightItem = ram.numberOfSticks.toString()
         )

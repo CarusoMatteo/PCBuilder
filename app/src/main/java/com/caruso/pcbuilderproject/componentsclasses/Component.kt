@@ -13,6 +13,10 @@ abstract class Component(
     }
 
     override fun toString(): String {
-        return "Component: $brand $name"
+        return "Component: " + toStringDropType()
+    }
+
+    open fun toStringDropType(): String {
+        return "$brand $name"
     }
 }

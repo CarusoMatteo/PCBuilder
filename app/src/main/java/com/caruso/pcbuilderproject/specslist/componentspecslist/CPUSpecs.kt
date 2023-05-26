@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.Cpu
-import com.caruso.pcbuilderproject.specslist.SpecListItem
+import com.caruso.pcbuilderproject.specslist.SpecsListItem
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @Composable
@@ -18,7 +18,7 @@ fun CPUSpecs(
     cpu: Cpu
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(numberOfCores_Text),
             rightItem = cpu.coreNumber.toString()
         )
@@ -26,7 +26,7 @@ fun CPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(baseClockSpeed_Text),
             rightItem = cpu.baseClockSpeed.toString(),
             unitOfMeasurement = "GHz"
@@ -35,7 +35,7 @@ fun CPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(powerConsumption_Text),
             rightItem = cpu.powerConsumption.toString(),
             unitOfMeasurement = "W"
@@ -44,7 +44,7 @@ fun CPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(architecture_Text),
             rightItem = cpu.architecture
         )
@@ -52,12 +52,12 @@ fun CPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(leftItem = stringResource(socket_Text), rightItem = cpu.socket)
+        SpecsListItem(leftItem = stringResource(socket_Text), rightItem = cpu.socket)
         Divider(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(integratedGraphics_Text),
             rightItem = if (cpu.integratedGraphics) stringResource(yes_Text) else stringResource(
                 no_Text
@@ -67,7 +67,7 @@ fun CPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(coolerIncluded_Text),
             rightItem = if (cpu.fanIncluded) stringResource(yes_Text) else stringResource(no_Text)
         )

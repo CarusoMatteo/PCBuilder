@@ -17,12 +17,12 @@ abstract class GlobalData {
         const val dynamicColorActive = false
 
         // Contains the Username of the user currently logged-in, otherwise is null
-        // var loggedInUser: User? = null
-        var loggedInUser: User? = User("Admin")
+        var loggedInUser: User? = null
+        // var loggedInUser: User? = User("Admin")
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "6a27-93-40-209-128"
+        var ngrokServerLink = "24f5-93-40-209-128"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -37,6 +37,8 @@ abstract class GlobalData {
         private var storeProductTypeSelected: Int = ComponentType.CPU
 
         var noItemsFoundCardVisible = false
+
+        var reloadAccountScreenForXTimes = 0
 
         // List of all possible filters
         val filterList: MutableList<Filter> = mutableListOf(
@@ -238,7 +240,7 @@ abstract class GlobalData {
             }
         }
 
-        fun floatToStringChecker(
+        fun priceInFloatToString(
             number: Float,
             currency: String,
             decimalPoint: String

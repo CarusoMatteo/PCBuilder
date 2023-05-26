@@ -5,12 +5,14 @@ import com.caruso.pcbuilderproject.componentsclasses.*
 
 data class User(
     var username: String,
+    var balance: Float = 0f,
     var cpuSelected: Cpu? = null,
     var motherboardSelected: Motherboard? = null,
     var ramSelected: Ram? = null,
     var gpuSelected: Gpu? = null,
     var storageSelected: Storage? = null,
     var psuSelected: Psu? = null,
+    var orderHistory: MutableList<Order> = mutableListOf()
 ) {
     override fun toString(): String {
         return username

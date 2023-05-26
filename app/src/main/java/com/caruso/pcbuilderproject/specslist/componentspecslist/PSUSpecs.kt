@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.Psu
-import com.caruso.pcbuilderproject.specslist.SpecListItem
+import com.caruso.pcbuilderproject.specslist.SpecsListItem
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @Composable
@@ -18,7 +18,7 @@ fun PSUSpecs(
     psu: Psu
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(brand_Text),
             rightItem = psu.brand
         )
@@ -26,7 +26,7 @@ fun PSUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(wattage_Text),
             rightItem = psu.wattage.toString(),
             unitOfMeasurement = "W"
@@ -35,7 +35,7 @@ fun PSUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(formFactor_Text),
             rightItem = psu.formFactor,
         )
@@ -43,7 +43,7 @@ fun PSUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(length_Text),
             rightItem = psu.length.toString(),
             unitOfMeasurement = "mm"

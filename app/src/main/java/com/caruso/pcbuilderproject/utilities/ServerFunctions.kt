@@ -3,7 +3,7 @@ package com.caruso.pcbuilderproject.utilities
 import android.content.Context
 import android.util.Log
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.*
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.android.volley.Response
@@ -30,6 +30,7 @@ import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.ps
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.rams
 import com.caruso.pcbuilderproject.componentsclasses.ComponentsList.Companion.storages
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
+import com.caruso.pcbuilderproject.user.Order
 import com.caruso.pcbuilderproject.user.User
 import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.loggedInUser
 import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.ngrokServerLink
@@ -42,6 +43,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
+import java.time.LocalDate
 
 abstract class ServerFunctions {
     companion object {
@@ -112,6 +114,7 @@ abstract class ServerFunctions {
             snackbarMessage: MutableState<String>,
             navController: NavHostController,
             loadingIconVisible: MutableState<Boolean>,
+            exitButtonVisible: MutableState<Boolean>,
             ngrokLink: String = ngrokServerLinkPrefix
                     + ngrokServerLink
                     + ngrokServerLinkSuffix
@@ -149,11 +152,15 @@ abstract class ServerFunctions {
                                 )
                                 Log.d("Check Credentials", "----------------------------")
 
+                                exitButtonVisible.value = true
+
                                 selectUser(
                                     username = username,
                                     context = context,
                                     snackbarMessage = snackbarMessage
                                 )
+
+                                GlobalData.reloadAccountScreenForXTimes = 10
 
                                 navController.navigate(BottomBarScreen.AccountScreen.route) {
                                     popUpTo(id = navController.graph.findStartDestination().id)
@@ -238,8 +245,15 @@ abstract class ServerFunctions {
                         try {
                             val jsonObject = JSONObject(response)
                             Log.d("Select User", "Returned $jsonObject.")
+                            Log.d(
+                                "Select User",
+                                "Balance is ${jsonObject.getString("Balance").toFloat()}f"
+                            )
 
-                            loggedInUser = User(username = username)
+                            loggedInUser = User(
+                                username = jsonObject.getString("Username"),
+                                balance = jsonObject.getString("Balance").toFloat()
+                            )
 
                             try {
                                 if (jsonObject.getString("CPU") != "null") {
@@ -253,7 +267,10 @@ abstract class ServerFunctions {
                                 Log.e("Select User", "Error is " + error.message)
                                 Log.d("Select User", "----------------------------")
 
-                                loggedInUser = User(username = username)
+                                loggedInUser = User(
+                                    username = jsonObject.getString("Username"),
+                                    balance = jsonObject.getString("Balance").toFloat()
+                                )
                             }
 
                             try {
@@ -268,7 +285,10 @@ abstract class ServerFunctions {
                                 Log.e("Select User", "Error is " + error.message)
                                 Log.d("Select User", "----------------------------")
 
-                                loggedInUser = User(username = username)
+                                loggedInUser = User(
+                                    username = jsonObject.getString("Username"),
+                                    balance = jsonObject.getString("Balance").toFloat()
+                                )
                             }
 
                             try {
@@ -284,7 +304,10 @@ abstract class ServerFunctions {
                                 Log.e("Select User", "Error is " + error.message)
                                 Log.d("Select User", "----------------------------")
 
-                                loggedInUser = User(username = username)
+                                loggedInUser = User(
+                                    username = jsonObject.getString("Username"),
+                                    balance = jsonObject.getString("Balance").toFloat()
+                                )
                             }
 
                             try {
@@ -299,7 +322,10 @@ abstract class ServerFunctions {
                                 Log.e("Select User", "Error is " + error.message)
                                 Log.d("Select User", "----------------------------")
 
-                                loggedInUser = User(username = username)
+                                loggedInUser = User(
+                                    username = jsonObject.getString("Username"),
+                                    balance = jsonObject.getString("Balance").toFloat()
+                                )
                             }
 
                             try {
@@ -314,7 +340,10 @@ abstract class ServerFunctions {
                                 Log.e("Select User", "Error is " + error.message)
                                 Log.d("Select User", "----------------------------")
 
-                                loggedInUser = User(username = username)
+                                loggedInUser = User(
+                                    username = jsonObject.getString("Username"),
+                                    balance = jsonObject.getString("Balance").toFloat()
+                                )
                             }
 
                             try {
@@ -329,8 +358,16 @@ abstract class ServerFunctions {
                                 Log.e("Select User", "Error is " + error.message)
                                 Log.d("Select User", "----------------------------")
 
-                                loggedInUser = User(username = username)
+                                loggedInUser = User(
+                                    username = jsonObject.getString("Username"),
+                                    balance = jsonObject.getString("Balance").toFloat()
+                                )
                             }
+
+                            selectOrder(
+                                username = username,
+                                context = context
+                            )
 
                         } catch (error: JSONException) {
                             Log.e("Select User", "Error is: " + error.message)
@@ -914,6 +951,183 @@ abstract class ServerFunctions {
 
             queue.add(request)
         }
+
+
+        fun selectOrder(
+            username: String,
+            context: Context,
+            ngrokLink: String = ngrokServerLinkPrefix
+                    + ngrokServerLink
+                    + ngrokServerLinkSuffix
+        ) {
+            val url = buildString {
+                append(ngrokLink)
+                append("/User/SelectOrder.php?Username=$username")
+            }
+
+            Log.d(
+                "Select Order",
+                "Attempting to select orders of user $username at link:\"$url\""
+            )
+
+            val queue = Volley.newRequestQueue(context)
+
+            val request: StringRequest =
+                object : StringRequest(
+                    url,
+                    Response.Listener { response ->
+                        try {
+                            val jsonObject = JSONObject(response)
+                            Log.d(
+                                "Select Order",
+                                "Returned $jsonObject"
+                            )
+
+                            Thread {
+                                for (i in 1 until jsonObject.length()) {
+
+                                    val currentObject: JSONObject = jsonObject["$i"] as JSONObject
+                                    Log.d("GetComponents", "Parsing order $currentObject")
+
+                                    val date: LocalDate? =
+                                        LocalDate.parse(currentObject.getString("Date"))
+                                    val totalCost: Float =
+                                        currentObject.getString("TotalCost").toFloat()
+
+
+                                    var cpu: Cpu? = null
+                                    if (currentObject.getString("CPU") != "null") {
+                                        val cpuResponse = JSONObject(
+                                            URL(
+                                                buildString {
+                                                    append(ngrokLink)
+                                                    append("/SelectComponentBasedOnId/SelectCPU.php?")
+                                                    append("Id=")
+                                                    append(currentObject.getString("CPU"))
+                                                }
+                                            ).readText()
+                                        )
+
+                                        cpu = Cpu.toCPU(cpuResponse)
+                                    }
+
+                                    var motherboard: Motherboard? = null
+                                    if (currentObject.getString("Motherboard") != "null") {
+                                        val cpuResponse = JSONObject(
+                                            URL(
+                                                buildString {
+                                                    append(ngrokLink)
+                                                    append("/SelectComponentBasedOnId/SelectMotherboard.php?")
+                                                    append("Id=")
+                                                    append(currentObject.getString("Motherboard"))
+                                                }
+                                            ).readText()
+                                        )
+
+                                        motherboard = Motherboard.toMotherboard(cpuResponse)
+                                    }
+
+                                    var ram: Ram? = null
+                                    if (currentObject.getString("RAM") != "null") {
+                                        val cpuResponse = JSONObject(
+                                            URL(
+                                                buildString {
+                                                    append(ngrokLink)
+                                                    append("/SelectComponentBasedOnId/SelectRAM.php?")
+                                                    append("Id=")
+                                                    append(currentObject.getString("RAM"))
+                                                }
+                                            ).readText()
+                                        )
+
+                                        ram = Ram.toRAM(cpuResponse)
+                                    }
+
+                                    var gpu: Gpu? = null
+                                    if (currentObject.getString("GPU") != "null") {
+                                        val cpuResponse = JSONObject(
+                                            URL(
+                                                buildString {
+                                                    append(ngrokLink)
+                                                    append("/SelectComponentBasedOnId/SelectGPU.php?")
+                                                    append("Id=")
+                                                    append(currentObject.getString("GPU"))
+                                                }
+                                            ).readText()
+                                        )
+
+                                        gpu = Gpu.toGPU(cpuResponse)
+                                    }
+
+                                    var storage: Storage? = null
+                                    if (currentObject.getString("Storage") != "null") {
+                                        val cpuResponse = JSONObject(
+                                            URL(
+                                                buildString {
+                                                    append(ngrokLink)
+                                                    append("/SelectComponentBasedOnId/SelectStorage.php?")
+                                                    append("Id=")
+                                                    append(currentObject.getString("Storage"))
+                                                }
+                                            ).readText()
+                                        )
+
+                                        storage = Storage.toStorage(cpuResponse)
+                                    }
+
+                                    var psu: Psu? = null
+                                    if (currentObject.getString("PSU") != "null") {
+                                        val cpuResponse = JSONObject(
+                                            URL(
+                                                buildString {
+                                                    append(ngrokLink)
+                                                    append("/SelectComponentBasedOnId/SelectPSU.php?")
+                                                    append("Id=")
+                                                    append(currentObject.getString("PSU"))
+                                                }
+                                            ).readText()
+                                        )
+
+                                        psu = Psu.toPSU(cpuResponse)
+                                    }
+
+                                    if (date != null)
+                                        loggedInUser?.orderHistory?.add(
+                                            Order(
+                                                orderId = 1000 + i,
+                                                date = date,
+                                                totalCost = totalCost,
+                                                cpu = cpu,
+                                                motherboard = motherboard,
+                                                ram = ram,
+                                                gpu = gpu,
+                                                storage = storage,
+                                                psu = psu
+                                            )
+                                        )
+                                }
+
+                                Log.d(
+                                    "Select Order",
+                                    "The LoggedInUser order list was updated. Now it's: ${loggedInUser?.orderHistory.toString()}"
+                                )
+                            }.start()
+                        } catch (error: JSONException) {
+                            Log.e(
+                                "Select Order",
+                                "Error is " + error.message
+                            )
+                        }
+                    },
+                    Response.ErrorListener
+                    { error ->
+                        Log.e(
+                            "Select Order",
+                            "Error is " + error.message
+                        )
+                    }) {}
+
+            queue.add(request)
+        }
     }
 }
-

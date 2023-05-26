@@ -48,7 +48,11 @@ data class Motherboard(
     }
 
     override fun toString(): String {
-        return "Motherboard: $brand $name"
+        return "Motherboard: " + toStringDropType()
+    }
+
+    override fun toStringDropType(): String {
+        return "$brand $name"
     }
 
     companion object {

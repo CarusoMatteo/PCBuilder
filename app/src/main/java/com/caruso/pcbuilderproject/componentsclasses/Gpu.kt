@@ -28,7 +28,11 @@ data class Gpu(
     }
 
     override fun toString(): String {
-        return "GPU: $brand $name"
+        return "GPU: " + toStringDropType()
+    }
+
+    override fun toStringDropType(): String {
+        return "$brand $name $chipset"
     }
 
     companion object {

@@ -12,7 +12,7 @@ import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 
 @Composable
-fun SpecListItem(
+fun SpecsListItem(
     modifier: Modifier = Modifier,
     leftItem: String,
     rightItem: String,
@@ -20,9 +20,11 @@ fun SpecListItem(
 ) {
     Row(
         modifier = Modifier.padding(end = 16.dp, bottom = 10.dp)
-                then modifier
+                then modifier,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
+            modifier = Modifier.padding(end = 5.dp),
             text = leftItem,
             fontStyle = MaterialTheme.typography.headlineSmall.fontStyle,
             fontWeight = FontWeight.Bold
@@ -38,7 +40,7 @@ fun SpecListItem(
                             " $unitOfMeasurement"
                         else
                             "",
-                fontStyle = MaterialTheme.typography.headlineSmall.fontStyle,
+                fontStyle = MaterialTheme.typography.headlineSmall.fontStyle
             )
         }
     }
@@ -49,7 +51,11 @@ fun SpecListItem(
 fun SpecsListItemPreview() {
     PCBuilderProjectTheme(darkTheme = true) {
         Card {
-            SpecListItem(leftItem = "Power consumption", rightItem = "120", unitOfMeasurement = "W")
+            SpecsListItem(
+                leftItem = "Power consumption",
+                rightItem = "120",
+                unitOfMeasurement = "W"
+            )
         }
     }
 }

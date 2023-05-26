@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.caruso.pcbuilderproject.R
 import com.caruso.pcbuilderproject.R.string.*
 import com.caruso.pcbuilderproject.componentsclasses.Gpu
-import com.caruso.pcbuilderproject.specslist.SpecListItem
+import com.caruso.pcbuilderproject.specslist.SpecsListItem
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 
 @Composable
@@ -18,7 +18,7 @@ fun GPUSpecs(
     gpu: Gpu
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(brand_Text),
             rightItem = gpu.brand
         )
@@ -26,7 +26,7 @@ fun GPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(chipsetBrand_Text),
             rightItem = gpu.chipsetBrand,
         )
@@ -34,7 +34,7 @@ fun GPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(chipset_Text),
             rightItem = gpu.chipset,
         )
@@ -42,7 +42,7 @@ fun GPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(vramSize_Text),
             rightItem = gpu.vRamSize.toString(),
             unitOfMeasurement = "GB"
@@ -51,7 +51,7 @@ fun GPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(baseClockSpeed_Text),
             rightItem = gpu.clockSpeed.toString(),
             unitOfMeasurement = "GHz"
@@ -60,7 +60,7 @@ fun GPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(length_Text),
             rightItem = gpu.length.toString(),
             unitOfMeasurement = "mm"
@@ -69,7 +69,7 @@ fun GPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(size_Text),
             rightItem = gpu.size.toString(),
             unitOfMeasurement = stringResource(slots_Text)
@@ -78,7 +78,7 @@ fun GPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(powerConsumption_Text),
             rightItem = gpu.powerConsumption.toString(),
             unitOfMeasurement = "W"
@@ -87,7 +87,7 @@ fun GPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(numberOfHdmiPorts_Text),
             rightItem = gpu.hdmiPortNumber.toString()
         )
@@ -95,7 +95,7 @@ fun GPUSpecs(
             Modifier.padding(bottom = 10.dp, end = 16.dp),
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        SpecListItem(
+        SpecsListItem(
             leftItem = stringResource(numberOfDisplayPorts_Text),
             rightItem = gpu.displayPortNumber.toString()
         )

@@ -25,8 +25,8 @@ import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityList
 import com.caruso.pcbuilderproject.specslist.componentspecslist.*
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.*
-import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.floatToStringChecker
 import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.loggedInUser
+import com.caruso.pcbuilderproject.utilities.GlobalData.Companion.priceInFloatToString
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -86,14 +86,7 @@ fun ComponentProductCard(
                     ) {
                         Box(modifier = Modifier.fillMaxWidth(0.8f)) {
                             Text(
-                                text = when (component) {
-                                    is Cpu -> component.brand + " " + component.series + " " + component.name
-                                    is Ram -> component.brand + " " + component.name + " " + component.totalSize + " GB"
-                                    is Gpu -> component.brand + " " + component.name + " " + component.chipset
-                                    is Storage -> component.brand + " " + component.name + " " + component.storageSize + " GB"
-                                    is Psu -> component.brand + " " + component.name + " " + component.wattage + " W"
-                                    else -> component.brand + " " + component.name
-                                },
+                                text = component.toStringDropType(),
                                 style = nameSize,
                                 fontWeight = FontWeight.Bold,
                                 maxLines = 2,
@@ -121,7 +114,7 @@ fun ComponentProductCard(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = floatToStringChecker(
+                            text = priceInFloatToString(
                                 number = component.price,
                                 currency = stringResource(R.string.currency),
                                 decimalPoint = stringResource(id = R.string.decimalPoint)

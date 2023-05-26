@@ -1,18 +1,15 @@
 package com.caruso.pcbuilderproject.accountscreen
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
-import com.caruso.pcbuilderproject.navigation.BottomBarScreen
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.GlobalData
 
@@ -20,55 +17,48 @@ import com.caruso.pcbuilderproject.utilities.GlobalData
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(all = 0.dp),
-    //snackbarHostState: SnackbarHostState?,
-    navController: NavHostController?
 ) {
-    val loadingIconOnButtonVisible = remember {
-        mutableStateOf(false)
-    }
+    val addBalanceDialogVisible = remember { mutableStateOf(false) }
 
-    val context = LocalContext.current
-
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
                 then modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "User currently logged in: " + GlobalData.loggedInUser,
-            fontSize = MaterialTheme.typography.headlineLarge.fontSize,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onBackground
-        )
-        Button(onClick = {
-            GlobalData.logout(context = context)
-
-            navController?.navigate(BottomBarScreen.AccountScreen.route) {
-                popUpTo(id = navController.graph.findStartDestination().id)
-                launchSingleTop = true
-            }
-        }) {
-            AnimatedVisibility(
-                visible = loadingIconOnButtonVisible.value
-            ) {
-                Box(
-                    modifier = Modifier.padding(end = 8.dp)
-                ) {
-                    CircularProgressIndicator(
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        strokeWidth = 2.dp,
-                        modifier = Modifier
-                            .size(MaterialTheme.typography.labelLarge.fontSize.value.dp)
-                    )
-                }
-            }
-
-            Text(
-                text = "Exit"
+        item {
+            BalanceCard(
+                modifier = Modifier.fillMaxWidth(0.9f),
+                balance = GlobalData.loggedInUser!!.balance,
+                addBalanceDialogVisible = addBalanceDialogVisible
             )
+
+            Spacer(Modifier.height(20.dp))
+
+            Box(
+                modifier = Modifier.fillMaxWidth(0.9f),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Text(
+                    text = "Order history",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(Modifier.height(20.dp))
+        }
+
+        GlobalData.loggedInUser?.let {
+            items(items = it.orderHistory) { order ->
+                OrderCard(
+                    modifier = Modifier.fillMaxWidth(0.9f),
+                    order = order
+                )
+
+                Spacer(Modifier.height(20.dp))
+            }
         }
     }
 }
@@ -78,10 +68,7 @@ fun ProfileScreen(
 fun ProfileScreenPreview() {
     PCBuilderProjectTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            ProfileScreen(
-                //snackbarHostState = null,
-                navController = null
-            )
+            ProfileScreen()
         }
     }
 }

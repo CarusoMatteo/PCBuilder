@@ -25,7 +25,7 @@ import com.caruso.pcbuilderproject.dialogs.ServerSettingsDialog
 import com.caruso.pcbuilderproject.incompatibilities.Incompatibility
 import com.caruso.pcbuilderproject.incompatibilities.IncompatibilityDialog
 import com.caruso.pcbuilderproject.navigation.BottomBarScreen
-import com.caruso.pcbuilderproject.specslist.SpecListItem
+import com.caruso.pcbuilderproject.specslist.SpecsListItem
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.*
 
@@ -223,11 +223,11 @@ fun PartsListScreen(
             Column(Modifier.fillMaxWidth(0.9f)) {
                 Divider(modifier = Modifier.padding(top = 20.dp, bottom = 15.dp))
 
-                SpecListItem(
+                SpecsListItem(
                     leftItem = stringResource(total_Text),
                     rightItem = buildString {
                         append(
-                            GlobalData.floatToStringChecker(
+                            GlobalData.priceInFloatToString(
                                 number = if (GlobalData.loggedInUser != null)
                                     GlobalData.loggedInUser!!.getTotalPrice()
                                 else

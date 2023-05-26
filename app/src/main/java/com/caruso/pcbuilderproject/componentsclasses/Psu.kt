@@ -22,7 +22,11 @@ data class Psu(
     }
 
     override fun toString(): String {
-        return "PSU: $brand $name"
+        return "PSU: " + toStringDropType()
+    }
+
+    override fun toStringDropType(): String {
+        return "$brand $name $wattage W"
     }
 
     companion object {
