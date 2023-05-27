@@ -136,4 +136,11 @@
     <string name="proceedToPurchase_Button">Proceed to purchase</string>
     <string name="yourCurrentBalance_Text">Your current Balance</string>
     <string name="addFunds_Button">Add funds</string>
+    <string name="orderHistory_Text">Order history</string>
+    <string name="order_Text">Order</string>
+    <string name="addFunds_Text">Add funds</string>
+    <string name="writeTheAmountOfFundsToAddTtoYourAaccount_Text">Write the amount of funds to add to your account.</string>
+    <string name="foundsToAdd_Text">Founds to add</string>
+    <string name="balance_Text">Balance</string>
+    <string name="subTotal_Text">Sub-total</string>
 </resources>

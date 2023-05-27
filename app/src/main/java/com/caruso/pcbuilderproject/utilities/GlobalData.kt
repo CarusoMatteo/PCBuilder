@@ -22,7 +22,7 @@ abstract class GlobalData {
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "24f5-93-40-209-128"
+        var ngrokServerLink = "5576-93-40-208-236"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -243,7 +243,8 @@ abstract class GlobalData {
         fun priceInFloatToString(
             number: Float,
             currency: String,
-            decimalPoint: String
+            decimalPoint: String,
+            dropCurrency: Boolean = false
         ): String {
             val numberString = number.toString()
 
@@ -260,7 +261,10 @@ abstract class GlobalData {
                 decimalPart = decimalPart.dropLast(decimalPart.length - 2)
             }
 
-            return "$currency $wholePart$decimalPoint$decimalPart"
+            if (!dropCurrency)
+                return "$currency $wholePart$decimalPoint$decimalPart"
+            else
+                return "$wholePart$decimalPoint$decimalPart"
         }
 
         fun copyToClipboard(

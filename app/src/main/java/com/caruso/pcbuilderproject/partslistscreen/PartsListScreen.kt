@@ -224,7 +224,7 @@ fun PartsListScreen(
                 Divider(modifier = Modifier.padding(top = 20.dp, bottom = 15.dp))
 
                 SpecsListItem(
-                    leftItem = stringResource(total_Text),
+                    leftItem = stringResource(subTotal_Text),
                     rightItem = buildString {
                         append(
                             GlobalData.priceInFloatToString(
@@ -233,11 +233,54 @@ fun PartsListScreen(
                                 else
                                     0f,
                                 currency = stringResource(currency),
-                                decimalPoint = stringResource(decimalPoint)
+                                decimalPoint = stringResource(decimalPoint),
+                                dropCurrency = false
                             )
                         )
                     }
                 )
+
+                if (GlobalData.loggedInUser != null && GlobalData.loggedInUser!!.balance > 0f) {
+                    SpecsListItem(
+                        leftItem = stringResource(balance_Text),
+                        rightItem = buildString {
+                            append("− ")
+                            append(
+                                GlobalData.priceInFloatToString(
+                                    number = if (GlobalData.loggedInUser!!.balance < GlobalData.loggedInUser!!.getTotalPrice())
+                                        GlobalData.loggedInUser!!.balance
+                                    else
+                                        GlobalData.loggedInUser!!.getTotalPrice(),
+                                    currency = stringResource(currency),
+                                    decimalPoint = stringResource(decimalPoint),
+                                    dropCurrency = true
+                                )
+                            )
+                        }
+                    )
+
+                    Divider(modifier = Modifier.padding(start = 290.dp))
+                }
+
+                if (GlobalData.loggedInUser != null) {
+                    SpecsListItem(
+                        leftItem = stringResource(total_Text),
+                        rightItem = buildString {
+                            append("= ")
+                            append(
+                                GlobalData.priceInFloatToString(
+                                    number = if (GlobalData.loggedInUser!!.balance <= GlobalData.loggedInUser!!.getTotalPrice())
+                                        GlobalData.loggedInUser!!.getTotalPrice() - GlobalData.loggedInUser!!.balance
+                                    else
+                                        0f,
+                                    currency = stringResource(currency),
+                                    decimalPoint = stringResource(decimalPoint),
+                                    dropCurrency = true
+                                )
+                            )
+                        }
+                    )
+                }
 
                 val loadingIconVisible = remember { mutableStateOf(false) }
 

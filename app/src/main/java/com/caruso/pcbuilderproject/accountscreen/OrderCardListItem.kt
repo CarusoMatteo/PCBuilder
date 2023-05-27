@@ -20,43 +20,6 @@ fun OrderCardListItem(
     modifier: Modifier = Modifier,
     component: Component
 ) {
-    /*
-    Row(
-        modifier = Modifier.padding(end = 16.dp, bottom = 10.dp)
-                then modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            modifier = Modifier
-                .weight(1f, fill = false),
-            text = component.toStringDropType(),
-            fontStyle = MaterialTheme.typography.headlineSmall.fontStyle,
-            fontWeight = FontWeight.Bold,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-
-        Row(
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 5.dp)
-        ) {
-            Text(
-                text = GlobalData.priceInFloatToString(
-                    number = component.price,
-                    currency = stringResource(currency),
-                    decimalPoint = stringResource(decimalPoint)
-                ),
-                fontStyle = MaterialTheme.typography.headlineSmall.fontStyle,
-                maxLines = 1,
-                overflow = TextOverflow.Visible,
-            )
-        }
-    }
-     */
-
     Row(
         modifier = Modifier.fillMaxWidth()
                 then modifier,

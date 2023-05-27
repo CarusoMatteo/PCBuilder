@@ -7,9 +7,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.caruso.pcbuilderproject.R.string.orderHistory_Text
 import com.caruso.pcbuilderproject.ui.theme.PCBuilderProjectTheme
 import com.caruso.pcbuilderproject.utilities.GlobalData
 
@@ -17,8 +19,16 @@ import com.caruso.pcbuilderproject.utilities.GlobalData
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues = PaddingValues(all = 0.dp),
+    snackbarHostState: SnackbarHostState?
 ) {
     val addBalanceDialogVisible = remember { mutableStateOf(false) }
+
+    var balanceValue = 0f
+    if (GlobalData.loggedInUser?.balance != null) {
+        balanceValue = GlobalData.loggedInUser?.balance!!
+    }
+
+    val balance: MutableState<Float> = remember { mutableStateOf(balanceValue) }
 
     LazyColumn(
         modifier = Modifier
@@ -28,9 +38,11 @@ fun ProfileScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
+            Spacer(Modifier.height(10.dp))
+
             BalanceCard(
                 modifier = Modifier.fillMaxWidth(0.9f),
-                balance = GlobalData.loggedInUser!!.balance,
+                balance = balance.value,
                 addBalanceDialogVisible = addBalanceDialogVisible
             )
 
@@ -41,7 +53,7 @@ fun ProfileScreen(
                 contentAlignment = Alignment.CenterStart
             ) {
                 Text(
-                    text = "Order history",
+                    text = stringResource(orderHistory_Text),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -57,9 +69,17 @@ fun ProfileScreen(
                     order = order
                 )
 
-                Spacer(Modifier.height(20.dp))
+                Spacer(Modifier.height(10.dp))
             }
         }
+    }
+
+    if (addBalanceDialogVisible.value) {
+        AddFundsDialog(
+            addFundsDialogDialogOpen = addBalanceDialogVisible,
+            balance = balance,
+            snackbarHostState = snackbarHostState
+        )
     }
 }
 
@@ -68,7 +88,9 @@ fun ProfileScreen(
 fun ProfileScreenPreview() {
     PCBuilderProjectTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            ProfileScreen()
+            ProfileScreen(
+                snackbarHostState = null
+            )
         }
     }
 }

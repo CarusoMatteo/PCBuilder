@@ -134,4 +134,11 @@
     <string name="proceedToPurchase_Button">Procedi all\'acquisto</string>
     <string name="yourCurrentBalance_Text">Il tuo Saldo attuale</string>
     <string name="addFunds_Button">Aggiungi fondi</string>
+    <string name="orderHistory_Text">Storico degli ordini</string>
+    <string name="order_Text">Ordine</string>
+    <string name="addFunds_Text">Aggiungi fondi</string>
+    <string name="writeTheAmountOfFundsToAddTtoYourAaccount_Text">Scrivi la quantità di fondi da aggiungere al tuo account.</string>
+    <string name="foundsToAdd_Text">Fondi da aggiungere</string>
+    <string name="balance_Text">Saldo</string>
+    <string name="subTotal_Text">Subtotale</string>
 </resources>

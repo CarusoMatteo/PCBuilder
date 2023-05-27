@@ -61,7 +61,7 @@ fun OrderCard(
         ) {
             Box(modifier = Modifier.fillMaxWidth(0.8f)) {
                 Text(
-                    text = "Order #${order.orderId}",
+                    text = "${stringResource(order_Text)} #${order.orderId}",
                     style = nameSize,
                     fontWeight = FontWeight.Bold
                 )
@@ -141,7 +141,7 @@ fun OrderCard(
 
         SpecsListItem(
             modifier = Modifier.padding(start = 16.dp),
-            leftItem = "Total",
+            leftItem = stringResource(total_Text),
             rightItem = GlobalData.priceInFloatToString(
                 number = order.totalCost,
                 currency = stringResource(currency),

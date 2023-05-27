@@ -129,6 +129,7 @@ fun AccountScreen(
         } else {
             ProfileScreen(
                 paddingValues = paddingValues,
+                snackbarHostState = snackbarHostState
             )
         }
     }

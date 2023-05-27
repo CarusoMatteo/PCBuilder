@@ -905,6 +905,8 @@ abstract class ServerFunctions {
 
                                 loadingIconVisible.value = false
 
+                                GlobalData.reloadAccountScreenForXTimes = 10
+
                                 navController.navigate(BottomBarScreen.AccountScreen.route) {
                                     popUpTo(id = navController.graph.findStartDestination().id)
                                     launchSingleTop = true
@@ -1128,6 +1130,82 @@ abstract class ServerFunctions {
                     }) {}
 
             queue.add(request)
+        }
+
+
+        /**
+         * Updates the [loggedInUser] using provided [fundsToAdd].
+         * @exception android.os.NetworkOnMainThreadException
+         * @param fundsToAdd The funds that have to be added.
+         * @param currentFunds A [mutableStateOf(Float)][MutableState] that contains the current balance.
+         * @param snackbarMessage Required to show Snackbar in case of failure.
+         * @param snackbarHostState Required to show Snackbar in case of failure.
+         * @param scope Required to show Snackbar in case of failure.
+         * @return True if the update was successful, otherwise false.
+         */
+        fun updateBalance(
+            fundsToAdd: Float,
+            currentFunds: MutableState<Float>,
+            context: Context,
+            snackbarMessage: MutableState<String>,
+            snackbarHostState: SnackbarHostState,
+            scope: CoroutineScope,
+            ngrokLink: String = ngrokServerLinkPrefix
+                    + ngrokServerLink
+                    + ngrokServerLinkSuffix
+        ): Boolean {
+            Log.d("Update Balance", "----------------------------")
+
+            try {
+                if (loggedInUser == null) {
+                    return false
+                }
+
+                val url = buildString {
+                    append(ngrokLink)
+                    append("/User/UpdateBalance.php?")
+                    append("Username=")
+                    append(loggedInUser!!.username)
+                    append("&FundsToAdd=")
+                    append(fundsToAdd)
+                }
+
+                Log.d(
+                    "Update Balance",
+                    "Attempting to update the balance of the user ${loggedInUser!!.username} at link: $url"
+                )
+
+                val updateBalanceResponse = JSONObject(URL(url).readText())
+
+                Log.d(
+                    "Update Balance",
+                    "Returned $updateBalanceResponse"
+                )
+
+                // updateBalanceResponse is true
+                if (updateBalanceResponse.getString("UpdateSuccessful") == "true") {
+                    loggedInUser!!.balance += fundsToAdd
+                    currentFunds.value += fundsToAdd
+                    Log.d("Update Balance", "----------------------------")
+                    return true
+                }
+
+                // updateBalanceResponse is false
+                Log.d("Update Balance", "----------------------------")
+                return false
+            } catch (e: Exception) {
+                Log.e("Update Balance", "Error is: " + e.cause)
+                Log.d("Update Balance", "----------------------------")
+
+                if (!isInternetReachable())
+                    snackbarMessage.value = context.getString(offlineWarning_Message)
+                else
+                    snackbarMessage.value = context.getString(serverError_Message)
+
+                scope.launch { snackbarHostState.showSnackbar(snackbarMessage.value) }
+
+                return false
+            }
         }
     }
 }
