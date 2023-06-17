@@ -581,7 +581,7 @@ fun initializeFilters(context: Context) {
     )
     FilterList.chipsetRX7900XTX = Filter(
         name = context.getString(chipset_Text),
-        value = "RX 7900 XT",
+        value = "RX 7900 XTX",
         component = GPU,
         nameNotLocalized = "chipset",
     )

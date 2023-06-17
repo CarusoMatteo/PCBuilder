@@ -90,7 +90,7 @@ fun AccountScreen(
                             onClick = {
                                 exitButtonVisible.value = false
 
-                                GlobalData.logout(context = context)
+                                GlobalData.logout()
 
                                 navController?.navigate(BottomBarScreen.AccountScreen.route) {
                                     popUpTo(id = navController.graph.findStartDestination().id)

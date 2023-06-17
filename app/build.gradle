@@ -11,8 +11,8 @@ android {
         applicationId "com.caruso.pcbuilderproject"
         minSdk 28
         targetSdk 33
-        versionCode 38
-        versionName 'v.0.38.1'
+        versionCode 39
+        versionName 'v.1.0.0'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

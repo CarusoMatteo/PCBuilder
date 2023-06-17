@@ -174,7 +174,7 @@ abstract class ServerFunctions {
                                 Log.d("Check Credentials", "----------------------------")
 
                                 snackbarMessage.value = context.getString(accountDoesntExists)
-                                GlobalData.logout(context = context)
+                                GlobalData.logout()
 
                                 scope.launch {
                                     snackbarHostState.showSnackbar(

@@ -22,7 +22,7 @@ abstract class GlobalData {
 
         // Contains the link to connect to the ngrok server
         const val ngrokServerLinkPrefix = "https://"
-        var ngrokServerLink = "5576-93-40-208-236"
+        var ngrokServerLink = "8959-93-40-210-60"
         const val ngrokServerLinkSuffix = ".ngrok-free.app/PCBuilder"
 
         // Contains the product type currently selected in the store
@@ -263,8 +263,8 @@ abstract class GlobalData {
 
             if (!dropCurrency)
                 return "$currency $wholePart$decimalPoint$decimalPart"
-            else
-                return "$wholePart$decimalPoint$decimalPart"
+
+            return "$wholePart$decimalPoint$decimalPart"
         }
 
         fun copyToClipboard(
@@ -277,9 +277,11 @@ abstract class GlobalData {
             clipboardManager.setPrimaryClip(clip)
         }
 
-        fun logout(context: Context) {
+        fun logout() {
             loggedInUser = null
-            IncompatibilityList.checkForIncompatibilities(context = context)
+            getActiveIncompatibilities().forEach {
+                it.active = false
+            }
         }
     }
 }
